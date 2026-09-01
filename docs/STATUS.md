@@ -1,10 +1,10 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
-**CI:** not yet run on this round (M5 + M6). Last green push was `6fafa44` (audio-route
-fix, ducking, 14 video links, read-only Schedule screen) — still not run on a real
-device by the user. This round is the biggest batch of first-time Android API surface
-in the project so far; see "Real risk in this round" before assuming it just works.
+**CI:** green on `1f3c798` (M5 + M6), first try — `Core tests` and `Build APK` both
+passed, APK produced (`Assemble debug APK`, 2m55s, 38/38 tasks). **None of it has run
+on a real device yet** — that is the next step, and it is a bigger one than usual: see
+"Real risk in this round" before assuming a clean compile means it works.
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
@@ -18,8 +18,8 @@ Read this first, then `CLAUDE.md` for the background that does not change.
 | M2 | Tầng dữ liệu + toàn bộ nội dung (63 động tác, 7 buổi tập, chương trình tuần) | ✅ Xong |
 | M3 | Minh hoạ động tác | 🔁 Đổi hướng — liên kết video (14/63), không tự vẽ. Xem D-008. |
 | M4 | Trình phát buổi tập, nhịp tabata, giọng đếm tiếng Việt | ✅ Xác nhận trên máy thật: nút bấm được, giọng đọc và nhịp trống đều nghe được. |
-| M5 | Nhắc nhở qua thông báo (không báo thức) | 🟡 Code xong, **chưa build-verify** — xem bên dưới. |
-| M6 | Tiến trình: chuỗi ngày, tín hiệu gối tác động thật lên buổi tập, cân nặng/vòng eo | 🟡 Code xong, **chưa build-verify** — xem bên dưới. |
+| M5 | Nhắc nhở qua thông báo (không báo thức) | 🟡 CI xanh (compile + đóng gói thật). **Chưa chạy trên máy thật.** |
+| M6 | Tiến trình: chuỗi ngày, tín hiệu gối tác động thật lên buổi tập, cân nặng/vòng eo | 🟡 CI xanh (compile + đóng gói thật). **Chưa chạy trên máy thật.** |
 | M7 | Hoàn thiện: tiếng Anh, tiếp cận, bản release | ⬜ Chưa bắt đầu |
 
 ## M5 + M6, làm trong phiên này — chưa từng chạy, kể cả trên CI
@@ -86,9 +86,15 @@ JSON thật cho cả 3 loại bản ghi — đây là cơ chế `ProgressReposit
 cách nào khác để xác nhận nó trong container này), cộng 2 test mới cho
 `KneeLoadPolicy.impactFactorFor`.
 
-**`:app` — chưa compile-verify trong phiên này.** Không thể, xem CLAUDE.md. Đã tự rà
-soát thủ công (đóng ngoặc, tên package, tên hàm/tham số khớp chữ ký) nhưng đây không
-thay thế được một lần build thật.
+**`:app` — compile-verify qua CI, không phải trong container này** (không thể, xem
+CLAUDE.md). `Build APK` chạy `1f3c798` xanh: `BUILD SUCCESSFUL in 2m 55s`, 38/38 task,
+APK 17.3MB đóng gói và upload thành công. Ba cảnh báo deprecation trong log, không phải
+lỗi — hai cái có từ trước (`Icons.Filled.ShowChart`, `Icons.Filled.OpenInNew`), một cái
+mới từ vòng này (`LocalLifecycleOwner` import sai gói) đã sửa ngay, gộp vào cùng lần
+push này. Trước khi push đã tự rà soát thủ công (đóng ngoặc, tên package, tên hàm/tham
+số khớp chữ ký) — lần này việc rà soát khớp với kết quả build thật, nhưng đó là may mắn
+có xác nhận, không phải điều nên trông cậy ở vòng sau: build thật trên CI vẫn luôn là
+bằng chứng duy nhất đáng tin.
 
 ## Real risk in this round
 
@@ -106,18 +112,19 @@ app companion, ngoài tầm kiểm soát của app này.
 
 ## Do this next
 
-1. **Push, đọc CI trước tiên** — đây là lần compile đầu tiên của toàn bộ API mới ở
-   trên, khả năng lỗi cú pháp/chữ ký hàm không phải bằng không.
-2. **Cài lại và bật "Bật nhắc nhở" trong Cài đặt.** Cần biết: hộp thoại xin quyền
+**Push + CI đã xong, xanh cả hai workflow** — không cần lặp lại bước đó. Việc còn lại
+toàn bộ nằm trên máy thật, không cách nào làm thay được từ container này:
+
+1. **Cài lại và bật "Bật nhắc nhở" trong Cài đặt.** Cần biết: hộp thoại xin quyền
    thông báo có hiện không, công tắc có tự tắt lại khi từ chối không, nút "Cấp quyền
    báo đúng giờ" có dẫn đúng màn hình hệ thống không, và — quan trọng nhất vì đây là lý
    do M5 tồn tại — **thông báo có hiện rõ ràng trên đồng hồ thông minh không**, hay chỉ
    hiện trên điện thoại.
-3. **Hoàn thành một buổi tập gối/chạy thật** (ví dụ `w_zone2_knee`), xác nhận màn hình
+2. **Hoàn thành một buổi tập gối/chạy thật** (ví dụ `w_zone2_knee`), xác nhận màn hình
    chọn tín hiệu gối hiện đúng lúc, chọn xong quay lại đúng, rồi mở tab Tiến trình xem
    chuỗi ngày/tín hiệu gối/buổi tập vừa xong có hiện đúng không.
-4. **Thử nhập cân nặng/vòng eo** ở tab Tiến trình, xác nhận lưu và hiện lại đúng.
-5. **Chờ qua 04:30/09:30/14:00/16:30/19:45 một lần thật** (hoặc chỉnh giờ máy để test
+3. **Thử nhập cân nặng/vòng eo** ở tab Tiến trình, xác nhận lưu và hiện lại đúng.
+4. **Chờ qua 04:30/09:30/14:00/16:30/19:45 một lần thật** (hoặc chỉnh giờ máy để test
    nhanh) để biết `AlarmManager` có bắn đúng giờ trên máy cụ thể của người dùng không —
    đây là phần duy nhất không cách nào rút ngắn được.
 
