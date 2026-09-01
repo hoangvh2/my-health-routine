@@ -51,9 +51,9 @@ fun LibraryScreen(container: AppContainer) {
         item { Spacer(Modifier.height(16.dp)) }
 
         item {
-            Text("Thư viện động tác", style = MaterialTheme.typography.headlineMedium)
+            Text("Thư viện động tác", style = MaterialTheme.typography.titleLarge)
             Text(
-                text = "${library.exercises.size} động tác · ${library.kneeWork().size} bài dành riêng cho gối",
+                text = "${library.exercises.size} động tác · ${library.kneeWork().size} bài cho gối",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

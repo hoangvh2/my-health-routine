@@ -17,6 +17,8 @@ data class AppSettings(
     val todayStartOverride: LocalTime? = null,
     /** "Sáng nay chỉ có N phút" — null means the morning is not being squeezed. */
     val todayWindowMinutes: Int? = null,
+    /** Day one of the programme, so the four-week block can be counted. */
+    val programStartEpochDay: Long? = null,
 ) {
     /** The start the morning chain is actually anchored to right now. */
     val effectiveStart: LocalTime get() = todayStartOverride ?: wakeTime

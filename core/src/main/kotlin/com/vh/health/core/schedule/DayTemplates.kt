@@ -24,11 +24,12 @@ object DayTemplates {
     fun morning(mainMinutes: Int = 33): List<DayBlock> = listOf(
         DayBlock(
             id = "personal_care",
-            title = "Dậy, vệ sinh cá nhân, uống 400 ml nước",
+            title = "Dậy & vệ sinh cá nhân",
             kind = BlockKind.PERSONAL_CARE,
             minutes = 10,
             minMinutes = 5,
             priority = Priority.ESSENTIAL,
+            note = "Uống 400 ml nước ngay: sau 8 tiếng ngủ cơ thể đang thiếu nước.",
         ),
         DayBlock(
             id = "warm_up",
@@ -37,7 +38,7 @@ object DayTemplates {
             minutes = 12,
             minMinutes = 6,
             priority = Priority.ESSENTIAL,
-            note = "Không bao giờ bỏ hẳn: khớp và đĩa đệm còn cứng sau 8 tiếng nằm.",
+            note = "Không bao giờ bỏ hẳn: khớp còn cứng sau 8 tiếng nằm.",
         ),
         DayBlock(
             id = "main",
@@ -49,7 +50,7 @@ object DayTemplates {
         ),
         DayBlock(
             id = "cool_down",
-            title = "Giãn cơ tĩnh & thở",
+            title = "Giãn cơ & thở",
             kind = BlockKind.COOL_DOWN,
             minutes = 10,
             minMinutes = 5,
@@ -57,19 +58,21 @@ object DayTemplates {
         ),
         DayBlock(
             id = "shower",
-            title = "Tắm & vệ sinh sau tập",
+            title = "Tắm & vệ sinh",
             kind = BlockKind.PERSONAL_CARE,
             minutes = 20,
             minMinutes = 10,
             priority = Priority.HIGH,
+            note = "Tắm sau khi nhịp tim đã xuống và hết mồ hôi.",
         ),
         DayBlock(
             id = "breakfast",
-            title = "Bữa sáng nhiều đạm",
+            title = "Bữa sáng",
             kind = BlockKind.MEAL,
             minutes = 20,
             minMinutes = 10,
             priority = Priority.NORMAL,
+            note = "Ưu tiên đạm: giữ cơ trong lúc giảm mỡ.",
         ),
     )
 
@@ -80,7 +83,7 @@ object DayTemplates {
     fun evening(): List<DayBlock> = listOf(
         DayBlock(
             id = "wind_down",
-            title = "Hạ nhiệt: giãn cơ nhẹ & thở 4-7-8",
+            title = "Hạ nhiệt & thở 4-7-8",
             kind = BlockKind.WIND_DOWN,
             minutes = 15,
             minMinutes = 8,
@@ -96,7 +99,7 @@ object DayTemplates {
         ),
         DayBlock(
             id = "prepare_sleep",
-            title = "Soạn đồ tập, chuẩn bị đi ngủ",
+            title = "Chuẩn bị đi ngủ",
             kind = BlockKind.PERSONAL_CARE,
             minutes = 15,
             minMinutes = 5,

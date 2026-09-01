@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.vh.health.core.schedule.DayTemplates
 import com.vh.health.core.schedule.SleepLink
@@ -31,6 +32,7 @@ class SettingsRepository(private val context: Context) {
         val TODAY_OVERRIDE = intPreferencesKey("today_start_override_minutes")
         val TODAY_WINDOW = intPreferencesKey("today_window_minutes")
         val OVERRIDE_DAY = intPreferencesKey("today_override_epoch_day")
+        val PROGRAM_START = longPreferencesKey("program_start_epoch_day")
     }
 
     val settings: Flow<AppSettings> = context.settingsStore.data.map { prefs ->
@@ -45,6 +47,7 @@ class SettingsRepository(private val context: Context) {
             mainSessionMinutes = prefs[Keys.MAIN_SESSION] ?: 33,
             todayStartOverride = if (overrideStillForToday) prefs[Keys.TODAY_OVERRIDE]?.toLocalTime() else null,
             todayWindowMinutes = if (overrideStillForToday) prefs[Keys.TODAY_WINDOW] else null,
+            programStartEpochDay = prefs[Keys.PROGRAM_START],
         )
     }
 
@@ -102,6 +105,15 @@ class SettingsRepository(private val context: Context) {
             } else {
                 prefs[Keys.TODAY_WINDOW] = minutes
                 prefs[Keys.OVERRIDE_DAY] = LocalDate.now().toEpochDay().toInt()
+            }
+        }
+    }
+
+    /** Stamps day one on first launch so the week counter has something to count from. */
+    suspend fun ensureProgramStart() {
+        context.settingsStore.edit { prefs ->
+            if (prefs[Keys.PROGRAM_START] == null) {
+                prefs[Keys.PROGRAM_START] = LocalDate.now().toEpochDay()
             }
         }
     }

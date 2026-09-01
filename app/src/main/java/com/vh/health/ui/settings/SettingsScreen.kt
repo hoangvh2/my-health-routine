@@ -48,7 +48,7 @@ fun SettingsScreen(container: AppContainer) {
         item {
             SettingCard(
                 title = "Điểm neo buổi sáng",
-                subtitle = "Giờ bắt đầu mặc định. Cả chuỗi buổi sáng tính ra từ đây.",
+                subtitle = "Cả chuỗi buổi sáng tính ra từ giờ này.",
             ) {
                 Stepper(
                     value = settings.wakeTime.hhmm(),
@@ -62,9 +62,9 @@ fun SettingsScreen(container: AppContainer) {
             SettingCard(
                 title = "Điểm neo buổi tối",
                 subtitle = if (settings.bedtimeFollowsWake) {
-                    "Đang tự tính từ giờ dậy trừ ${minutesAsText(settings.sleepTargetMinutes)}."
+                    "Tự tính từ giờ dậy trừ ${minutesAsText(settings.sleepTargetMinutes)}."
                 } else {
-                    "Bạn đang đặt tay. Hiện ngủ ${minutesAsText(SleepLink.sleepMinutes(settings.bedtime, settings.wakeTime))}."
+                    "Đặt tay. Hiện ngủ ${minutesAsText(SleepLink.sleepMinutes(settings.bedtime, settings.wakeTime))}."
                 },
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -93,7 +93,7 @@ fun SettingsScreen(container: AppContainer) {
         item {
             SettingCard(
                 title = "Độ dài buổi tập chính",
-                subtitle = "Phần giữa của buổi sáng. Khởi động và giãn cơ không đổi.",
+                subtitle = "Khởi động và giãn cơ không đổi theo.",
             ) {
                 Stepper(
                     value = "${settings.mainSessionMinutes} phút",
@@ -106,8 +106,10 @@ fun SettingsScreen(container: AppContainer) {
         item {
             SettingCard(
                 title = "Còn thiếu",
-                subtitle = "Nhắc nhở và báo thức (M5), âm thanh tabata và giọng đếm (M4), " +
-                    "sao lưu JSON (M6), bản tiếng Anh (M7).",
+                subtitle = "Âm thanh tabata và giọng đếm · M4\n" +
+                    "Nhắc nhở và báo thức · M5\n" +
+                    "Sao lưu JSON · M6\n" +
+                    "Bản tiếng Anh · M7",
                 content = {},
             )
         }
