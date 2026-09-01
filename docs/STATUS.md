@@ -1,8 +1,8 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
-**CI:** green through `6dba6f2` (dashboard redesign) · APK artifact `vh-health-debug-apk`.
-The session-player commit below has not been pushed/built yet — see "Do this next".
+**CI:** green on `1864d63` (session player) on the first try — no compile fixes needed
+this round. APK artifact `vh-health-debug-apk` current.
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
@@ -15,7 +15,7 @@ Read this first, then `CLAUDE.md` for the background that does not change.
 | M1 | Khung dự án, Gradle, Compose, điều hướng, CI ra APK | ✅ Xong |
 | M2 | Tầng dữ liệu + toàn bộ nội dung (63 động tác, 7 buổi tập, chương trình tuần) | ✅ Xong |
 | M3 | Minh hoạ động tác | 🔁 Đổi hướng — xem bên dưới |
-| M4 | Trình phát buổi tập, nhịp tabata, giọng đếm tiếng Việt | 🟡 Vừa viết xong, **chưa build, chưa chạy thật** |
+| M4 | Trình phát buổi tập, nhịp tabata, giọng đếm tiếng Việt | 🟡 Build xanh, **chưa ai chạy thật trên máy** |
 | M5 | Lịch tuần, kéo thả đổi ngày, báo thức và nhắc nhở | ⬜ Chưa bắt đầu |
 | M6 | Tiến trình, biểu đồ, Room, sao lưu JSON | ⬜ Chưa bắt đầu |
 | M7 | Hoàn thiện: tiếng Anh, tiếp cận, bản release | ⬜ Chưa bắt đầu |
@@ -30,18 +30,18 @@ văn bản kỹ thuật (`cues`) đã có sẵn trong nội dung — trình phá
 
 ## Điều CHƯA xong ở M4 — nói rõ để không ai lầm
 
-M4 vừa được viết trong phiên này (`WorkoutPlayerViewModel`, `WorkoutPlayerScreen`,
-`BeatEngine`, `VoiceCues`, `SessionBuilder`) nhưng:
+M4 được viết trong phiên trước (`WorkoutPlayerViewModel`, `WorkoutPlayerScreen`,
+`BeatEngine`, `VoiceCues`, `SessionBuilder`) và CI đã xanh trên lần build đầu tiên —
+nghĩa là mọi API Compose/Android dùng đúng chữ ký, nhưng đó là tất cả những gì đã được
+kiểm chứng.
 
-1. **`:app` chưa được compile lại từ khi thêm code này.** CI cho commit này chưa chạy.
-   Rất có thể có lỗi kiểu/API tương tự lần trước (`item` vs `items`) — kiểm tra Actions
-   trước khi làm bất cứ gì khác.
-2. **Chưa ai bấm nút "Bắt đầu" trên máy thật.** Toàn bộ hành vi thời gian thực — đồng
-   hồ đếm, chuyển pha, âm thanh, rung — mới chỉ được suy luận đúng trên giấy, không
-   phải quan sát.
-3. **`videoUrl` toàn bộ đang trống.** Một lượt `WebSearch` để tìm link thật đã đụng giới
-   hạn phiên (`session limit`) trước khi tìm được kết quả nào. Nút "Xem video hướng dẫn"
-   sẽ không hiện cho tới khi có link — điều này đúng, không phải lỗi.
+1. **Chưa ai bấm nút "Bắt đầu" trên máy thật.** Toàn bộ hành vi thời gian thực — đồng
+   hồ đếm, chuyển pha, âm thanh, rung — mới chỉ được suy luận đúng trên giấy và đúng
+   kiểu Kotlin, không phải quan sát chạy thật. Đây là việc ưu tiên nhất tiếp theo.
+2. **`videoUrl` toàn bộ đang trống.** Một lượt `WebSearch` để tìm link thật đã đụng giới
+   hạn phiên (`session limit`, reset 04:20 UTC) trước khi tìm được kết quả nào. Nút
+   "Xem video hướng dẫn" sẽ không hiện cho tới khi có link — điều này đúng, không phải
+   lỗi.
 
 ## Đã kiểm chứng thật (test chạy được ở đây)
 
@@ -61,22 +61,19 @@ M4 vừa được viết trong phiên này (`WorkoutPlayerViewModel`, `WorkoutPl
 
 ## Do this next
 
-1. **Push commit này rồi đọc CI.** `git push`, mở tab Actions, đọc `Build APK`. Sửa lỗi
-   Kotlin/Compose nếu có — quy trình y hệt lần trước (push → đọc log → sửa → lặp).
-   Nghi vấn cao nhất: chữ ký API Compose Material3/Canvas trong
-   `WorkoutPlayerScreen.kt` (chưa từng compile).
-2. **Người dùng bấm "Bắt đầu" trên máy thật**, báo lại: đồng hồ có chạy đúng nhịp
-   không, âm thanh tabata có phát không (đặc biệt: máy có tắt tiếng hệ thống ảnh hưởng
-   gì không — `AudioAttributes.USAGE_ASSISTANCE_SONIFICATION` có thể bị một số máy xử
-   lý khác nhau), giọng đọc tiếng Việt của TextToSpeech có cài sẵn trên máy không (một
-   số máy Android thiếu gói dữ liệu giọng vi-VN, `VoiceCues` lặng lẽ bỏ qua khi vậy —
-   cần biết máy người dùng có rơi vào trường hợp này không).
-3. **Tìm link video thật khi phiên WebSearch hết hạn** (reset 04:20 UTC theo thông báo
+1. **Người dùng cài APK mới, bấm "Bắt đầu", báo lại kết quả.** Cụ thể cần biết: đồng
+   hồ có chạy đúng nhịp và đúng giây không; âm thanh tabata có phát không (một số máy
+   OEM xử lý `AudioAttributes.USAGE_ASSISTANCE_SONIFICATION` khác nhau khi máy đang ở
+   chế độ im lặng/rung); giọng đọc tiếng Việt của TextToSpeech có kêu không (nhiều máy
+   Android thiếu sẵn gói dữ liệu giọng vi-VN — `VoiceCues` lặng lẽ bỏ qua khi vậy, cần
+   biết máy này có rơi vào trường hợp đó); vòng đếm ngược, rung, và nút chuyển bài có
+   phản hồi đúng không. Đây là việc chặn mọi thứ khác.
+2. **Tìm link video thật khi phiên WebSearch hết hạn** (reset 04:20 UTC theo thông báo
    lúc bị chặn) — ưu tiên nhóm bài gối trước vì đó là nơi sai kỹ thuật nguy hiểm nhất:
    `kn_spanish_squat`, `kn_step_down`, `kn_tibialis_raise`, cộng `lo_goblet_squat`,
    `co_plank`, `ca_mountain_climber`. Chỉ điền `videoUrl` bằng URL thật lấy được từ kết
    quả tìm kiếm — không bao giờ tự bịa link.
-4. **Audio-focus ducking** (D-008) — chưa làm. Khi cue phát, xin
+3. **Audio-focus ducking** (D-008) — chưa làm. Khi cue phát, xin
    `AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK` để nhạc nền của người dùng tự hạ nhỏ rồi trả
    lại, thay vì im lặng hoàn toàn hoặc chồng tiếng.
 
