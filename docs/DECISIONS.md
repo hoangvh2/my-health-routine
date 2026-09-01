@@ -33,6 +33,10 @@ what makes a real test loop possible in the dev container.
 
 **Do not "tidy" the root build file by adding a plugins block.**
 
+The build therefore prints a Kotlin warning that the plugin is loaded in both `:app`
+and `:core` with explicit versions, advising the root-plugins arrangement. That advice
+is correct in general and wrong here — the warning is accepted, not a defect to fix.
+
 ## D-003 — No Room until session logging exists
 
 **Date:** 2026-09-01 · **Status:** accepted
