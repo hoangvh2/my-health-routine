@@ -11,7 +11,9 @@ import com.vh.health.data.SettingsRepository
  * See docs/DECISIONS.md (D-004).
  */
 class AppContainer(context: Context) {
-    val settings: SettingsRepository = SettingsRepository(context.applicationContext)
+    /** Kept for the few callers that need a raw Context — TextToSpeech, opening a link. */
+    val appContext: Context = context.applicationContext
+    val settings: SettingsRepository = SettingsRepository(appContext)
     val content: ContentRepository = ContentRepository()
 }
 

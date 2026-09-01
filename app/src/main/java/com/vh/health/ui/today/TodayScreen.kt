@@ -19,7 +19,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -54,7 +58,7 @@ import java.time.format.DateTimeFormatter
 private val DayMonth: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM")
 
 @Composable
-fun TodayScreen(container: AppContainer) {
+fun TodayScreen(container: AppContainer, onStartWorkout: (String) -> Unit) {
     val viewModel: TodayViewModel = viewModel(factory = TodayViewModel.factory(container))
     val state by viewModel.state.collectAsStateWithLifecycle()
     var expandedId by remember { mutableStateOf<String?>(null) }
@@ -69,7 +73,12 @@ fun TodayScreen(container: AppContainer) {
 
         item { DayHeader(state) }
 
-        item { SessionCard(state) }
+        item {
+            SessionCard(
+                state = state,
+                onStart = { state.workout?.let { workout -> onStartWorkout(workout.id) } },
+            )
+        }
 
         item {
             SectionBar(
@@ -155,7 +164,7 @@ private fun DayHeader(state: TodayUiState) {
 }
 
 @Composable
-private fun SessionCard(state: TodayUiState) {
+private fun SessionCard(state: TodayUiState, onStart: () -> Unit) {
     val workout = state.workout
     Surface(
         color = MaterialTheme.colorScheme.surface,
@@ -164,7 +173,7 @@ private fun SessionCard(state: TodayUiState) {
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(
@@ -185,6 +194,15 @@ private fun SessionCard(state: TodayUiState) {
                 StatTile("${workout?.minutes ?: 0}′", "Thời lượng", Modifier.weight(1f))
                 StatTile(workout?.rpe ?: "—", "Cường độ", Modifier.weight(1f))
                 StatTile("${workout?.blocks?.size ?: 0}", "Khối bài", Modifier.weight(1f))
+            }
+            Button(
+                onClick = onStart,
+                enabled = workout != null,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Icon(Icons.Filled.PlayArrow, contentDescription = null, modifier = Modifier.size(20.dp))
+                Spacer(Modifier.width(8.dp))
+                Text("Bắt đầu", style = MaterialTheme.typography.titleMedium)
             }
         }
     }

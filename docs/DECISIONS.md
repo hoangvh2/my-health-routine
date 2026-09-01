@@ -91,3 +91,32 @@ Encoded in `KneeLoadPolicy`, `ImpactPolicy`, and `RunVolumeGuard`:
 - Full squat depth, no artificial range limit.
 
 A future session must not soften this back into a rest-and-avoid programme.
+
+## D-008 — Media stays linked or self-supplied; the player itself is built
+
+**Date:** 2026-09-01 · **Status:** accepted
+
+The user asked me to source exercise photos/video from the internet and bundle them
+into the app, on the grounds that personal use makes copyright a non-issue. That
+premise is wrong — downloading commercial stock content (the concrete example was a
+paid illustration pack) and compiling it into the APK is copying it, not viewing it
+privately, and it contradicts D-006. Declined, and explained why rather than silently
+reinterpreting the request.
+
+What shipped instead, all consistent with D-006:
+
+- `Exercise.videoUrl` (already in the content model) is the hook for layer 2 — an
+  external link opened via `ACTION_VIEW`, never an embedded/downloaded file. No URLs
+  are populated yet: a `WebSearch` pass to curate them hit its session quota before
+  it produced results, and a session cannot verify a video's content by watching it,
+  only by source reputation — so a future pass must say so explicitly, and must
+  never fabricate a URL it hasn't gotten as an actual search result.
+- The tabata beat and every player cue are synthesised PCM (`audio/BeatEngine.kt`),
+  not a file — D-006 extended to the player rather than relaxed for it.
+- No bundled "background music" track. If the user plays their own music in another
+  app, that is the intended source for it; a future pass can make cues request
+  transient audio focus so a beep politely ducks it rather than fighting it, but
+  that is not yet implemented.
+
+Do not revisit the "just download some images, it's personal use" framing — it was
+considered and rejected once already; re-litigating it wastes a session.
