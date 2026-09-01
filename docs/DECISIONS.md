@@ -148,3 +148,33 @@ Reasons this held even once there was real per-session data to store:
 
 Revisit only if a real query need shows up (e.g. date-range charts over months of
 data) that "decode the whole list, filter in Kotlin" stops comfortably covering.
+
+## D-010 — The player shows a thumbnail, still no embedded playback
+
+**Date:** 2026-09-01 · **Status:** accepted
+
+The user reported a real gap: pressing "Bắt đầu" on a running day went straight into
+run intervals with no warm-up at all, and asked that an exercise's image or video
+appear inline under the countdown ring, not only behind a tap-out-to-browser button.
+
+**The inline preview is a thumbnail, not an embedded video player**, loaded at runtime
+from YouTube's own public thumbnail endpoint (`img.youtube.com/vi/<id>/hqdefault.jpg`).
+Nothing is downloaded or stored — same runtime-fetch, nothing-bundled shape as the
+video link itself — so this stays inside D-006/D-008's boundary rather than reopening
+it. Tapping the thumbnail still opens the real video externally via `ACTION_VIEW`,
+exactly as the button it replaced did.
+
+An embedded WebView video player was considered and rejected for this round: it would
+fight the player's own audio (tabata beat, TTS voice cues, `PlaybackFocus` ducking)
+unless carefully muted, adds a WebView lifecycle this codebase has never used, and —
+like everything else in `:app` — cannot be run here to catch a mistake before CI does.
+A thumbnail needed one new dependency (`io.coil-kt:coil-compose`, a single artifact,
+stable since 2021) and no new runtime surface beyond one `AsyncImage` call.
+
+**Consequence:** the app's first-ever outbound network call from its own process, not
+just a browser hand-off — `android.permission.INTERNET` is now declared. Still no
+account, no server, no data leaving the device except the request YouTube already sees
+for any linked-video tap.
+
+Revisit embedded playback only if thumbnails turn out not to be enough — this was a
+deliberate, scoped-down first step, not a rejection of the idea.

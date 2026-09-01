@@ -1,10 +1,12 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
-**CI:** green on `1f3c798` (M5 + M6), first try — `Core tests` and `Build APK` both
-passed, APK produced (`Assemble debug APK`, 2m55s, 38/38 tasks). **None of it has run
-on a real device yet** — that is the next step, and it is a bigger one than usual: see
-"Real risk in this round" before assuming a clean compile means it works.
+**CI:** M5+M6 (`620c0e0`) green. The user then actually pressed "Bắt đầu" on a real
+device — the first real signal on any of this round's code — and found a real bug
+(see "Phản hồi thật #3" below). **That confirms the APK installs and the player
+launches and runs**, nothing more yet: no confirmation on notifications, the knee
+picker, or the Progress screen. The fix below is **not pushed yet**; this file will be
+updated again once CI confirms it.
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
@@ -21,6 +23,62 @@ Read this first, then `CLAUDE.md` for the background that does not change.
 | M5 | Nhắc nhở qua thông báo (không báo thức) | 🟡 CI xanh (compile + đóng gói thật). **Chưa chạy trên máy thật.** |
 | M6 | Tiến trình: chuỗi ngày, tín hiệu gối tác động thật lên buổi tập, cân nặng/vòng eo | 🟡 CI xanh (compile + đóng gói thật). **Chưa chạy trên máy thật.** |
 | M7 | Hoàn thiện: tiếng Anh, tiếp cận, bản release | ⬜ Chưa bắt đầu |
+
+## Phản hồi thật #3: thiếu khởi động, video ẩn sau nút bấm
+
+Nguyên văn: *"tôi thấy bài tập luyện của bạn có lỗ hổng lớn về mặt khởi động trước khi
+tập. ví dụ hôm nay là thứ 3, ngay khi nhấn bắt đầu thì vào ngay bài tập chạy nhẹ và
+chạy nhanh, mà không hề có bài tập khởi động nào???? nếu có bài tập khởi động hoặc bài
+tập đòi hỏi động tác, tôi mong đợi là hình ảnh hoặc video hướng dẫn xuất hiện bên dưới
+đồng hồ đếm ngược luôn"*
+
+### Lỗi 1 — không hề bịa, kiểm tra ra là thật: 6/7 buổi tập không có khởi động
+
+`DayTemplates.morning()` đặt 12 phút "Khởi động & mobility" trên **lịch dashboard**, ghi
+rõ "Không bao giờ bỏ hẳn: khớp còn cứng sau 8 tiếng nằm" — nhưng đó chỉ là một khối
+*thời gian*, không tự động biến thành nội dung tập thật. Trình phát chạy trực tiếp
+`Workout.blocks` từ `program.json`, và khối đó **không hề nối với nhau**. Kiểm tra thật:
+
+| Buổi tập | Khối đầu tiên trước khi sửa |
+|---|---|
+| `w_strength_full_a` (T2) | Vòng sức mạnh 1 — vào tạ luôn |
+| `w_zone2_knee` (T3) | Chạy – đi bộ xen kẽ — **đúng như người dùng báo cáo** |
+| `w_tabata_core` (T4) | Tabata 1 — vào cường độ cao luôn |
+| `w_lower_knee` (T5) | Sức mạnh thân dưới — vào tạ luôn |
+| `w_intervals_core` (T6) | Có "Khởi động chạy" (đi bộ nhanh 5 phút) nhưng không phải mobility khớp |
+| `w_long_easy` (T7) | Chạy – đi bộ dài — mobility có nhưng nằm ở **cuối**, không phải đầu |
+| `w_recovery` (CN) | Yoga & mobility — **đây là buổi duy nhất đúng ngay từ đầu** |
+
+**Đã sửa:** thêm 1 khối "Khởi động" dùng chung (8 động tác từ `MuscleGroup.WARM_UP`,
+~4 phút, thứ tự đứng → tường → thảm để giảm số lần đổi tư thế) vào đầu 6/7 buổi tập —
+`w_recovery` giữ nguyên vì đã đúng. Cập nhật lại trường `minutes` hiển thị cho 5 buổi
+tập giờ dài hơn ~3–5 phút thật (không đổi cho `w_long_easy`/`w_recovery`, chênh lệch đã
+nằm trong sai số cho phép).
+
+**Chặn tái diễn:** thêm test `ContentTest > every workout opens with a genuine warm-up
+movement` — khẳng định động tác đầu tiên của mọi buổi tập phải thuộc nhóm `WARM_UP`.
+Nếu sau này thêm buổi tập mới mà quên khởi động, `./gradlew :core:test` báo lỗi ngay,
+không phải chờ người dùng phát hiện trên máy thật lần nữa.
+
+### Lỗi 2 (thật ra là thiếu tính năng) — hình minh hoạ giờ nằm ngay dưới đồng hồ đếm ngược
+
+Trước đây: có `videoUrl` thì hiện nút "Xem video hướng dẫn", bấm vào mới rời app sang
+trình duyệt. Giờ: `ExerciseThumbnail` hiện ảnh xem trước (thumbnail thật từ YouTube,
+tải lúc chạy — không tải về, không đóng gói, vẫn đúng D-006/D-008, xem D-010) ngay dưới
+vòng đếm ngược; bấm vào ảnh mới mở video ngoài, đúng như hành vi cũ.
+
+**Nhưng: 63 động tác chỉ có 26 cái có `videoUrl`** (14 từ trước + 12 bài khởi động mới
+tìm vòng này). 37 bài — gồm phần lớn nhóm thân dưới/thân trên/core không thuộc nhóm gối
+— vẫn chưa có link, nghĩa là với những bài đó màn hình trình phát vẫn chỉ có chữ, không
+có ảnh. Không phải lỗi (không có link thì không hiện ảnh, không hiện ảnh vỡ), nhưng đó
+là còn thiếu, sẽ nêu lại trong "Việc cố tình chưa làm".
+
+**Đã thêm quyền `INTERNET`** — trước giờ app hoàn toàn offline (mở link video là giao
+Intent cho trình duyệt, không phải app tự tải gì). Đây là lần đầu app tự gọi mạng để
+tải ảnh thumbnail. Vẫn không có tài khoản, không máy chủ riêng.
+
+**Chưa build-verify, chưa push.** Xem "Đã kiểm chứng thật" bên dưới cho phần đã chạy
+test thật (`:core`), và phần còn lại chưa có bằng chứng gì ngoài tự rà soát thủ công.
 
 ## M5 + M6, làm trong phiên này — chưa từng chạy, kể cả trên CI
 
@@ -76,25 +134,28 @@ tối (giờ bắt đầu khối hạ nhiệt buổi tối, tính lùi từ gi�
 
 ## Đã kiểm chứng thật (test chạy được ở đây)
 
-`:core` — **94 unit test, tất cả pass.** Chạy `./gradlew :core:test`.
+`:core` — **102 unit test, tất cả pass.** Chạy `./gradlew :core:test`.
 
-Mới trong phiên này: `ReminderScheduleTest`, `ReminderContentTest` (giờ nhắc đúng kế
-hoạch 04:30/09:30/14:00/16:30/19:45, ranh giới nửa đêm, nội dung không rỗng cho mọi
-buổi tập), `LoadAdjustmentTest` (chỉ cardio bị co giãn, khối gối/sức mạnh giữ nguyên
-byte-identical, sàn không về 0/âm), `StreakTest`, `ProgressRecordsTest` (round-trip
-JSON thật cho cả 3 loại bản ghi — đây là cơ chế `ProgressRepository` dựa vào, không
-cách nào khác để xác nhận nó trong container này), cộng 2 test mới cho
+Từ vòng M5+M6 (đã CI-verify, xem dưới): `ReminderScheduleTest`, `ReminderContentTest`,
+`LoadAdjustmentTest`, `StreakTest`, `ProgressRecordsTest`, cộng test cho
 `KneeLoadPolicy.impactFactorFor`.
 
+Mới trong vòng sửa lỗi khởi động (chưa CI-verify): test mới `every workout opens with
+a genuine warm-up movement` trong `ContentTest` (khẳng định lỗi vừa sửa không tái
+diễn), `each workout actually lasts roughly what it claims` vẫn pass sau khi cập nhật
+`minutes`, `VideoThumbnailTest` (7 test — trích id từ 3 dạng URL YouTube, dừng đúng
+trước query param thừa, URL không phải YouTube thì không ra thumbnail, và **mọi
+`videoUrl` thật trong nội dung đã đóng gói đều ra được thumbnail** — chạy trên đúng 26
+link thật, không phải dữ liệu giả).
+
 **`:app` — compile-verify qua CI, không phải trong container này** (không thể, xem
-CLAUDE.md). `Build APK` chạy `1f3c798` xanh: `BUILD SUCCESSFUL in 2m 55s`, 38/38 task,
-APK 17.3MB đóng gói và upload thành công. Ba cảnh báo deprecation trong log, không phải
-lỗi — hai cái có từ trước (`Icons.Filled.ShowChart`, `Icons.Filled.OpenInNew`), một cái
-mới từ vòng này (`LocalLifecycleOwner` import sai gói) đã sửa ngay, gộp vào cùng lần
-push này. Trước khi push đã tự rà soát thủ công (đóng ngoặc, tên package, tên hàm/tham
-số khớp chữ ký) — lần này việc rà soát khớp với kết quả build thật, nhưng đó là may mắn
-có xác nhận, không phải điều nên trông cậy ở vòng sau: build thật trên CI vẫn luôn là
-bằng chứng duy nhất đáng tin.
+CLAUDE.md). `Build APK` cho `620c0e0` (M5+M6) xanh: `BUILD SUCCESSFUL in 3m 22s`, 38/38
+task, APK đóng gói và upload thành công, chỉ còn 2 cảnh báo deprecation cũ, không liên
+quan vòng đó. **Vòng sửa lỗi khởi động + thumbnail này thì chưa** — có thêm rủi ro thật
+sự mới: dependency `Coil` lần đầu dùng trong project, quyền `INTERNET` lần đầu khai
+báo, `verticalScroll` lồng trong layout đã từng có bug thật một lần
+(`fillMaxSize()`-trong-`Column`) nên càng cần thận trọng dù lần sửa này dùng cách khác
+hẳn (`weight` + `verticalScroll`, không phải `fillMaxSize`).
 
 ## Real risk in this round
 
@@ -112,24 +173,39 @@ app companion, ngoài tầm kiểm soát của app này.
 
 ## Do this next
 
-**Push + CI đã xong, xanh cả hai workflow** — không cần lặp lại bước đó. Việc còn lại
-toàn bộ nằm trên máy thật, không cách nào làm thay được từ container này:
-
-1. **Cài lại và bật "Bật nhắc nhở" trong Cài đặt.** Cần biết: hộp thoại xin quyền
-   thông báo có hiện không, công tắc có tự tắt lại khi từ chối không, nút "Cấp quyền
-   báo đúng giờ" có dẫn đúng màn hình hệ thống không, và — quan trọng nhất vì đây là lý
-   do M5 tồn tại — **thông báo có hiện rõ ràng trên đồng hồ thông minh không**, hay chỉ
-   hiện trên điện thoại.
-2. **Hoàn thành một buổi tập gối/chạy thật** (ví dụ `w_zone2_knee`), xác nhận màn hình
-   chọn tín hiệu gối hiện đúng lúc, chọn xong quay lại đúng, rồi mở tab Tiến trình xem
-   chuỗi ngày/tín hiệu gối/buổi tập vừa xong có hiện đúng không.
-3. **Thử nhập cân nặng/vòng eo** ở tab Tiến trình, xác nhận lưu và hiện lại đúng.
-4. **Chờ qua 04:30/09:30/14:00/16:30/19:45 một lần thật** (hoặc chỉnh giờ máy để test
-   nhanh) để biết `AlarmManager` có bắn đúng giờ trên máy cụ thể của người dùng không —
-   đây là phần duy nhất không cách nào rút ngắn được.
+1. **Push vòng sửa lỗi khởi động + thumbnail, đọc CI trước tiên.** Rủi ro compile thật
+   (Coil lần đầu, `INTERNET` permission, layout đổi cấu trúc) — đừng giả định sạch.
+2. **Mở lại đúng buổi thứ Ba (`w_zone2_knee`) trên máy thật**, xác nhận: khối "Khởi
+   động" hiện ra đầu tiên với 8 động tác đúng thứ tự, ảnh thumbnail hiện dưới vòng đếm
+   ngược cho các bài khởi động có link (không phải chữ suông), bấm vào ảnh mở đúng
+   video, và cuộn được nếu nội dung dài hơn màn hình.
+3. **Thử một buổi không có khởi động-video** (vd. giữa buổi tập gối cũ chưa có link) để
+   xác nhận: không có ảnh thì không vỡ layout, không có khoảng trống kỳ lạ.
+4. Sau đó mới quay lại các mục chưa xác nhận từ vòng M5+M6 trước — **chưa ai kiểm tra**:
+   - Bật "Bật nhắc nhở": hộp thoại xin quyền, công tắc tự tắt khi từ chối, nút "Cấp
+     quyền báo đúng giờ", và quan trọng nhất — **thông báo có hiện trên đồng hồ thông
+     minh không**.
+   - Màn hình chọn tín hiệu gối sau buổi `tracksKneeSignal`, tab Tiến trình (chuỗi
+     ngày, banner gợi ý khám, nhập cân nặng/vòng eo).
+   - Chờ qua giờ thật (hoặc chỉnh giờ máy) để biết `AlarmManager` có bắn đúng giờ trên
+     máy cụ thể của người dùng không.
 
 ## Things deliberately left undone
 
+- **37 of 63 exercises still have no `videoUrl`** — mostly lower/upper body and core
+  work outside the knee-focus set. Their player screens show no thumbnail, by design
+  (no link, no image) not by bug. Extending coverage is real remaining work, same
+  caveat as always: chosen by title/channel only, never watched, never fabricated.
+- **The shared warm-up block is identical for every workout**, not tailored per day
+  (e.g. more ankle work before a run day, more shoulder before an upper-body day).
+  Consistency over customization was the deliberate call this round — the person
+  learns one routine instead of seven. Worth revisiting once the current fix is
+  confirmed on a real device, not before.
+- **`WorkoutItem.perSide` is still not read anywhere** (not new to this round — it was
+  already unused dead data on 15 existing items before this fix). A `perSide` item
+  produces exactly one WORK step of `workSeconds`, not two; the new warm-up block's
+  `wu_leg_swing`/`wu_ankle_rock` follow that same existing convention rather than
+  trying to fix it — a real gap, but pre-existing and out of scope for this round.
 - **JSON backup/export.** Nêu trong kế hoạch M6 gốc, không làm vòng này — dữ liệu vẫn
   chỉ nằm trên máy, mất app là mất hết. Ưu tiên thấp hơn việc đóng lỗ hổng tín hiệu gối
   không tác động gì, nhưng vẫn là nợ thật, chưa trả.
