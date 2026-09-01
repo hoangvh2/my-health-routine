@@ -3,6 +3,8 @@ package com.vh.health.ui.player
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,16 +16,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,14 +38,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalView
@@ -51,8 +57,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.vh.health.AppContainer
 import com.vh.health.core.content.Exercise
+import com.vh.health.core.content.youtubeThumbnailUrl
 import com.vh.health.core.program.KneeSignal
 import com.vh.health.core.session.StepPhase
 import com.vh.health.ui.minutesAsText
@@ -108,9 +116,15 @@ fun WorkoutPlayerScreen(container: AppContainer, workoutId: String, onFinish: ()
             // not "whatever is left after the top bar" — that pushed PlayerControls
             // off the bottom of the screen entirely, so Bắt đầu was unreachable and
             // nothing ever played. weight(1f) is what actually means "the remainder".
+            //
+            // verticalScroll so a smaller screen degrades to "scroll for the rest"
+            // instead of silently clipping content — the ring plus a thumbnail plus
+            // every existing text line will not always fit unscrolled on every phone,
+            // and there is no way to verify actual screen sizes from this container.
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -133,7 +147,7 @@ fun WorkoutPlayerScreen(container: AppContainer, workoutId: String, onFinish: ()
                     style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Center,
                 )
-                Spacer(Modifier.height(28.dp))
+                Spacer(Modifier.height(20.dp))
 
                 CountdownRing(fraction = ringFraction, accent = accent, isCountIn = state.isCountIn) {
                     Text(
@@ -143,10 +157,14 @@ fun WorkoutPlayerScreen(container: AppContainer, workoutId: String, onFinish: ()
                     )
                 }
 
-                Spacer(Modifier.height(28.dp))
+                // Right under the ring, not behind a tap-out button: seeing the move
+                // is the point for anything that isn't already muscle memory, and
+                // "tap this link to leave the app" was one extra step too many.
+                Spacer(Modifier.height(16.dp))
+                exercise?.let { ExerciseThumbnail(it) }
+
+                Spacer(Modifier.height(16.dp))
                 CueText(phase, exercise, nextExercise)
-                Spacer(Modifier.height(20.dp))
-                exercise?.videoUrl?.let { url -> WatchVideoButton(url) }
             }
         }
 
@@ -256,16 +274,45 @@ private fun CueText(phase: StepPhase, exercise: Exercise?, nextExercise: Exercis
     }
 }
 
+/**
+ * A still preview loaded from YouTube's own thumbnail endpoint — not an embedded
+ * player. Tapping it opens the real video externally, same as the old button did;
+ * this only changes the resting state from "a link" to "a picture of the movement",
+ * which is the actual ask: seeing the exercise, not hunting for where to see it.
+ * Nothing here is downloaded or bundled — see docs/DECISIONS.md (D-006, D-008).
+ */
 @Composable
-private fun WatchVideoButton(url: String) {
+private fun ExerciseThumbnail(exercise: Exercise) {
+    val url = exercise.videoUrl ?: return
+    val thumbnailUrl = remember(url) { youtubeThumbnailUrl(url) } ?: return
     val context = LocalContext.current
-    Button(
-        onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) },
-        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(0.85f)
+            .height(140.dp)
+            .clip(RoundedCornerShape(14.dp))
+            // Visible even before the image loads (or if it never does — a network
+            // hiccup or a since-removed video) rather than an empty gap with a play
+            // icon floating in it.
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+            .clickable { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) },
+        contentAlignment = Alignment.Center,
     ) {
-        Icon(Icons.Filled.OpenInNew, contentDescription = null, modifier = Modifier.size(18.dp))
-        Spacer(Modifier.width(6.dp))
-        Text("Xem video hướng dẫn", color = MaterialTheme.colorScheme.onSurface)
+        AsyncImage(
+            model = thumbnailUrl,
+            contentDescription = "Hình minh hoạ: ${exercise.nameVi}. Chạm để xem video hướng dẫn.",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
+        )
+        Surface(shape = CircleShape, color = Color.Black.copy(alpha = 0.55f), modifier = Modifier.size(44.dp)) {
+            Icon(
+                imageVector = Icons.Filled.PlayArrow,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.padding(8.dp),
+            )
+        }
     }
 }
 

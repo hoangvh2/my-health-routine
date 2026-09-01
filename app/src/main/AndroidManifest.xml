@@ -19,6 +19,13 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!-- The app's own first network request: the player loads an exercise's YouTube
+         thumbnail inline (ui/player/ExerciseThumbnail, Coil). Opening a video link in
+         an external browser never needed this — that's just handing an Intent to
+         another app — but fetching the preview image ourselves does. Nothing else in
+         the app touches the network; there is still no server, no account. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".VhHealthApp"
         android:allowBackup="true"

@@ -69,6 +69,10 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons)
+    // Inline exercise-thumbnail preview in the player (see VideoThumbnail.kt in
+    // :core) — single artifact, bundles its own OkHttp-based loader, nothing else
+    // to wire up.
+    implementation(libs.coil.compose)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 
