@@ -57,6 +57,11 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
+    // Only the runtime: the @Serializable progress records live in :core, where the
+    // kotlin.serialization compiler plugin is applied (core/build.gradle.kts). :app
+    // just needs Json/encodeToString/decodeFromString to call their generated
+    // serializers — it never declares an @Serializable class of its own.
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)

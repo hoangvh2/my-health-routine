@@ -33,6 +33,7 @@ class SettingsRepository(private val context: Context) {
         val TODAY_WINDOW = intPreferencesKey("today_window_minutes")
         val OVERRIDE_DAY = intPreferencesKey("today_override_epoch_day")
         val PROGRAM_START = longPreferencesKey("program_start_epoch_day")
+        val REMINDERS_ENABLED = booleanPreferencesKey("reminders_enabled")
     }
 
     val settings: Flow<AppSettings> = context.settingsStore.data.map { prefs ->
@@ -48,6 +49,7 @@ class SettingsRepository(private val context: Context) {
             todayStartOverride = if (overrideStillForToday) prefs[Keys.TODAY_OVERRIDE]?.toLocalTime() else null,
             todayWindowMinutes = if (overrideStillForToday) prefs[Keys.TODAY_WINDOW] else null,
             programStartEpochDay = prefs[Keys.PROGRAM_START],
+            remindersEnabled = prefs[Keys.REMINDERS_ENABLED] ?: false,
         )
     }
 
@@ -107,6 +109,10 @@ class SettingsRepository(private val context: Context) {
                 prefs[Keys.OVERRIDE_DAY] = LocalDate.now().toEpochDay().toInt()
             }
         }
+    }
+
+    suspend fun setRemindersEnabled(enabled: Boolean) {
+        context.settingsStore.edit { it[Keys.REMINDERS_ENABLED] = enabled }
     }
 
     /** Stamps day one on first launch so the week counter has something to count from. */

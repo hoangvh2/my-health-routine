@@ -18,8 +18,8 @@ import androidx.navigation.navArgument
 import com.vh.health.AppContainer
 import com.vh.health.ui.library.LibraryScreen
 import com.vh.health.ui.nav.Destination
-import com.vh.health.ui.placeholder.PlaceholderScreen
 import com.vh.health.ui.player.WorkoutPlayerScreen
+import com.vh.health.ui.progress.ProgressScreen
 import com.vh.health.ui.schedule.ScheduleScreen
 import com.vh.health.ui.settings.SettingsScreen
 import com.vh.health.ui.today.TodayScreen
@@ -78,14 +78,7 @@ fun VhHealthRoot(container: AppContainer) {
             }
             composable(Destination.SCHEDULE.route) { ScheduleScreen(container) }
             composable(Destination.LIBRARY.route) { LibraryScreen(container) }
-            composable(Destination.PROGRESS.route) {
-                PlaceholderScreen(
-                    title = "Tiến trình",
-                    milestone = "M6",
-                    body = "Nhật ký từng buổi, biểu đồ cân nặng và vòng eo, lịch chuỗi ngày, " +
-                        "và đường tín hiệu gối để phát hiện sớm khi khối lượng vượt sức chịu tải.",
-                )
-            }
+            composable(Destination.PROGRESS.route) { ProgressScreen(container) }
             composable(Destination.SETTINGS.route) { SettingsScreen(container) }
         }
     }

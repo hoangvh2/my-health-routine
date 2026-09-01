@@ -24,9 +24,11 @@ import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,6 +53,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vh.health.AppContainer
 import com.vh.health.core.content.Exercise
+import com.vh.health.core.program.KneeSignal
 import com.vh.health.core.session.StepPhase
 import com.vh.health.ui.minutesAsText
 import com.vh.health.ui.theme.ClockStyle
@@ -73,6 +76,10 @@ fun WorkoutPlayerScreen(container: AppContainer, workoutId: String, onFinish: ()
         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
     }
 
+    if (state.isLoading) {
+        LoadingNotice()
+        return
+    }
     if (state.workout == null || state.steps.isEmpty()) {
         EmptySessionNotice(onFinish)
         return
@@ -109,7 +116,11 @@ fun WorkoutPlayerScreen(container: AppContainer, workoutId: String, onFinish: ()
             verticalArrangement = Arrangement.Center,
         ) {
             if (state.isFinished) {
-                FinishedContent(onFinish)
+                FinishedContent(
+                    tracksKneeSignal = state.workout?.tracksKneeSignal == true,
+                    onRecordKneeSignal = viewModel::recordKneeSignal,
+                    onFinish = onFinish,
+                )
             } else {
                 Text(
                     text = phaseLabel(phase).uppercase(),
@@ -292,8 +303,19 @@ private fun PlayerControls(isRunning: Boolean, onToggle: () -> Unit, onPrev: () 
     }
 }
 
+/**
+ * The knee check-in picker (for `tracksKneeSignal` workouts) stands in for the plain
+ * "Xong" button rather than sitting alongside it — asking a question and offering an
+ * unrelated escape hatch next to it invites people to tap past it without answering,
+ * and the answer is exactly what [com.vh.health.core.program.applyCardioLoadFactor]
+ * needs to do anything useful next session.
+ */
 @Composable
-private fun FinishedContent(onFinish: () -> Unit) {
+private fun FinishedContent(
+    tracksKneeSignal: Boolean,
+    onRecordKneeSignal: (KneeSignal) -> Unit,
+    onFinish: () -> Unit,
+) {
     Text("Hoàn thành!", style = MaterialTheme.typography.headlineMedium)
     Spacer(Modifier.height(8.dp))
     Text(
@@ -302,7 +324,35 @@ private fun FinishedContent(onFinish: () -> Unit) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     Spacer(Modifier.height(24.dp))
-    Button(onClick = onFinish) { Text("Xong") }
+    if (tracksKneeSignal) {
+        KneeSignalPicker(onPick = { signal -> onRecordKneeSignal(signal); onFinish() })
+    } else {
+        Button(onClick = onFinish) { Text("Xong") }
+    }
+}
+
+@Composable
+private fun KneeSignalPicker(onPick: (KneeSignal) -> Unit) {
+    Text(
+        "Gối bạn thế nào sau buổi này?",
+        style = MaterialTheme.typography.titleMedium,
+        textAlign = TextAlign.Center,
+    )
+    Spacer(Modifier.height(14.dp))
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        KneeSignal.entries.forEach { signal ->
+            OutlinedButton(onClick = { onPick(signal) }, modifier = Modifier.fillMaxWidth(0.85f)) {
+                Text(signal.labelVi, textAlign = TextAlign.Center)
+            }
+        }
+    }
+}
+
+@Composable
+private fun LoadingNotice() {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator()
+    }
 }
 
 @Composable

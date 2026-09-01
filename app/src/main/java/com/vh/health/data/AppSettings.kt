@@ -19,6 +19,8 @@ data class AppSettings(
     val todayWindowMinutes: Int? = null,
     /** Day one of the programme, so the four-week block can be counted. */
     val programStartEpochDay: Long? = null,
+    /** Master switch for the five scheduled notifications — not alarms, see notify/. */
+    val remindersEnabled: Boolean = false,
 ) {
     /** The start the morning chain is actually anchored to right now. */
     val effectiveStart: LocalTime get() = todayStartOverride ?: wakeTime

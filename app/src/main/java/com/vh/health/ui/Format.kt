@@ -1,11 +1,15 @@
 package com.vh.health.ui
 
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 private val HourMinute: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+private val DayMonth: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM")
 
 fun LocalTime.hhmm(): String = format(HourMinute)
+
+fun LocalDate.ddmm(): String = format(DayMonth)
 
 /** "1 giờ 45", "45 phút" — how a person would say it out loud. */
 fun minutesAsText(minutes: Int): String = when {

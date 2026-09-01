@@ -10,6 +10,15 @@
         </intent>
     </queries>
 
+    <!-- Reminders are notifications, never a ringing "báo thức" alarm-clock UI — see
+         notify/ReminderScheduler.kt. Three permissions this needs, none of them tied
+         to an account or a server: posting the notification itself (API 33+ runtime
+         permission), timing it precisely enough to be useful (a settings toggle on
+         API 31+, always allowed below that), and re-arming after the phone reboots. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".VhHealthApp"
         android:allowBackup="true"
@@ -31,6 +40,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".notify.ReminderReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".notify.BootReceiver"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

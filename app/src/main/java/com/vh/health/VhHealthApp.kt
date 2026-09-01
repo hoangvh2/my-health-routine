@@ -3,7 +3,9 @@ package com.vh.health
 import android.app.Application
 import android.content.Context
 import com.vh.health.data.ContentRepository
+import com.vh.health.data.ProgressRepository
 import com.vh.health.data.SettingsRepository
+import com.vh.health.notify.NotificationChannels
 
 /**
  * Dependencies are wired by hand rather than by a DI framework: the graph is small,
@@ -15,6 +17,7 @@ class AppContainer(context: Context) {
     val appContext: Context = context.applicationContext
     val settings: SettingsRepository = SettingsRepository(appContext)
     val content: ContentRepository = ContentRepository()
+    val progress: ProgressRepository = ProgressRepository(appContext)
 }
 
 class VhHealthApp : Application() {
@@ -25,5 +28,6 @@ class VhHealthApp : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(this)
+        NotificationChannels.ensureCreated(this)
     }
 }

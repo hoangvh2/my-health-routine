@@ -9,6 +9,9 @@ import com.vh.health.audio.BeatEngine
 import com.vh.health.audio.PlaybackFocus
 import com.vh.health.audio.VoiceCues
 import com.vh.health.core.content.Workout
+import com.vh.health.core.program.KneeLoadPolicy
+import com.vh.health.core.program.KneeSignal
+import com.vh.health.core.program.applyCardioLoadFactor
 import com.vh.health.core.session.SessionBuilder
 import com.vh.health.core.session.SessionStep
 import com.vh.health.core.session.StepPhase
@@ -17,11 +20,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 data class PlayerUiState(
+    val isLoading: Boolean = true,
     val workout: Workout? = null,
     val steps: List<SessionStep> = emptyList(),
     val stepIndex: Int = 0,
@@ -42,22 +48,27 @@ data class PlayerUiState(
  * "where does second N land" — is [com.vh.health.core.session.SessionBuilder] and
  * `cursorAt`, both pure and unit-tested; this class just ticks real time into that
  * function and turns the crossings it reports into sound.
+ *
+ * The workout it plays is not necessarily the one authored in `program.json` verbatim:
+ * [applyCardioLoadFactor] scales its cardio content by whatever the most recent knee
+ * check-in decided (see [KneeLoadPolicy]), so a week the knees flagged OVERLOADED
+ * actually plays a shorter cardio block next time, not just a number nobody acts on.
  */
 class WorkoutPlayerViewModel(
     private val container: AppContainer,
-    workoutId: String,
+    private val workoutId: String,
 ) : ViewModel() {
 
     private val beat = BeatEngine()
     private val voice = VoiceCues(container.appContext)
     private val focus = PlaybackFocus(container.appContext)
 
-    private val workout: Workout? = container.content.program.workout(workoutId)
-    private val steps: List<SessionStep> = workout?.let(SessionBuilder::build).orEmpty()
+    private val todayEpochDay = LocalDate.now().toEpochDay()
 
-    private val _state = MutableStateFlow(
-        PlayerUiState(workout = workout, steps = steps, remainingInStep = steps.firstOrNull()?.seconds ?: 0),
-    )
+    private var workout: Workout? = null
+    private var steps: List<SessionStep> = emptyList()
+
+    private val _state = MutableStateFlow(PlayerUiState())
     val state: StateFlow<PlayerUiState> = _state.asStateFlow()
 
     private var elapsedMs = 0L
@@ -66,9 +77,19 @@ class WorkoutPlayerViewModel(
     private var lastTickRealtime = 0L
 
     init {
-        if (steps.isNotEmpty()) {
-            focus.requestDucking()
-            viewModelScope.launch {
+        viewModelScope.launch {
+            val (loadedWorkout, loadedSteps) = loadWorkout()
+            workout = loadedWorkout
+            steps = loadedSteps
+            _state.value = PlayerUiState(
+                isLoading = false,
+                workout = loadedWorkout,
+                steps = loadedSteps,
+                remainingInStep = loadedSteps.firstOrNull()?.seconds ?: 0,
+            )
+
+            if (loadedSteps.isNotEmpty()) {
+                focus.requestDucking()
                 lastTickRealtime = SystemClock.elapsedRealtime()
                 while (isActive) {
                     delay(TICK_MS)
@@ -83,8 +104,21 @@ class WorkoutPlayerViewModel(
         }
     }
 
+    /** Reads today's cardio-load factor from the most recent knee check-in (any
+     *  workout, not just this one — see [applyCardioLoadFactor]) and applies it
+     *  before building the session steps, so the very first PREPARE step already
+     *  reflects it rather than jumping mid-playback. */
+    private suspend fun loadWorkout(): Pair<Workout?, List<SessionStep>> {
+        val base = container.content.program.workout(workoutId) ?: return null to emptyList()
+        val mostRecentSignal = container.progress.kneeCheckIns.first()
+            .maxByOrNull { it.epochDay }
+            ?.signal
+        val adjusted = applyCardioLoadFactor(base, KneeLoadPolicy.impactFactorFor(mostRecentSignal), container.content.library)
+        return adjusted to SessionBuilder.build(adjusted)
+    }
+
     fun start() {
-        if (_state.value.isFinished) return
+        if (_state.value.isFinished || _state.value.isLoading) return
         lastTickRealtime = SystemClock.elapsedRealtime()
         _state.update { it.copy(isRunning = true) }
     }
@@ -101,7 +135,16 @@ class WorkoutPlayerViewModel(
 
     fun skipToPrevious() = jumpToStep((_state.value.stepIndex - 1).coerceAtLeast(0))
 
+    /** Logs today's knee signal for this workout and lets the screen move on —
+     *  called from the finished-state picker, only ever shown when
+     *  `workout.tracksKneeSignal` is true. */
+    fun recordKneeSignal(signal: KneeSignal) {
+        val id = workout?.id ?: return
+        viewModelScope.launch { container.progress.logKneeCheckIn(todayEpochDay, id, signal) }
+    }
+
     private fun jumpToStep(index: Int) {
+        if (_state.value.isLoading) return
         elapsedMs = if (index in steps.indices) {
             steps.take(index).sumOf { it.seconds } * 1000L
         } else {
@@ -126,6 +169,7 @@ class WorkoutPlayerViewModel(
         if (cursor.finished && !_state.value.isFinished) {
             beat.finished()
             voice.announce("Hoàn thành buổi tập. Làm tốt lắm.")
+            workout?.let { finished -> viewModelScope.launch { container.progress.logSession(todayEpochDay, finished.id) } }
         }
 
         _state.update {

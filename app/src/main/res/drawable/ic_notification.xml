@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Notification small icon: must be a flat single-colour silhouette — Android
+     re-renders it monochrome in the status bar regardless of the fill colour
+     declared here, so a detailed multi-colour mark (like the launcher icon)
+     would render as a solid blob. A plain filled disc, echoing the sunrise
+     mark, reads cleanly at 24dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M12,5 a7,7 0 1,1 -0.01,0 Z" />
+</vector>
