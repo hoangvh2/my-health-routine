@@ -44,15 +44,21 @@ giật lên xuống liên tục mỗi giây trong 3 giây đếm ngược, khó 
 **Chưa được xác nhận chạy đúng trên máy thật** — đây là việc ưu tiên nhất, xem "Do this
 next".
 
-## Video hướng dẫn — đã có 6 link, KHÔNG PHẢI đã xem qua
+## Video hướng dẫn — đã có 14/63 link, KHÔNG PHẢI đã xem qua
 
-Phiên `WebSearch` trước bị chặn (`session limit`); phiên này (05:55 UTC, sau mốc reset
-04:20 UTC) đã tìm và gắn `videoUrl` cho: `kn_spanish_squat`, `kn_step_down`,
-`kn_tibialis_raise`, `lo_goblet_squat`, `co_plank`, `ca_mountain_climber`. Chọn theo
-**tên tiêu đề và tên kênh** (ưu tiên kênh vật lý trị liệu/rehab có tên riêng cho nhóm bài
-gối) — **không hề xem nội dung video**, vì không có khả năng phát video. Người dùng nên
-tự mở thử vài link để xác nhận trước khi tin tưởng hoàn toàn. 57 động tác còn lại vẫn
-chưa có link — nút "Xem video hướng dẫn" ẩn với những bài đó, đúng như thiết kế.
+Gắn `videoUrl` cho 14 động tác: 6 bài trọng tâm ban đầu (`kn_spanish_squat`,
+`kn_step_down`, `kn_tibialis_raise`, `lo_goblet_squat`, `co_plank`,
+`ca_mountain_climber`) cộng 8 bài gối còn lại (`kn_calf_raise_seated`,
+`kn_calf_raise_standing`, `kn_monster_walk`, `kn_clamshell`, `kn_side_abduction`,
+`kn_tke`, `kn_ham_slide`, `kn_copenhagen_short`) — toàn bộ nhóm bài có gắn nhãn
+`kneeFocus` thuộc danh mục "gối" (`MuscleGroup.KNEE`) giờ đã có link đủ.
+
+Chọn theo **tên tiêu đề và tên kênh** (ưu tiên kênh vật lý trị liệu/rehab có tên riêng)
+— **không hề xem nội dung video**, vì không có khả năng phát video. Người dùng nên tự
+mở thử vài link để xác nhận trước khi tin tưởng hoàn toàn. 49 động tác còn lại (gồm 12
+bài mang cờ `kneeFocus` nhưng thuộc nhóm cơ khác — ví dụ `lo_step_up`, `lo_split_squat`,
+warm-up, cardio) vẫn chưa có link — nút "Xem video hướng dẫn" ẩn với những bài đó, đúng
+như thiết kế, không phải lỗi.
 
 ## Lịch tuần (M5, phần đầu) — mới, chưa build-verify
 
@@ -98,10 +104,10 @@ ScheduleScreen đều mới, CI cho commit này chưa chạy khi ghi dòng này.
    giữa các hãng Android (Doze, tối ưu pin theo OEM) và **không thể kiểm chứng gì từ
    trong môi trường này**, chỉ suy luận đúng API là chưa đủ. Đừng làm dồn nhiều thứ
    cùng lúc — làm từng mảnh nhỏ, để người dùng xác nhận từng bước trên máy thật.
-4. **Tìm nốt link video** cho các bài gối còn lại (`kn_calf_raise_seated`,
-   `kn_calf_raise_standing`, `kn_monster_walk`, `kn_clamshell`, `kn_side_abduction`,
-   `kn_ham_slide`, `kn_copenhagen_short`, `kn_tke`) khi có phiên WebSearch mới — vẫn theo
-   nguyên tắc chỉ dùng URL thật lấy từ kết quả tìm kiếm.
+4. **Mở rộng link video ra ngoài nhóm gối** khi cần — 49 động tác còn lại (thân dưới,
+   thân trên, core, cardio) chưa có, không khẩn cấp bằng nhóm gối vì đó không phải nơi
+   sai kỹ thuật gây hại nhiều nhất. Vẫn theo nguyên tắc chỉ dùng URL thật từ kết quả
+   tìm kiếm, không bịa.
 
 ## Things deliberately left undone
 

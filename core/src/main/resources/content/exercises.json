@@ -606,7 +606,8 @@
         "Khoá gối quá mạnh",
         "Dây quá nhẹ nên không có tác dụng"
       ],
-      "animation": "kn_tke"
+      "animation": "kn_tke",
+      "videoUrl": "https://www.youtube.com/watch?v=7xG3MeoLjC0"
     },
     {
       "id": "kn_tibialis_raise",
@@ -654,7 +655,8 @@
         "Nảy lên xuống bằng quán tính"
       ],
       "harder": "Đứng một chân hoặc cầm tạ nặng hơn",
-      "animation": "kn_calf_raise_standing"
+      "animation": "kn_calf_raise_standing",
+      "videoUrl": "https://www.youtube.com/watch?v=ndQc4mz4mBU"
     },
     {
       "id": "kn_calf_raise_seated",
@@ -678,7 +680,8 @@
         "Chỉ nhón nửa tầm",
         "Bỏ qua vì thấy nhẹ hơn bài đứng"
       ],
-      "animation": "kn_calf_raise_seated"
+      "animation": "kn_calf_raise_seated",
+      "videoUrl": "https://www.youtube.com/watch?v=9fhuSSsHckE"
     },
     {
       "id": "kn_ham_slide",
@@ -701,7 +704,8 @@
         "Dùng lưng đẩy thay vì mông"
       ],
       "easier": "Trượt tầm ngắn và làm hai chân",
-      "animation": "kn_ham_slide"
+      "animation": "kn_ham_slide",
+      "videoUrl": "https://www.youtube.com/watch?v=Eok1o5p213g"
     },
     {
       "id": "kn_clamshell",
@@ -724,7 +728,8 @@
         "Mở quá nhanh",
         "Dây quá nặng làm mất kỹ thuật"
       ],
-      "animation": "kn_clamshell"
+      "animation": "kn_clamshell",
+      "videoUrl": "https://www.youtube.com/watch?v=1MJC6gyP-ig"
     },
     {
       "id": "kn_side_abduction",
@@ -746,7 +751,8 @@
         "Ngả người ra sau",
         "Nâng quá cao khiến hông làm thay việc"
       ],
-      "animation": "kn_side_abduction"
+      "animation": "kn_side_abduction",
+      "videoUrl": "https://www.youtube.com/watch?v=CTmFNSDJTR8"
     },
     {
       "id": "kn_monster_walk",
@@ -768,7 +774,8 @@
         "Kéo chân sau lê theo",
         "Để gối đổ vào trong khi bước"
       ],
-      "animation": "kn_monster_walk"
+      "animation": "kn_monster_walk",
+      "videoUrl": "https://www.youtube.com/watch?v=N9xf-hk7_6w"
     },
     {
       "id": "kn_copenhagen_short",
@@ -792,7 +799,8 @@
         "Giữ quá lâu ở tuần đầu"
       ],
       "easier": "Gác gối thay vì cẳng chân và rút ngắn thời gian",
-      "animation": "kn_copenhagen_short"
+      "animation": "kn_copenhagen_short",
+      "videoUrl": "https://www.youtube.com/watch?v=4Rf8kfgL1Rs"
     },
     {
       "id": "co_dead_bug",
