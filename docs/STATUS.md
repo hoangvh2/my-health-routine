@@ -1,8 +1,8 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
-**CI:** clean through the previous push (layout fix). This round's commit (audio-route
-fix, ducking, video links, Schedule screen) not yet built — see "Do this next".
+**CI:** green on `227f16d` (audio-route fix, ducking, video links, Schedule screen),
+first try. None of it has been run on a real device yet — that's the next step.
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
