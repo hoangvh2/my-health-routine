@@ -121,3 +121,30 @@ What shipped instead, all consistent with D-006:
 
 Do not revisit the "just download some images, it's personal use" framing — it was
 considered and rejected once already; re-litigating it wastes a session.
+
+## D-009 — M6 progress data stays on DataStore + JSON; Room is still not in
+
+**Date:** 2026-09-01 · **Status:** accepted · **Amends D-003**
+
+D-003 said Room arrives with M6. It hasn't: `ProgressRepository` stores session logs,
+knee check-ins and body metrics the same way `SettingsRepository` stores settings —
+JSON-encoded lists in DataStore Preferences (`core/progress/ProgressRecords.kt` for
+the `@Serializable` shapes, `data/ProgressRepository.kt` for the storage).
+
+Reasons this held even once there was real per-session data to store:
+
+- Volume is still small — a handful of records a day, read back only as "recent N" or
+  "all". Nothing here needs a query planner.
+- Room means KSP. `:app` cannot be compiled in this container at all (D-001); adding
+  an annotation-processor step for the first time is exactly the kind of change that
+  can only be debugged by pushing and reading CI logs one round-trip at a time. A
+  hand-rolled encode/decode is small enough to unit-test for real in `:core`
+  (`ProgressRecordsTest`) before it ever reaches CI.
+- The `@Serializable` record types live in `:core`, not `:app`, specifically so their
+  JSON round trip is something `./gradlew :core:test` can actually verify — `:app`
+  only adds the kotlinx-serialization-json *runtime* dependency to read/write them
+  through DataStore, not the compiler plugin (that stays a `:core`-only plugin, so
+  D-002's "plugins declared per module" isn't loosened).
+
+Revisit only if a real query need shows up (e.g. date-range charts over months of
+data) that "decode the whole list, filter in Kotlin" stops comfortably covering.

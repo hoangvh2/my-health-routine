@@ -1,8 +1,10 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
-**CI:** green on `227f16d` (audio-route fix, ducking, video links, Schedule screen),
-first try. None of it has been run on a real device yet — that's the next step.
+**CI:** not yet run on this round (M5 + M6). Last green push was `6fafa44` (audio-route
+fix, ducking, 14 video links, read-only Schedule screen) — still not run on a real
+device by the user. This round is the biggest batch of first-time Android API surface
+in the project so far; see "Real risk in this round" before assuming it just works.
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
@@ -14,117 +16,137 @@ Read this first, then `CLAUDE.md` for the background that does not change.
 |-----|----------|------------|
 | M1 | Khung dự án, Gradle, Compose, điều hướng, CI ra APK | ✅ Xong |
 | M2 | Tầng dữ liệu + toàn bộ nội dung (63 động tác, 7 buổi tập, chương trình tuần) | ✅ Xong |
-| M3 | Minh hoạ động tác | 🔁 Đổi hướng — liên kết video, không tự vẽ. Xem D-008. |
-| M4 | Trình phát buổi tập, nhịp tabata, giọng đếm tiếng Việt | 🟡 Chạy được trên máy thật (nút bấm được, giọng đọc nghe được), nhịp trống vừa vá — **chưa xác nhận lại** |
-| M5 | Lịch tuần, kéo thả đổi ngày, báo thức và nhắc nhở | 🟡 Xem tuần read-only vừa xong; kéo thả + báo thức chưa làm |
-| M6 | Tiến trình, biểu đồ, Room, sao lưu JSON | ⬜ Chưa bắt đầu |
+| M3 | Minh hoạ động tác | 🔁 Đổi hướng — liên kết video (14/63), không tự vẽ. Xem D-008. |
+| M4 | Trình phát buổi tập, nhịp tabata, giọng đếm tiếng Việt | ✅ Xác nhận trên máy thật: nút bấm được, giọng đọc và nhịp trống đều nghe được. |
+| M5 | Nhắc nhở qua thông báo (không báo thức) | 🟡 Code xong, **chưa build-verify** — xem bên dưới. |
+| M6 | Tiến trình: chuỗi ngày, tín hiệu gối tác động thật lên buổi tập, cân nặng/vòng eo | 🟡 Code xong, **chưa build-verify** — xem bên dưới. |
 | M7 | Hoàn thiện: tiếng Anh, tiếp cận, bản release | ⬜ Chưa bắt đầu |
 
-## Vòng phản hồi thật đã chạy hai lần trên M4 — đây là bằng chứng quy trình push→CI→cài→báo lỗi→vá hoạt động
+## M5 + M6, làm trong phiên này — chưa từng chạy, kể cả trên CI
 
-1. Build đầu tiên: xanh trên CI nhưng **kẹt cứng ở màn hình CHUẨN BỊ** — nút Play bị đẩy
-   ra ngoài màn hình do `fillMaxSize()` lồng trong `Column` (đã vá, xem lịch sử commit).
-2. Build thứ hai (đã vá lỗi trên): nút bấm được, đồng hồ chạy, **giọng đọc nghe được
-   nhưng nhịp trống tabata thì im lặng.**
+Yêu cầu gốc: "triển khai M5 và M6. về m5 thì không cần báo thức. mọi thông báo, nhắc
+nhở đề thực hiện qua Push Notification vì tôi dùng smartwatch nên cần thông báo rõ
+ràng, đủ thông tin, dễ đọc nhất." Không có câu hỏi nào được hỏi lại — quyết định phạm
+vi dưới đây là của phiên làm việc này, không phải do người dùng chốt riêng từng cái.
 
-### Lỗi vừa vá: nhịp trống dùng sai luồng âm thanh Android
+### M5 — Nhắc nhở
 
-`BeatEngine` dùng `AudioAttributes.USAGE_ASSISTANCE_SONIFICATION` — luồng này trên phần
-lớn máy Android đi theo **âm lượng chuông/thông báo**, và bị tắt tiếng ở chế độ rung/im
-lặng. `TextToSpeech` mặc định phát qua `STREAM_MUSIC` (âm lượng media) — luồng khác hẳn,
-không bị ảnh hưởng bởi chế độ rung. Ảnh chụp máy người dùng có icon rung ở thanh trạng
-thái, khớp hoàn toàn với giả thuyết này.
+Năm mốc/ngày, tính ra từ `TimelineEngine`/`DayTemplates` chứ không hard-code
+(`core/schedule/ReminderSchedule.kt`), nên nếu thời lượng khối tập đổi thì giờ nhắc tự
+đổi theo, không lệch: bắt đầu buổi sáng (giờ dậy), ba lần nghỉ bàn giấy, hạ nhiệt buổi
+tối (giờ bắt đầu khối hạ nhiệt buổi tối, tính lùi từ giờ ngủ).
 
-**Đã sửa:** đổi sang `USAGE_MEDIA` + `CONTENT_TYPE_MUSIC` — cùng luồng với giọng đọc.
-Đồng thời thêm `PlaybackFocus` (audio-focus ducking, D-08 mục còn treo): xin
-`AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK` **một lần cho cả buổi tập** khi mở màn hình trình
-phát, không xin theo từng tiếng bíp — xin theo từng tiếng sẽ làm nhạc nền của người dùng
-giật lên xuống liên tục mỗi giây trong 3 giây đếm ngược, khó chịu hơn là không ducking.
+- **Không phải báo thức.** Không `setAlarmClock()`, không chuông riêng, không toàn màn
+  hình — `NotificationCompat` bình thường, 3 channel riêng (sáng/nghỉ giữa giờ/tối) để
+  người dùng tắt riêng từng loại được từ Cài đặt hệ thống nếu muốn.
+  Nội dung soạn riêng cho mặt đồng hồ thông minh: giờ + sự kiện lên trước tiên trong
+  tiêu đề, một dòng thông tin — không có dòng thứ ba mà smartwatch không hiện được
+  (`core/notify/ReminderContent.kt`).
+- **Cơ chế:** `AlarmManager` một lần (exact, `setExactAndAllowWhileIdle`), tự đặt lại
+  cho ngày mai ngay khi bắn — Android không còn API "lặp lại chính xác hàng ngày" nữa,
+  đây là cách làm đúng hiện tại. Việc đặt lại xảy ra **trước** khi post thông báo, nên
+  nếu post lỗi thì lịch ngày mai vẫn không mất (`notify/ReminderReceiver.kt`).
+- `notify/BootReceiver.kt` đặt lại toàn bộ 5 lịch sau khi khởi động lại máy — alarm bị
+  xoá sạch mỗi lần reboot, không có receiver này thì nhắc nhở âm thầm ngừng hẳn.
+- Công tắc "Bật nhắc nhở" trong Cài đặt, xin quyền `POST_NOTIFICATIONS` (API 33+, hỏi
+  trong app) và báo riêng khi thiếu quyền báo đúng giờ (API 31+, phải qua màn hình Cài
+  đặt hệ thống — Android không có hộp thoại trong app cho quyền này).
 
-**Chưa được xác nhận chạy đúng trên máy thật** — đây là việc ưu tiên nhất, xem "Do this
-next".
+### M6 — Tiến trình
 
-## Video hướng dẫn — đã có 14/63 link, KHÔNG PHẢI đã xem qua
-
-Gắn `videoUrl` cho 14 động tác: 6 bài trọng tâm ban đầu (`kn_spanish_squat`,
-`kn_step_down`, `kn_tibialis_raise`, `lo_goblet_squat`, `co_plank`,
-`ca_mountain_climber`) cộng 8 bài gối còn lại (`kn_calf_raise_seated`,
-`kn_calf_raise_standing`, `kn_monster_walk`, `kn_clamshell`, `kn_side_abduction`,
-`kn_tke`, `kn_ham_slide`, `kn_copenhagen_short`) — toàn bộ nhóm bài có gắn nhãn
-`kneeFocus` thuộc danh mục "gối" (`MuscleGroup.KNEE`) giờ đã có link đủ.
-
-Chọn theo **tên tiêu đề và tên kênh** (ưu tiên kênh vật lý trị liệu/rehab có tên riêng)
-— **không hề xem nội dung video**, vì không có khả năng phát video. Người dùng nên tự
-mở thử vài link để xác nhận trước khi tin tưởng hoàn toàn. 49 động tác còn lại (gồm 12
-bài mang cờ `kneeFocus` nhưng thuộc nhóm cơ khác — ví dụ `lo_step_up`, `lo_split_squat`,
-warm-up, cardio) vẫn chưa có link — nút "Xem video hướng dẫn" ẩn với những bài đó, đúng
-như thiết kế, không phải lỗi.
-
-## Lịch tuần (M5, phần đầu) — mới, chưa build-verify
-
-`ScheduleScreen` thay thế placeholder: hiện đủ 7 ngày trong `program.json`, buổi tập mỗi
-ngày, chip 4 khối (Làm quen/Tăng tải/Đỉnh khối/Giảm tải) tô sáng khối hiện tại, đánh dấu
-"Hôm nay". Read-only — **chưa có** kéo thả đổi ngày, chưa có đánh dấu ngày nghỉ, chưa có
-nút bắt đầu buổi tập từ đây (vẫn phải qua tab Hôm nay). Đây là quyết định phạm vi có chủ
-đích, không phải thiếu sót — xem "Việc cố tình chưa làm".
-
-Logic "đang ở tuần thứ mấy" được rút ra khỏi `TodayViewModel` (trước đó tính riêng lẻ,
-không test được) thành `Progression.weekNumber(startEpochDay, todayEpochDay)` trong
-`:core`, có test riêng (biên 6/7/27/28 ngày, và trường hợp ngày bắt đầu ở tương lai).
-Today và Schedule giờ dùng chung một hàm — không thể lệch nhau về "tuần mấy" nữa.
+- `ProgressRepository` (DataStore + JSON, không phải Room — xem D-009 sửa lại D-003).
+  Ba loại bản ghi (`SessionLog`, `KneeCheckIn`, `BodyMetric`) khai báo trong `:core`
+  (`core/progress/ProgressRecords.kt`) để có test round-trip JSON thật
+  (`ProgressRecordsTest`), `:app` chỉ thêm phần lưu trữ DataStore xung quanh.
+- **Tín hiệu gối giờ đã tác động thật lên buổi tập sau, không chỉ hiển thị số.** Đây
+  là lỗ hổng ưu tiên cao nhất mà báo cáo audit trước đó nêu ra.
+  `LoadAdjustment.applyCardioLoadFactor` co giãn riêng phần cardio của bài tập theo hệ
+  số từ `KneeLoadPolicy.decide` (dựa trên tín hiệu gối gần nhất) — phần sức mạnh/gối
+  giữ nguyên, đúng D-007. `WorkoutPlayerViewModel` áp dụng hệ số này **trước khi** dựng
+  các bước buổi tập, nên bước CHUẨN BỊ đầu tiên đã đúng luôn, không nhảy số giữa chừng.
+- Sau khi hoàn thành một buổi tập `tracksKneeSignal = true` (3 buổi đi bộ/chạy trong
+  tuần), màn hình Hoàn thành hiện 3 nút chọn tín hiệu gối thay cho nút "Xong" — chọn
+  xong là ghi nhận và thoát luôn, không có bước xác nhận thừa.
+- Mỗi buổi tập hoàn thành tự ghi log (`WorkoutPlayerViewModel`, tại đúng thời điểm
+  chuyển sang `isFinished`), có chống ghi trùng nếu màn hình bị vào lại.
+- `ProgressScreen` mới: thẻ chuỗi ngày (`currentStreak` — "hôm nay chưa tập" không làm
+  chuỗi thật của hôm qua về 0, xem `StreakTest`), thẻ tín hiệu gối + banner gợi ý đi
+  khám khi 2 lần liên tiếp gần nhất đều nặng, form nhập cân nặng/vòng eo + danh sách 5
+  lần gần nhất, danh sách buổi tập gần đây.
 
 ## Đã kiểm chứng thật (test chạy được ở đây)
 
-`:core` — **59 unit test, tất cả pass.** Chạy `./gradlew :core:test`.
+`:core` — **94 unit test, tất cả pass.** Chạy `./gradlew :core:test`.
 
-- `TimelineEngineTest`, `SleepLinkTest`, `TimelineClockTest` — lịch neo, co giãn, vị trí
-  hiện tại trong ngày.
-- `ProgramRulesTest` — chu kỳ 4 tuần (**+ `weekNumber` mới**), trần 10%/tuần, đèn giao
-  thông gối, mở va đập từ tuần 3.
-- `ContentTest` — nội dung 63 động tác + 7 buổi tập hợp lệ, đúng với chính file sẽ ship.
-- `SessionBuilderTest` — bộ máy trình phát: tổng giây khớp `Workout.estimatedSeconds`,
-  REST xem trước đúng bài kế tiếp, `cursorAt` đúng tại mọi mốc, `isCountIn` chỉ sáng ở
-  3 giây cuối.
+Mới trong phiên này: `ReminderScheduleTest`, `ReminderContentTest` (giờ nhắc đúng kế
+hoạch 04:30/09:30/14:00/16:30/19:45, ranh giới nửa đêm, nội dung không rỗng cho mọi
+buổi tập), `LoadAdjustmentTest` (chỉ cardio bị co giãn, khối gối/sức mạnh giữ nguyên
+byte-identical, sàn không về 0/âm), `StreakTest`, `ProgressRecordsTest` (round-trip
+JSON thật cho cả 3 loại bản ghi — đây là cơ chế `ProgressRepository` dựa vào, không
+cách nào khác để xác nhận nó trong container này), cộng 2 test mới cho
+`KneeLoadPolicy.impactFactorFor`.
 
-**`:app` — chưa compile-verify trong phiên này.** Cả BeatEngine, PlaybackFocus và
-ScheduleScreen đều mới, CI cho commit này chưa chạy khi ghi dòng này.
+**`:app` — chưa compile-verify trong phiên này.** Không thể, xem CLAUDE.md. Đã tự rà
+soát thủ công (đóng ngoặc, tên package, tên hàm/tham số khớp chữ ký) nhưng đây không
+thay thế được một lần build thật.
+
+## Real risk in this round
+
+Lớn hơn hẳn các đợt trước — lần đầu tiên codebase này dùng: `AlarmManager`,
+`BroadcastReceiver` (2 cái), `NotificationManager`/`NotificationCompat`,
+`ActivityResultContracts.RequestPermission` (Compose permission launcher),
+`LifecycleEventObserver` thủ công. Không cái nào có thể chạy thử trong container này —
+kể cả compile. Rủi ro compile lỗi ở CI vòng đầu là thật, không phải chỉ hành vi runtime.
+
+Ngoài compile, hành vi lúc chạy (không kiểm chứng được ở đây, chỉ suy luận đúng API):
+Doze/tối ưu pin theo hãng có thể trễ hoặc bỏ alarm dù đã xin quyền exact; luồng xin
+quyền `POST_NOTIFICATIONS` chỉ chạy thật trên máy Android 13+; thông báo có thực sự
+hiện rõ ràng trên đồng hồ cụ thể của người dùng hay không phụ thuộc hãng đồng hồ và
+app companion, ngoài tầm kiểm soát của app này.
 
 ## Do this next
 
-1. **Push, đọc CI, rồi người dùng cài lại và thử buổi tập thật.** Cần biết: nhịp trống
-   tabata có nghe được không (đặc biệt lúc máy đang ở chế độ rung — đúng kịch bản gây ra
-   bug lần trước); nếu đang mở nhạc nền (Spotify/YouTube Music), nhạc có tự hạ nhỏ khi
-   có tiếng bíp rồi trả lại không (audio-focus ducking mới thêm); tab Lịch tuần hiện
-   đúng 7 ngày và đúng khối hiện tại không.
-2. **Mở thử vài link trong 6 video đã gắn**, xác nhận chúng thật sự đúng động tác và
-   chất lượng chấp nhận được — chưa ai xem qua nội dung, chỉ chọn theo tên/kênh.
-3. **M5 phần còn lại:** báo thức 04:35/19:45 (`AlarmManager`), ba lần nhắc nghỉ bàn giấy
-   trong ngày (`WorkManager`), kéo thả đổi ngày trên Lịch tuần, đánh dấu ngày nghỉ. Đây
-   là mảng rủi ro cao hơn hẳn mọi thứ đã làm — hành vi nền/báo thức khác nhau rất nhiều
-   giữa các hãng Android (Doze, tối ưu pin theo OEM) và **không thể kiểm chứng gì từ
-   trong môi trường này**, chỉ suy luận đúng API là chưa đủ. Đừng làm dồn nhiều thứ
-   cùng lúc — làm từng mảnh nhỏ, để người dùng xác nhận từng bước trên máy thật.
-4. **Mở rộng link video ra ngoài nhóm gối** khi cần — 49 động tác còn lại (thân dưới,
-   thân trên, core, cardio) chưa có, không khẩn cấp bằng nhóm gối vì đó không phải nơi
-   sai kỹ thuật gây hại nhiều nhất. Vẫn theo nguyên tắc chỉ dùng URL thật từ kết quả
-   tìm kiếm, không bịa.
+1. **Push, đọc CI trước tiên** — đây là lần compile đầu tiên của toàn bộ API mới ở
+   trên, khả năng lỗi cú pháp/chữ ký hàm không phải bằng không.
+2. **Cài lại và bật "Bật nhắc nhở" trong Cài đặt.** Cần biết: hộp thoại xin quyền
+   thông báo có hiện không, công tắc có tự tắt lại khi từ chối không, nút "Cấp quyền
+   báo đúng giờ" có dẫn đúng màn hình hệ thống không, và — quan trọng nhất vì đây là lý
+   do M5 tồn tại — **thông báo có hiện rõ ràng trên đồng hồ thông minh không**, hay chỉ
+   hiện trên điện thoại.
+3. **Hoàn thành một buổi tập gối/chạy thật** (ví dụ `w_zone2_knee`), xác nhận màn hình
+   chọn tín hiệu gối hiện đúng lúc, chọn xong quay lại đúng, rồi mở tab Tiến trình xem
+   chuỗi ngày/tín hiệu gối/buổi tập vừa xong có hiện đúng không.
+4. **Thử nhập cân nặng/vòng eo** ở tab Tiến trình, xác nhận lưu và hiện lại đúng.
+5. **Chờ qua 04:30/09:30/14:00/16:30/19:45 một lần thật** (hoặc chỉnh giờ máy để test
+   nhanh) để biết `AlarmManager` có bắn đúng giờ trên máy cụ thể của người dùng không —
+   đây là phần duy nhất không cách nào rút ngắn được.
 
 ## Things deliberately left undone
 
-- **No ViewModels on the Library and Settings screens.** They read the repository flow
-  directly. Fine at this size; revisit if either grows real state. Schedule follows the
-  same convention.
-- **27 of the 63 exercises are unused by the programme.** That is the substitution pool
-  for the "easier/harder" swaps and for later four-week blocks — not dead content.
-  `ContentTest` guards that the pool never swallows more than half the library.
-- **Vietnamese strings are inline, not in `strings.xml`.** Moving them is M7, when the
-  English translation lands. Doing it now would be churn for no gain.
-- **No Room.** See `docs/DECISIONS.md` (D-003).
+- **JSON backup/export.** Nêu trong kế hoạch M6 gốc, không làm vòng này — dữ liệu vẫn
+  chỉ nằm trên máy, mất app là mất hết. Ưu tiên thấp hơn việc đóng lỗ hổng tín hiệu gối
+  không tác động gì, nhưng vẫn là nợ thật, chưa trả.
+- **Thông báo buổi sáng chưa có deep-link thẳng vào trình phát.** Chạm vào mở
+  `MainActivity` như bình thường, người dùng tự bấm "Bắt đầu" ở tab Hôm nay — thiếu một
+  bước, không phải lỗi.
+- **"Sáng nay chỉ có N phút" (todayStartOverride) không kéo giờ nhắc nhở theo.** Giờ
+  nhắc buổi sáng tính từ giờ dậy đã lưu, không phải override một-lần-cho-hôm-nay. Chỉnh
+  giờ dậy/giờ ngủ *trong màn hình Cài đặt* thì có tự đặt lại lịch nhắc (nếu đang bật);
+  chỉnh nhanh ở tab Hôm nay thì không. Quyết định phạm vi có chủ đích, không phải sót.
+- **Không có biểu đồ cân nặng/vòng eo** — chỉ danh sách 5 lần gần nhất. Đủ để thấy xu
+  hướng thô; biểu đồ thật sẽ cần thêm thư viện, chưa đáng đánh đổi ở quy mô dữ liệu này.
+- **Form nhập cân nặng/vòng eo không tự điền lại giá trị đã lưu hôm nay.** Lưu lần hai
+  trong cùng ngày vẫn đúng (đè lên bản ghi cũ, xem `ProgressRepository.logBodyMetric`),
+  chỉ là ô nhập không tự hiện số đã lưu để sửa — bất tiện nhỏ, không phải lỗi dữ liệu.
+- **No ViewModels on the Library screen.** It reads the repository flow directly. Fine
+  at this size. Settings and Progress now have real derived state (permission flags,
+  streak/clinician computation) and do use one each.
+- **27 of the 63 exercises are unused by the programme.** Substitution pool for
+  "easier/harder" swaps and later four-week blocks — not dead content.
+- **Vietnamese strings are inline, not in `strings.xml`.** Moving them is M7.
+- **No Room.** See D-009 (amends D-003).
 - **Player state does not survive process death.** Killing the app mid-workout loses
-  progress; resuming always restarts the session from PREPARE. Acceptable for a first
-  cut — revisit if it turns out to matter in practice.
-- **No hand-drawn/vector illustration layer.** Deliberately dropped per the user's own
-  change of direction (see D-008), not an oversight.
+  progress; resuming restarts from PREPARE.
+- **No hand-drawn/vector illustration layer.** Dropped per D-008, not an oversight.
 - **Schedule is read-only.** No drag-and-drop, no marking a day off, no starting a
-  workout from this screen. Deliberately scoped down to the safe, testable slice this
-  round; see "Do this next" #3 for why the rest is deferred rather than rushed.
+  workout from that screen.
