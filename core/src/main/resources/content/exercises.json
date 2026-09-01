@@ -1,0 +1,1408 @@
+{
+  "version": 1,
+  "exercises": [
+    {
+      "id": "wu_breath",
+      "nameVi": "Thở cơ hoành 4-6",
+      "nameEn": "Diaphragmatic breathing",
+      "group": "warmup",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Nằm ngửa, một tay đặt trên ngực, một tay trên bụng",
+        "Hít 4 nhịp bằng mũi, chỉ tay trên bụng nhô lên",
+        "Thở ra 6 nhịp bằng miệng, chậm và dài hơn nhịp hít",
+        "Vai và hàm giữ mềm, không gồng"
+      ],
+      "mistakes": [
+        "Nhô ngực thay vì nhô bụng",
+        "Hít quá sâu gây chóng mặt",
+        "Thở ra nhanh bằng nhịp hít"
+      ],
+      "harder": "Kéo dài nhịp thở ra lên 8",
+      "animation": "wu_breath"
+    },
+    {
+      "id": "wu_cat_cow",
+      "nameVi": "Mèo – bò",
+      "nameEn": "Cat–cow",
+      "group": "warmup",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Chống bốn điểm, cổ tay dưới vai, gối dưới hông",
+        "Hít vào võng lưng, mở ngực, mắt nhìn chếch lên",
+        "Thở ra cong lưng lên trần, thu cằm về ngực",
+        "Chuyển động từ từ theo nhịp thở, không giật"
+      ],
+      "mistakes": [
+        "Đẩy cổ ngửa quá mức",
+        "Khoá khuỷu tay",
+        "Đi quá nhanh, mất nhịp thở"
+      ],
+      "animation": "wu_cat_cow"
+    },
+    {
+      "id": "wu_open_book",
+      "nameVi": "Xoay ngực nằm nghiêng",
+      "nameEn": "Open book rotation",
+      "group": "warmup",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Nằm nghiêng, gối trên gập 90 độ kê lên gối hoặc sàn",
+        "Hai tay duỗi thẳng chồng lên nhau trước ngực",
+        "Mở tay trên ra sau như lật trang sách, mắt nhìn theo tay",
+        "Giữ gối dưới chạm sàn, chỉ xoay phần ngực"
+      ],
+      "mistakes": [
+        "Để hông xoay theo tay",
+        "Nín thở khi mở",
+        "Ép quá tầm gây đau vai"
+      ],
+      "animation": "wu_open_book"
+    },
+    {
+      "id": "wu_hip_9090",
+      "nameVi": "Mở hông 90/90",
+      "nameEn": "90/90 hip switch",
+      "group": "warmup",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Ngồi sàn, chân trước gập 90 độ, chân sau gập 90 độ",
+        "Lưng thẳng, ngực hướng về đầu gối trước",
+        "Đổ hai gối sang bên kia mà không dùng tay đẩy",
+        "Chuyển chậm, cảm nhận hông chứ không phải gối"
+      ],
+      "mistakes": [
+        "Gù lưng để với xuống",
+        "Dùng tay đẩy gối",
+        "Xoay từ khớp gối thay vì khớp hông"
+      ],
+      "easier": "Ngồi tựa lưng vào tường và chỉ chuyển nửa tầm",
+      "animation": "wu_hip_9090"
+    },
+    {
+      "id": "wu_hipflexor_stretch",
+      "nameVi": "Giãn cơ gấp hông quỳ gối",
+      "nameEn": "Half-kneeling hip flexor stretch",
+      "group": "warmup",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Quỳ một gối, chân trước gập 90 độ",
+        "Siết mông bên chân quỳ trước khi đẩy hông tới",
+        "Đẩy hông về trước một đoạn ngắn, giữ lưng thẳng",
+        "Giữ 30 giây mỗi bên, thở đều"
+      ],
+      "mistakes": [
+        "Võng thắt lưng thay vì mở hông",
+        "Không siết mông nên chỉ kéo thắt lưng",
+        "Đẩy quá xa gây ê gối trước"
+      ],
+      "harder": "Giơ tay cùng bên lên cao và nghiêng nhẹ sang bên đối diện",
+      "animation": "wu_hipflexor_stretch"
+    },
+    {
+      "id": "wu_ankle_rock",
+      "nameVi": "Đẩy gối qua mũi chân",
+      "nameEn": "Ankle dorsiflexion rock",
+      "group": "warmup",
+      "equipment": [
+        "mat"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Quỳ một gối, bàn chân trước đặt phẳng sát tường",
+        "Đẩy gối tới trước vượt qua mũi chân, gót không nhấc",
+        "Giữ 2 giây ở điểm xa nhất rồi lùi về",
+        "Làm 10 lần mỗi bên trước mọi buổi có squat"
+      ],
+      "mistakes": [
+        "Nhấc gót lên để với xa hơn",
+        "Để gối đổ vào trong",
+        "Đi quá nhanh, mất kiểm soát"
+      ],
+      "animation": "wu_ankle_rock"
+    },
+    {
+      "id": "wu_glute_bridge",
+      "nameVi": "Cầu mông khởi động",
+      "nameEn": "Glute bridge",
+      "group": "warmup",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Nằm ngửa, gối gập, bàn chân đặt rộng bằng hông",
+        "Thở ra rồi đẩy hông lên bằng lực mông",
+        "Siết mông 2 giây ở đỉnh, thân thẳng từ vai tới gối",
+        "Hạ xuống có kiểm soát, không thả rơi"
+      ],
+      "mistakes": [
+        "Đẩy bằng thắt lưng nên võng lưng",
+        "Đặt chân quá xa nên đùi sau chuột rút",
+        "Không siết ở đỉnh"
+      ],
+      "animation": "wu_glute_bridge"
+    },
+    {
+      "id": "wu_leg_swing",
+      "nameVi": "Đá chân trước – sau",
+      "nameEn": "Leg swing",
+      "group": "warmup",
+      "equipment": [
+        "wall"
+      ],
+      "cues": [
+        "Một tay vịn tường, đứng trên một chân",
+        "Đá chân kia tới trước và ra sau trong tầm thoải mái",
+        "Giữ thân trên yên, không ngả theo chân",
+        "10 đến 12 lần mỗi bên, tăng dần biên độ"
+      ],
+      "mistakes": [
+        "Vung mạnh ngay từ nhịp đầu",
+        "Võng lưng khi đá ra sau",
+        "Xoay hông theo chân"
+      ],
+      "animation": "wu_leg_swing"
+    },
+    {
+      "id": "wu_march",
+      "nameVi": "Giậm chân nâng gối",
+      "nameEn": "High-knee march",
+      "group": "warmup",
+      "equipment": [
+        "none"
+      ],
+      "cues": [
+        "Đứng thẳng, siết nhẹ bụng",
+        "Nâng gối lên ngang hông, đổi chân đều",
+        "Tiếp đất bằng nửa bàn chân, êm và nhẹ",
+        "Đánh tay tự nhiên ngược chiều chân"
+      ],
+      "mistakes": [
+        "Tiếp đất nện gót",
+        "Ngả người ra sau khi nâng gối",
+        "Nâng gối bằng cách nghiêng hông"
+      ],
+      "animation": "wu_march"
+    },
+    {
+      "id": "wu_bw_squat",
+      "nameVi": "Squat tay không khởi động",
+      "nameEn": "Bodyweight squat",
+      "group": "warmup",
+      "equipment": [
+        "none"
+      ],
+      "cues": [
+        "Chân rộng bằng vai, mũi chân hơi mở ra ngoài",
+        "Đẩy hông ra sau trước rồi mới gập gối",
+        "Gối đi theo hướng mũi chân, không đổ vào trong",
+        "Xuống trong tầm không đau, lên bằng lực gót"
+      ],
+      "mistakes": [
+        "Gối đổ vào trong",
+        "Nhấc gót khỏi sàn",
+        "Cong lưng dưới ở đáy"
+      ],
+      "animation": "wu_bw_squat"
+    },
+    {
+      "id": "wu_shoulder_circle",
+      "nameVi": "Xoay vai",
+      "nameEn": "Shoulder circle",
+      "group": "warmup",
+      "equipment": [
+        "none"
+      ],
+      "cues": [
+        "Đứng thẳng, hai tay buông tự nhiên",
+        "Xoay vai lên – ra sau – xuống thành vòng tròn lớn",
+        "10 vòng ra sau rồi 10 vòng ra trước",
+        "Giữ cổ dài, không rụt vai lên tai"
+      ],
+      "mistakes": [
+        "Chỉ nhún vai chứ không xoay",
+        "Nín thở",
+        "Ngả người theo vòng xoay"
+      ],
+      "animation": "wu_shoulder_circle"
+    },
+    {
+      "id": "wu_calf_pump",
+      "nameVi": "Nhún gót khởi động",
+      "nameEn": "Calf pump",
+      "group": "warmup",
+      "equipment": [
+        "none"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Đứng thẳng, hai chân rộng bằng hông",
+        "Nhón gót lên hết tầm rồi hạ chạm sàn nhẹ",
+        "20 nhịp liên tục, nhịp đều",
+        "Giữ gối thẳng nhưng không khoá cứng"
+      ],
+      "mistakes": [
+        "Đổ trọng tâm ra mép ngoài bàn chân",
+        "Nhấc gót nửa vời",
+        "Hạ xuống nện gót"
+      ],
+      "animation": "wu_calf_pump"
+    },
+    {
+      "id": "lo_goblet_squat",
+      "nameVi": "Squat ôm tạ trước ngực",
+      "nameEn": "Goblet squat",
+      "group": "lower",
+      "equipment": [
+        "dumbbell"
+      ],
+      "tempo": "3 giây xuống – 1 giây lên",
+      "cues": [
+        "Ôm tạ sát ngực bằng hai tay, khuỷu hướng xuống",
+        "Đẩy hông ra sau, xuống trong 3 giây",
+        "Ngực giữ cao, lưng thẳng suốt cả nhịp",
+        "Đạp gót đẩy sàn để đứng lên"
+      ],
+      "mistakes": [
+        "Để tạ rời khỏi ngực làm đổ người ra trước",
+        "Gối đổ vào trong khi lên",
+        "Xuống quá nhanh, mất kiểm soát"
+      ],
+      "easier": "Squat tay không hoặc ngồi chạm ghế rồi đứng lên",
+      "harder": "Tăng mức tạ hoặc dừng 2 giây ở đáy",
+      "animation": "lo_goblet_squat"
+    },
+    {
+      "id": "lo_split_squat",
+      "nameVi": "Split squat tại chỗ",
+      "nameEn": "Split squat",
+      "group": "lower",
+      "equipment": [
+        "dumbbell"
+      ],
+      "kneeFocus": true,
+      "tempo": "3 giây xuống",
+      "cues": [
+        "Bước một chân ra trước, khoảng cách bằng một bước dài",
+        "Hạ gối sau xuống thẳng đứng, thân giữ dựng",
+        "Trọng tâm dồn vào gót chân trước",
+        "Lên bằng lực chân trước, không đẩy bằng chân sau"
+      ],
+      "mistakes": [
+        "Bước quá ngắn nên gối trước vượt xa mũi chân",
+        "Ngả thân ra trước",
+        "Gót chân trước nhấc lên"
+      ],
+      "easier": "Bỏ tạ và vịn tường giữ thăng bằng",
+      "harder": "Gác chân sau lên ghế thành Bulgarian split squat",
+      "animation": "lo_split_squat"
+    },
+    {
+      "id": "lo_rear_lunge",
+      "nameVi": "Lunge lùi",
+      "nameEn": "Reverse lunge",
+      "group": "lower",
+      "equipment": [
+        "dumbbell"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Bước một chân về sau, hạ gối sau gần chạm sàn",
+        "Giữ thân trên thẳng đứng, mắt nhìn thẳng",
+        "Đạp gót chân trước để về vị trí đứng",
+        "Kiểm soát nhịp lùi, không rơi tự do"
+      ],
+      "mistakes": [
+        "Bước lùi quá ngắn",
+        "Gối trước đổ vào trong",
+        "Nghiêng người sang bên khi lùi"
+      ],
+      "easier": "Bỏ tạ, vịn tường",
+      "animation": "lo_rear_lunge"
+    },
+    {
+      "id": "lo_step_up",
+      "nameVi": "Bước lên bục có tạ",
+      "nameEn": "Weighted step-up",
+      "group": "lower",
+      "equipment": [
+        "dumbbell",
+        "chair"
+      ],
+      "kneeFocus": true,
+      "tempo": "Lên 1 giây – xuống 3 giây",
+      "cues": [
+        "Chọn bục cao ngang giữa cẳng chân, chắc chắn",
+        "Đặt trọn bàn chân lên bục, không chỉ nửa mũi",
+        "Đẩy người lên bằng chân trên bục, chân dưới không đạp",
+        "Hạ xuống trong 3 giây, chạm sàn thật nhẹ"
+      ],
+      "mistakes": [
+        "Lấy đà bằng chân dưới",
+        "Bục quá cao làm gối chịu lực xấu",
+        "Thả rơi khi hạ xuống"
+      ],
+      "easier": "Bục thấp hơn và bỏ tạ",
+      "harder": "Tăng tạ hoặc tăng chiều cao bục từng chút một",
+      "animation": "lo_step_up"
+    },
+    {
+      "id": "lo_rdl_double",
+      "nameVi": "Deadlift Romania hai chân",
+      "nameEn": "Romanian deadlift",
+      "group": "lower",
+      "equipment": [
+        "dumbbell"
+      ],
+      "tempo": "3 giây hạ",
+      "cues": [
+        "Hai tạ trước đùi, gối hơi chùng và giữ nguyên góc đó",
+        "Đẩy hông ra sau, tạ trượt sát dọc chân",
+        "Hạ tới khi thấy căng đùi sau thì dừng",
+        "Siết mông đẩy hông tới để đứng lên"
+      ],
+      "mistakes": [
+        "Cong lưng dưới",
+        "Biến thành squat vì gập gối thêm",
+        "Để tạ rời xa thân"
+      ],
+      "animation": "lo_rdl_double"
+    },
+    {
+      "id": "lo_rdl_single",
+      "nameVi": "Deadlift Romania một chân",
+      "nameEn": "Single-leg RDL",
+      "group": "lower",
+      "equipment": [
+        "dumbbell"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Đứng một chân, gối chùng nhẹ",
+        "Gập hông đưa chân sau ra sau, thân và chân thành một đường",
+        "Hông giữ ngang, không mở ra ngoài",
+        "Về bằng cách siết mông chân trụ"
+      ],
+      "mistakes": [
+        "Mở hông ra ngoài khi hạ",
+        "Cong lưng",
+        "Đặt chân sau chạm sàn để lấy đà"
+      ],
+      "easier": "Vịn tường một tay",
+      "animation": "lo_rdl_single"
+    },
+    {
+      "id": "lo_hip_thrust",
+      "nameVi": "Đẩy hông tựa ghế",
+      "nameEn": "Hip thrust",
+      "group": "lower",
+      "equipment": [
+        "dumbbell",
+        "chair"
+      ],
+      "cues": [
+        "Tựa bả vai lên mép ghế, chân đặt rộng bằng hông",
+        "Đặt tạ lên nếp hông, giữ bằng hai tay",
+        "Thu cằm, đẩy hông lên tới khi thân song song sàn",
+        "Siết mông 2 giây ở đỉnh rồi hạ có kiểm soát"
+      ],
+      "mistakes": [
+        "Ưỡn thắt lưng ở đỉnh thay vì siết mông",
+        "Đặt chân quá xa",
+        "Ngửa cổ ra sau"
+      ],
+      "animation": "lo_hip_thrust"
+    },
+    {
+      "id": "lo_glute_bridge_single",
+      "nameVi": "Cầu mông một chân",
+      "nameEn": "Single-leg glute bridge",
+      "group": "lower",
+      "equipment": [
+        "mat"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Nằm ngửa, một chân gập, chân kia duỗi thẳng lên",
+        "Đẩy hông lên bằng gót chân trụ",
+        "Giữ hông ngang, không đổ về bên chân duỗi",
+        "Hạ chậm, không để mông chạm sàn giữa các lần"
+      ],
+      "mistakes": [
+        "Hông xoay lệch",
+        "Dùng lưng đẩy thay vì mông",
+        "Đặt chân quá gần mông gây chuột rút đùi sau"
+      ],
+      "animation": "lo_glute_bridge_single"
+    },
+    {
+      "id": "lo_wall_sit",
+      "nameVi": "Ngồi tựa tường",
+      "nameEn": "Wall sit",
+      "group": "lower",
+      "equipment": [
+        "wall"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Tựa lưng vào tường, trượt xuống tới khi đùi gần song song sàn",
+        "Gối vuông góc, ngay trên gót chân",
+        "Ép cả lưng vào tường, tay buông hoặc khoanh trước ngực",
+        "Thở đều, đếm thời gian thay vì đếm nhịp"
+      ],
+      "mistakes": [
+        "Gối vượt quá mũi chân",
+        "Chống tay lên đùi để đỡ",
+        "Nín thở"
+      ],
+      "easier": "Ngồi cao hơn, góc gối rộng hơn 90 độ",
+      "harder": "Ôm tạ trước ngực hoặc kéo dài thời gian giữ",
+      "animation": "lo_wall_sit"
+    },
+    {
+      "id": "lo_lateral_lunge",
+      "nameVi": "Lunge ngang",
+      "nameEn": "Lateral lunge",
+      "group": "lower",
+      "equipment": [
+        "dumbbell"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Bước rộng sang một bên, chân kia giữ thẳng",
+        "Đẩy hông ra sau, gập gối chân bước",
+        "Bàn chân bước giữ nguyên hướng thẳng trước",
+        "Đạp chân bước để về giữa"
+      ],
+      "mistakes": [
+        "Gối đổ vào trong",
+        "Cong lưng để với xuống",
+        "Xoay mũi chân ra ngoài để xuống sâu hơn"
+      ],
+      "animation": "lo_lateral_lunge"
+    },
+    {
+      "id": "lo_sumo_deadlift",
+      "nameVi": "Deadlift thế sumo",
+      "nameEn": "Sumo deadlift",
+      "group": "lower",
+      "equipment": [
+        "dumbbell"
+      ],
+      "cues": [
+        "Chân rộng hơn vai, mũi chân mở ra ngoài",
+        "Tạ đặt giữa hai chân, tay thẳng",
+        "Ngực cao, đẩy sàn bằng cả bàn chân",
+        "Khoá hông ở trên bằng cách siết mông"
+      ],
+      "mistakes": [
+        "Nhấc mông trước rồi mới nhấc ngực",
+        "Kéo bằng lưng",
+        "Gối đổ vào trong khi lên"
+      ],
+      "animation": "lo_sumo_deadlift"
+    },
+    {
+      "id": "lo_good_morning_band",
+      "nameVi": "Good morning với dây",
+      "nameEn": "Banded good morning",
+      "group": "lower",
+      "equipment": [
+        "band"
+      ],
+      "cues": [
+        "Dây vòng qua gáy và đạp dưới hai bàn chân",
+        "Gối chùng nhẹ, đẩy hông ra sau",
+        "Hạ thân tới khi lưng vẫn còn thẳng thì dừng",
+        "Siết mông để dựng người lên"
+      ],
+      "mistakes": [
+        "Cong lưng dưới",
+        "Gập gối nhiều thành squat",
+        "Đi quá nhanh"
+      ],
+      "animation": "lo_good_morning_band"
+    },
+    {
+      "id": "kn_spanish_squat",
+      "nameVi": "Spanish squat với dây",
+      "nameEn": "Spanish squat",
+      "group": "knee",
+      "equipment": [
+        "band"
+      ],
+      "kneeFocus": true,
+      "tempo": "3 giây xuống – giữ 2 giây",
+      "cues": [
+        "Vòng dây quanh mặt sau hai gối, đầu kia buộc chắc ngang tầm gối",
+        "Ngả nhẹ về sau để dây căng, thân giữ thẳng đứng",
+        "Ngồi xuống thẳng, cẳng chân giữ gần như vuông góc sàn",
+        "Giữ 2 giây ở đáy, đứng lên bằng lực đùi trước"
+      ],
+      "mistakes": [
+        "Đẩy hông ra sau như squat thường",
+        "Dây buộc quá cao hoặc quá thấp",
+        "Không giữ ở đáy nên bỏ mất phần có tác dụng nhất"
+      ],
+      "easier": "Xuống nông hơn và giảm thời gian giữ",
+      "harder": "Ôm thêm tạ trước ngực",
+      "animation": "kn_spanish_squat"
+    },
+    {
+      "id": "kn_step_down",
+      "nameVi": "Step-down hạ chậm",
+      "nameEn": "Eccentric step-down",
+      "group": "knee",
+      "equipment": [
+        "chair"
+      ],
+      "kneeFocus": true,
+      "tempo": "Hạ 3 giây",
+      "cues": [
+        "Đứng một chân trên bục thấp, chân kia thả tự do bên cạnh",
+        "Hạ người xuống trong 3 giây tới khi gót chân dưới chạm nhẹ sàn",
+        "Gối chân trụ giữ thẳng hàng với mũi chân",
+        "Đẩy lên nhanh hơn nhịp hạ"
+      ],
+      "mistakes": [
+        "Thả rơi thay vì hạ chậm",
+        "Gối đổ vào trong",
+        "Dùng chân dưới đạp lấy đà"
+      ],
+      "easier": "Bục thấp hơn và vịn tường",
+      "harder": "Bục cao hơn hoặc cầm thêm tạ",
+      "animation": "kn_step_down"
+    },
+    {
+      "id": "kn_tke",
+      "nameVi": "Duỗi gối cuối tầm với dây",
+      "nameEn": "Terminal knee extension",
+      "group": "knee",
+      "equipment": [
+        "band"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Vòng dây quanh mặt sau gối, buộc đầu kia ngang tầm gối phía trước",
+        "Lùi ra để dây căng, gối hơi chùng",
+        "Duỗi thẳng gối bằng cách siết cơ đùi trước",
+        "Giữ 2 giây rồi thả về chậm"
+      ],
+      "mistakes": [
+        "Dùng hông đẩy thay vì duỗi gối",
+        "Khoá gối quá mạnh",
+        "Dây quá nhẹ nên không có tác dụng"
+      ],
+      "animation": "kn_tke"
+    },
+    {
+      "id": "kn_tibialis_raise",
+      "nameVi": "Nhón cẳng chân trước",
+      "nameEn": "Tibialis raise",
+      "group": "knee",
+      "equipment": [
+        "wall"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Tựa lưng vào tường, gót cách chân tường khoảng 20 cm",
+        "Giữ gối thẳng, kéo mũi chân lên hết tầm về phía cẳng chân",
+        "Hạ xuống chậm, không thả rơi",
+        "15 đến 20 lần, cảm giác căng phía trước cẳng chân là đúng"
+      ],
+      "mistakes": [
+        "Gập gối để kéo mũi chân dễ hơn",
+        "Đứng quá gần tường",
+        "Hạ xuống quá nhanh"
+      ],
+      "harder": "Đứng xa tường hơn hoặc đặt tạ nhẹ lên mũi chân",
+      "animation": "kn_tibialis_raise"
+    },
+    {
+      "id": "kn_calf_raise_standing",
+      "nameVi": "Nhón bắp chân đứng",
+      "nameEn": "Standing calf raise",
+      "group": "knee",
+      "equipment": [
+        "dumbbell"
+      ],
+      "kneeFocus": true,
+      "tempo": "Lên 1 giây – giữ 1 giây – xuống 3 giây",
+      "cues": [
+        "Đứng thẳng, gối thẳng nhưng không khoá",
+        "Nhón lên hết tầm, dồn lực vào ngón cái và ngón trỏ",
+        "Giữ 1 giây ở đỉnh",
+        "Hạ trong 3 giây cho gót xuống thấp hơn mũi chân nếu đứng trên bậc"
+      ],
+      "mistakes": [
+        "Đổ trọng tâm ra mép ngoài bàn chân",
+        "Nhón nửa tầm",
+        "Nảy lên xuống bằng quán tính"
+      ],
+      "harder": "Đứng một chân hoặc cầm tạ nặng hơn",
+      "animation": "kn_calf_raise_standing"
+    },
+    {
+      "id": "kn_calf_raise_seated",
+      "nameVi": "Nhón bắp chân ngồi",
+      "nameEn": "Seated calf raise",
+      "group": "knee",
+      "equipment": [
+        "dumbbell",
+        "chair"
+      ],
+      "kneeFocus": true,
+      "tempo": "Xuống 3 giây",
+      "cues": [
+        "Ngồi ghế, gối gập 90 độ, đặt tạ lên đùi ngay trên gối",
+        "Nhón gót lên hết tầm",
+        "Hạ trong 3 giây",
+        "Đây là bài cho cơ dép — bài quan trọng nhất để hấp thụ lực khi chạy"
+      ],
+      "mistakes": [
+        "Nhấc tạ khỏi đùi bằng tay",
+        "Chỉ nhón nửa tầm",
+        "Bỏ qua vì thấy nhẹ hơn bài đứng"
+      ],
+      "animation": "kn_calf_raise_seated"
+    },
+    {
+      "id": "kn_ham_slide",
+      "nameVi": "Cuốn đùi sau trượt gót",
+      "nameEn": "Hamstring slider curl",
+      "group": "knee",
+      "equipment": [
+        "mat"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Nằm ngửa, gót đặt lên khăn trên sàn trơn",
+        "Đẩy hông lên rồi trượt gót ra xa",
+        "Giữ hông luôn cao trong suốt nhịp trượt",
+        "Kéo gót về bằng lực đùi sau"
+      ],
+      "mistakes": [
+        "Để hông rơi khi duỗi chân",
+        "Trượt quá xa gây chuột rút",
+        "Dùng lưng đẩy thay vì mông"
+      ],
+      "easier": "Trượt tầm ngắn và làm hai chân",
+      "animation": "kn_ham_slide"
+    },
+    {
+      "id": "kn_clamshell",
+      "nameVi": "Vỏ sò với dây",
+      "nameEn": "Banded clamshell",
+      "group": "knee",
+      "equipment": [
+        "band",
+        "mat"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Nằm nghiêng, gối gập 45 độ, dây vòng trên hai gối",
+        "Giữ hai gót chạm nhau",
+        "Mở gối trên lên, hông không ngả ra sau",
+        "Hạ chậm, giữ căng dây suốt hiệp"
+      ],
+      "mistakes": [
+        "Ngả hông ra sau để mở rộng hơn",
+        "Mở quá nhanh",
+        "Dây quá nặng làm mất kỹ thuật"
+      ],
+      "animation": "kn_clamshell"
+    },
+    {
+      "id": "kn_side_abduction",
+      "nameVi": "Dạng hông nằm nghiêng",
+      "nameEn": "Side-lying hip abduction",
+      "group": "knee",
+      "equipment": [
+        "mat"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Nằm nghiêng, thân và chân thành một đường thẳng",
+        "Nâng chân trên lên khoảng 45 độ",
+        "Mũi chân hướng thẳng trước, không xoay lên trần",
+        "Hạ chậm, không để chân chạm chân dưới"
+      ],
+      "mistakes": [
+        "Xoay mũi chân lên trần",
+        "Ngả người ra sau",
+        "Nâng quá cao khiến hông làm thay việc"
+      ],
+      "animation": "kn_side_abduction"
+    },
+    {
+      "id": "kn_monster_walk",
+      "nameVi": "Monster walk với dây",
+      "nameEn": "Banded monster walk",
+      "group": "knee",
+      "equipment": [
+        "band"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Dây vòng quanh hai cẳng chân ngay dưới gối",
+        "Chùng gối vào tư thế nửa squat",
+        "Bước ngang từng bước rộng, giữ dây luôn căng",
+        "10 bước sang phải rồi 10 bước sang trái"
+      ],
+      "mistakes": [
+        "Đứng thẳng người nên mất tác dụng",
+        "Kéo chân sau lê theo",
+        "Để gối đổ vào trong khi bước"
+      ],
+      "animation": "kn_monster_walk"
+    },
+    {
+      "id": "kn_copenhagen_short",
+      "nameVi": "Plank Copenhagen ngắn",
+      "nameEn": "Short-lever Copenhagen plank",
+      "group": "knee",
+      "equipment": [
+        "mat",
+        "chair"
+      ],
+      "kneeFocus": true,
+      "cues": [
+        "Nằm nghiêng chống khuỷu, gối chân trên gác lên ghế",
+        "Đẩy hông lên tới khi thân thẳng",
+        "Giữ 15 đến 20 giây mỗi bên",
+        "Ép gối xuống mặt ghế trong suốt thời gian giữ"
+      ],
+      "mistakes": [
+        "Để hông tụt xuống",
+        "Xoay ngực về phía sàn",
+        "Giữ quá lâu ở tuần đầu"
+      ],
+      "easier": "Gác gối thay vì cẳng chân và rút ngắn thời gian",
+      "animation": "kn_copenhagen_short"
+    },
+    {
+      "id": "co_dead_bug",
+      "nameVi": "Dead bug",
+      "nameEn": "Dead bug",
+      "group": "core",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Nằm ngửa, tay vươn thẳng lên, gối và hông gập 90 độ",
+        "Ép thắt lưng sát sàn và giữ suốt hiệp",
+        "Hạ tay một bên và chân đối diện xuống thấp",
+        "Thở ra khi duỗi, hít vào khi về"
+      ],
+      "mistakes": [
+        "Để thắt lưng vênh khỏi sàn",
+        "Hạ quá thấp so với khả năng kiểm soát",
+        "Nín thở"
+      ],
+      "easier": "Chỉ hạ chân, giữ tay yên",
+      "animation": "co_dead_bug"
+    },
+    {
+      "id": "co_bird_dog",
+      "nameVi": "Bird dog",
+      "nameEn": "Bird dog",
+      "group": "core",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Chống bốn điểm, lưng phẳng như mặt bàn",
+        "Duỗi tay một bên và chân đối diện tới thẳng hàng thân",
+        "Hông giữ ngang, không xoay",
+        "Giữ 2 giây rồi thu về chậm"
+      ],
+      "mistakes": [
+        "Nâng chân quá cao làm võng lưng",
+        "Xoay hông",
+        "Đi nhanh, mất thăng bằng"
+      ],
+      "animation": "co_bird_dog"
+    },
+    {
+      "id": "co_plank",
+      "nameVi": "Plank",
+      "nameEn": "Forearm plank",
+      "group": "core",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Chống khuỷu ngay dưới vai, cẳng tay song song",
+        "Thu cằm, mắt nhìn xuống sàn",
+        "Siết mông và bụng, thân thành một đường",
+        "Thở đều, không nín"
+      ],
+      "mistakes": [
+        "Mông nhô cao",
+        "Võng thắt lưng",
+        "Ngửa cổ nhìn về trước"
+      ],
+      "easier": "Chống gối xuống sàn",
+      "harder": "Nhấc luân phiên một chân vài giây",
+      "animation": "co_plank"
+    },
+    {
+      "id": "co_side_plank",
+      "nameVi": "Plank nghiêng",
+      "nameEn": "Side plank",
+      "group": "core",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Chống một khuỷu ngay dưới vai, hai chân xếp chồng",
+        "Đẩy hông lên tới khi thân thẳng",
+        "Vai dưới đẩy ra xa tai",
+        "Đổi bên sau mỗi hiệp"
+      ],
+      "mistakes": [
+        "Hông tụt xuống",
+        "Xoay ngực về phía sàn",
+        "Chống khuỷu lệch ra ngoài vai"
+      ],
+      "easier": "Chống gối dưới xuống sàn",
+      "animation": "co_side_plank"
+    },
+    {
+      "id": "co_hollow_hold",
+      "nameVi": "Hollow hold",
+      "nameEn": "Hollow body hold",
+      "group": "core",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Nằm ngửa, ép thắt lưng sát sàn",
+        "Nhấc vai và chân khỏi sàn một khoảng nhỏ",
+        "Tay duỗi dọc thân hoặc qua đầu tuỳ mức",
+        "Giữ thắt lưng chạm sàn suốt thời gian giữ"
+      ],
+      "mistakes": [
+        "Thắt lưng vênh lên",
+        "Nhấc chân quá cao thành tư thế dễ",
+        "Rụt cổ căng cứng"
+      ],
+      "easier": "Gập gối lại và để tay dọc thân",
+      "animation": "co_hollow_hold"
+    },
+    {
+      "id": "co_pallof_press",
+      "nameVi": "Pallof press với dây",
+      "nameEn": "Pallof press",
+      "group": "core",
+      "equipment": [
+        "band"
+      ],
+      "cues": [
+        "Buộc dây ngang ngực, đứng nghiêng và bước ra cho dây căng",
+        "Kéo tay về giữa ngực",
+        "Đẩy thẳng tay ra trước, chống lại lực xoay của dây",
+        "Giữ 2 giây rồi thu về, hông không xoay"
+      ],
+      "mistakes": [
+        "Để thân xoay theo dây",
+        "Đẩy bằng vai thay vì giữ bằng bụng",
+        "Đứng quá gần điểm buộc"
+      ],
+      "animation": "co_pallof_press"
+    },
+    {
+      "id": "co_leg_lower",
+      "nameVi": "Hạ chân chậm",
+      "nameEn": "Slow leg lower",
+      "group": "core",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Nằm ngửa, hai chân duỗi thẳng lên trần",
+        "Ép thắt lưng sát sàn",
+        "Hạ hai chân xuống chậm, dừng khi thắt lưng bắt đầu vênh",
+        "Kéo chân về vị trí đầu và lặp lại"
+      ],
+      "mistakes": [
+        "Hạ quá thấp làm võng lưng",
+        "Dùng đà để kéo chân lên",
+        "Nín thở"
+      ],
+      "easier": "Gập gối khi hạ",
+      "animation": "co_leg_lower"
+    },
+    {
+      "id": "co_reverse_crunch",
+      "nameVi": "Gập bụng ngược",
+      "nameEn": "Reverse crunch",
+      "group": "core",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Nằm ngửa, gối gập, tay áp sàn hai bên",
+        "Cuộn hông lên đưa gối về phía ngực",
+        "Nâng bằng bụng dưới, không lấy đà bằng chân",
+        "Hạ chậm cho tới khi lưng chạm sàn"
+      ],
+      "mistakes": [
+        "Đẩy tay xuống sàn để lấy lực",
+        "Vung chân lấy đà",
+        "Cuộn quá nhanh"
+      ],
+      "animation": "co_reverse_crunch"
+    },
+    {
+      "id": "co_bicycle_slow",
+      "nameVi": "Đạp xe chậm có kiểm soát",
+      "nameEn": "Slow bicycle crunch",
+      "group": "core",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Nằm ngửa, tay đặt nhẹ sau đầu, không kéo cổ",
+        "Đưa vai đối diện về phía gối, xoay từ phần ngực",
+        "Chậm và có điểm dừng ở mỗi bên",
+        "Chân duỗi giữ thấp nhưng không chạm sàn"
+      ],
+      "mistakes": [
+        "Kéo cổ bằng tay",
+        "Đạp nhanh mất kiểm soát",
+        "Chỉ xoay khuỷu tay chứ không xoay thân"
+      ],
+      "animation": "co_bicycle_slow"
+    },
+    {
+      "id": "co_suitcase_carry",
+      "nameVi": "Đi bộ mang tạ một bên",
+      "nameEn": "Suitcase carry",
+      "group": "core",
+      "equipment": [
+        "dumbbell"
+      ],
+      "cues": [
+        "Cầm một tạ nặng ở một bên tay, tay kia buông tự do",
+        "Vai ngang, thân không nghiêng về bên có tạ",
+        "Bước đều, bụng siết nhẹ suốt quãng đi",
+        "Đổi tay sau mỗi hiệp"
+      ],
+      "mistakes": [
+        "Nghiêng người sang bên có tạ",
+        "Rụt vai lên tai",
+        "Đi quá nhanh"
+      ],
+      "animation": "co_suitcase_carry"
+    },
+    {
+      "id": "up_pushup",
+      "nameVi": "Chống đẩy",
+      "nameEn": "Push-up",
+      "group": "upper",
+      "equipment": [
+        "mat"
+      ],
+      "cues": [
+        "Tay rộng hơn vai một chút, thân thành đường thẳng",
+        "Khuỷu tay hướng chếch ra sau khoảng 45 độ",
+        "Hạ ngực tới gần sàn có kiểm soát",
+        "Đẩy lên và đẩy vai ra xa sàn ở trên"
+      ],
+      "mistakes": [
+        "Hông tụt hoặc nhô cao",
+        "Khuỷu tay bành ngang 90 độ",
+        "Chỉ hạ nửa tầm"
+      ],
+      "easier": "Chống tay lên ghế hoặc chống gối",
+      "harder": "Kê chân lên cao hoặc hạ trong 3 giây",
+      "animation": "up_pushup"
+    },
+    {
+      "id": "up_db_row",
+      "nameVi": "Kéo tạ một tay",
+      "nameEn": "Single-arm dumbbell row",
+      "group": "upper",
+      "equipment": [
+        "dumbbell",
+        "chair"
+      ],
+      "cues": [
+        "Một tay và một gối chống lên ghế, lưng phẳng",
+        "Tạ thả thẳng xuống, tay duỗi hết",
+        "Kéo tạ về phía hông, khuỷu men theo thân",
+        "Siết bả vai ở trên rồi hạ chậm"
+      ],
+      "mistakes": [
+        "Xoay thân để kéo",
+        "Kéo tạ ra ngoài về phía vai",
+        "Thả rơi khi hạ"
+      ],
+      "animation": "up_db_row"
+    },
+    {
+      "id": "up_db_shoulder_press",
+      "nameVi": "Đẩy vai với tạ",
+      "nameEn": "Dumbbell shoulder press",
+      "group": "upper",
+      "equipment": [
+        "dumbbell"
+      ],
+      "cues": [
+        "Đứng hoặc ngồi, tạ ngang tai, khuỷu hơi chếch trước",
+        "Siết mông và bụng để không ưỡn lưng",
+        "Đẩy thẳng lên tới khi tay gần duỗi hết",
+        "Hạ chậm về ngang tai"
+      ],
+      "mistakes": [
+        "Ưỡn thắt lưng để đẩy",
+        "Khoá khuỷu mạnh ở trên",
+        "Đẩy lệch ra trước mặt"
+      ],
+      "animation": "up_db_shoulder_press"
+    },
+    {
+      "id": "up_band_pull_apart",
+      "nameVi": "Kéo dây ngang ngực",
+      "nameEn": "Band pull-apart",
+      "group": "upper",
+      "equipment": [
+        "band"
+      ],
+      "cues": [
+        "Cầm dây rộng bằng vai, tay duỗi ngang ngực",
+        "Kéo dây ra hai bên bằng cách siết bả vai",
+        "Giữ cổ dài, không rụt vai",
+        "Thả về chậm, giữ căng dây"
+      ],
+      "mistakes": [
+        "Rụt vai lên tai",
+        "Ưỡn lưng khi kéo",
+        "Thả dây bật về"
+      ],
+      "animation": "up_band_pull_apart"
+    },
+    {
+      "id": "up_db_floor_press",
+      "nameVi": "Đẩy ngực nằm sàn",
+      "nameEn": "Dumbbell floor press",
+      "group": "upper",
+      "equipment": [
+        "dumbbell",
+        "mat"
+      ],
+      "cues": [
+        "Nằm ngửa, gối gập, hai tạ ngang ngực",
+        "Khuỷu chếch 45 độ so với thân",
+        "Hạ tới khi khuỷu chạm nhẹ sàn",
+        "Đẩy lên thẳng trên ngực"
+      ],
+      "mistakes": [
+        "Bành khuỷu vuông góc thân",
+        "Nảy khuỷu trên sàn",
+        "Đẩy hai tay lệch nhau"
+      ],
+      "animation": "up_db_floor_press"
+    },
+    {
+      "id": "up_band_row",
+      "nameVi": "Kéo dây ngồi",
+      "nameEn": "Seated band row",
+      "group": "upper",
+      "equipment": [
+        "band",
+        "mat"
+      ],
+      "cues": [
+        "Ngồi duỗi chân, vòng dây quanh hai bàn chân",
+        "Lưng thẳng, ngực mở",
+        "Kéo khuỷu về sau sát thân, siết bả vai",
+        "Duỗi tay về chậm mà không gù lưng"
+      ],
+      "mistakes": [
+        "Ngả người ra sau để kéo",
+        "Gù lưng khi duỗi tay",
+        "Kéo bằng tay thay vì bằng lưng"
+      ],
+      "animation": "up_band_row"
+    },
+    {
+      "id": "up_lateral_raise",
+      "nameVi": "Nâng tạ ngang vai",
+      "nameEn": "Lateral raise",
+      "group": "upper",
+      "equipment": [
+        "dumbbell"
+      ],
+      "cues": [
+        "Đứng thẳng, tạ hai bên đùi, khuỷu hơi chùng",
+        "Nâng tạ sang ngang tới ngang vai",
+        "Cổ tay không cao hơn khuỷu",
+        "Hạ trong 3 giây"
+      ],
+      "mistakes": [
+        "Dùng đà lắc người",
+        "Nâng cao quá vai",
+        "Rụt vai lên tai"
+      ],
+      "animation": "up_lateral_raise"
+    },
+    {
+      "id": "up_curl_to_press",
+      "nameVi": "Cuốn tay rồi đẩy",
+      "nameEn": "Curl to press",
+      "group": "upper",
+      "equipment": [
+        "dumbbell"
+      ],
+      "cues": [
+        "Cuốn tạ lên vai, khuỷu giữ sát thân",
+        "Xoay lòng bàn tay hướng trước rồi đẩy thẳng lên",
+        "Siết bụng để không ưỡn lưng",
+        "Hạ về theo đúng đường vừa đi lên"
+      ],
+      "mistakes": [
+        "Lắc người lấy đà",
+        "Khuỷu bành ra trước khi cuốn",
+        "Đẩy khi lưng đã ưỡn"
+      ],
+      "animation": "up_curl_to_press"
+    },
+    {
+      "id": "ca_fast_march",
+      "nameVi": "Giậm chân nhanh tại chỗ",
+      "nameEn": "Fast march in place",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "impact": "LOW",
+      "cues": [
+        "Nâng gối cao ngang hông, nhịp nhanh",
+        "Tiếp đất bằng nửa bàn chân, êm",
+        "Đánh tay mạnh ngược chiều chân",
+        "Giữ thân thẳng, bụng siết nhẹ"
+      ],
+      "mistakes": [
+        "Nện gót",
+        "Ngả người ra sau",
+        "Hạ nhịp ngay khi thấy mệt thay vì giữ đều"
+      ],
+      "animation": "ca_fast_march"
+    },
+    {
+      "id": "ca_mountain_climber",
+      "nameVi": "Leo núi",
+      "nameEn": "Mountain climber",
+      "group": "cardio",
+      "equipment": [
+        "mat"
+      ],
+      "impact": "LOW",
+      "cues": [
+        "Vào tư thế chống đẩy, vai ngay trên cổ tay",
+        "Kéo luân phiên từng gối về phía ngực",
+        "Hông giữ thấp và ngang, không nhấp nhô",
+        "Nhịp đều theo tiếng trống"
+      ],
+      "mistakes": [
+        "Mông nhô cao",
+        "Chân đạp mạnh xuống sàn",
+        "Vai trôi về trước cổ tay"
+      ],
+      "easier": "Chống tay lên ghế để giảm tải",
+      "animation": "ca_mountain_climber"
+    },
+    {
+      "id": "ca_skater_step",
+      "nameVi": "Trượt ngang không nhảy",
+      "nameEn": "Low skater step",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "impact": "LOW",
+      "kneeFocus": true,
+      "cues": [
+        "Bước rộng sang một bên, chân kia đưa chéo về sau",
+        "Chùng gối chân trụ, hông đẩy nhẹ ra sau",
+        "Tay đánh chéo theo hướng bước",
+        "Giữ chân luôn chạm sàn, không bật nhảy"
+      ],
+      "mistakes": [
+        "Gối đổ vào trong",
+        "Bước quá hẹp",
+        "Ngả thân quá nhiều về trước"
+      ],
+      "harder": "Chuyển thành bật nhảy nhẹ khi đã sang tuần thứ ba",
+      "animation": "ca_skater_step"
+    },
+    {
+      "id": "ca_shadow_punch",
+      "nameVi": "Đấm gió",
+      "nameEn": "Shadow punch",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "cues": [
+        "Chân trước sau, gối chùng nhẹ",
+        "Đấm thẳng luân phiên, xoay hông theo cú đấm",
+        "Không duỗi khoá khuỷu tay",
+        "Giữ nhịp đều và thở ra theo mỗi cú đấm"
+      ],
+      "mistakes": [
+        "Khoá khuỷu mỗi cú đấm",
+        "Chỉ dùng tay, không xoay hông",
+        "Vai gồng lên tai"
+      ],
+      "animation": "ca_shadow_punch"
+    },
+    {
+      "id": "ca_squat_pulse",
+      "nameVi": "Squat nhún nhanh",
+      "nameEn": "Squat pulse",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "impact": "LOW",
+      "kneeFocus": true,
+      "cues": [
+        "Vào tư thế squat nửa tầm",
+        "Nhún lên xuống trong biên độ ngắn, nhịp nhanh",
+        "Gót luôn chạm sàn",
+        "Ngực giữ cao suốt hiệp"
+      ],
+      "mistakes": [
+        "Đứng thẳng hẳn giữa các nhịp",
+        "Gối đổ vào trong",
+        "Nhấc gót"
+      ],
+      "animation": "ca_squat_pulse"
+    },
+    {
+      "id": "ca_step_jack",
+      "nameVi": "Jumping jack bước chân",
+      "nameEn": "Step jack",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "impact": "LOW",
+      "cues": [
+        "Bước một chân sang ngang thay vì bật hai chân",
+        "Tay giơ lên qua đầu cùng nhịp bước",
+        "Đổi chân đều, giữ nhịp theo tiếng trống",
+        "Tiếp đất nhẹ bằng nửa bàn chân"
+      ],
+      "mistakes": [
+        "Chuyển sang bật nhảy khi mệt",
+        "Tay giơ không hết tầm",
+        "Nện chân xuống sàn"
+      ],
+      "animation": "ca_step_jack"
+    },
+    {
+      "id": "ca_pogo_low",
+      "nameVi": "Bật nhỏ tại chỗ",
+      "nameEn": "Low pogo hop",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "impact": "MODERATE",
+      "kneeFocus": true,
+      "cues": [
+        "Bật rất thấp, chỉ vài centimet, bằng lực cổ chân",
+        "Gối giữ gần thẳng, không gập sâu",
+        "Tiếp đất bằng nửa bàn chân rồi gót chạm nhẹ",
+        "Nhịp nhanh và êm, nghe càng nhẹ càng đúng"
+      ],
+      "mistakes": [
+        "Bật cao",
+        "Tiếp đất nện",
+        "Gập gối sâu để bật mạnh hơn"
+      ],
+      "easier": "Chỉ nhón gót nhanh tại chỗ, không rời sàn",
+      "animation": "ca_pogo_low"
+    },
+    {
+      "id": "ca_high_knee_run",
+      "nameVi": "Chạy nâng gối tại chỗ",
+      "nameEn": "High-knee run",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "impact": "MODERATE",
+      "cues": [
+        "Nâng gối lên ngang hông với nhịp chạy",
+        "Tiếp đất bằng nửa bàn chân, ngay dưới thân",
+        "Thân giữ thẳng, không ngả ra sau",
+        "Đánh tay nhanh theo nhịp chân"
+      ],
+      "mistakes": [
+        "Ngả người ra sau",
+        "Nện gót",
+        "Bước chân ra xa trước thân"
+      ],
+      "animation": "ca_high_knee_run"
+    },
+    {
+      "id": "ca_run_easy",
+      "nameVi": "Chạy nhẹ",
+      "nameEn": "Easy run",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "impact": "MODERATE",
+      "cues": [
+        "Nhịp chân 170 đến 180 bước mỗi phút, app đếm nhịp giúp bạn",
+        "Bước ngắn, tiếp đất ngay dưới hông",
+        "Thở được thành câu ngắn là đúng cường độ",
+        "Vai thả lỏng, tay đánh nhẹ"
+      ],
+      "mistakes": [
+        "Sải bước quá dài nên tiếp đất trước thân",
+        "Chạy nhanh hơn mức nói được thành câu",
+        "Tăng quãng đường quá 10% mỗi tuần"
+      ],
+      "animation": "ca_run_easy"
+    },
+    {
+      "id": "ca_walk_brisk",
+      "nameVi": "Đi bộ nhanh",
+      "nameEn": "Brisk walk",
+      "group": "cardio",
+      "equipment": [
+        "none"
+      ],
+      "impact": "LOW",
+      "cues": [
+        "Bước dài và nhanh hơn nhịp đi bộ thường",
+        "Đánh tay chủ động, khuỷu gập 90 độ",
+        "Giữ thân thẳng, mắt nhìn xa",
+        "Đây là phần hồi phục giữa các quãng chạy, đừng dừng hẳn"
+      ],
+      "mistakes": [
+        "Dừng hẳn giữa các quãng",
+        "Đi quá chậm nên nhịp tim tụt sâu",
+        "Khom vai nhìn xuống điện thoại"
+      ],
+      "animation": "ca_walk_brisk"
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "id": "vh_health_base_v1",
+  "titleVi": "Chương trình nền VH. Health — 4 tuần",
+  "week": [
+    {
+      "day": "mon",
+      "workoutId": "w_strength_full_a"
+    },
+    {
+      "day": "tue",
+      "workoutId": "w_zone2_knee"
+    },
+    {
+      "day": "wed",
+      "workoutId": "w_tabata_core"
+    },
+    {
+      "day": "thu",
+      "workoutId": "w_lower_knee"
+    },
+    {
+      "day": "fri",
+      "workoutId": "w_intervals_core"
+    },
+    {
+      "day": "sat",
+      "workoutId": "w_long_easy"
+    },
+    {
+      "day": "sun",
+      "workoutId": "w_recovery"
+    }
+  ],
+  "workouts": [
+    {
+      "id": "w_strength_full_a",
+      "titleVi": "Sức mạnh toàn thân A",
+      "focusVi": "Giữ cơ khi giảm mỡ",
+      "minutes": 30,
+      "rpe": "6–7",
+      "blocks": [
+        {
+          "titleVi": "Vòng sức mạnh 1",
+          "rounds": 3,
+          "restBetweenRoundsSeconds": 60,
+          "restAfterSeconds": 60,
+          "items": [
+            {
+              "exerciseId": "lo_goblet_squat",
+              "workSeconds": 40,
+              "restSeconds": 20,
+              "reps": 10
+            },
+            {
+              "exerciseId": "up_db_row",
+              "workSeconds": 40,
+              "restSeconds": 20,
+              "reps": 10,
+              "perSide": true
+            },
+            {
+              "exerciseId": "lo_rdl_double",
+              "workSeconds": 40,
+              "restSeconds": 20,
+              "reps": 10
+            },
+            {
+              "exerciseId": "up_pushup",
+              "workSeconds": 40,
+              "restSeconds": 20,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "titleVi": "Vòng sức mạnh 2",
+          "rounds": 3,
+          "restBetweenRoundsSeconds": 60,
+          "restAfterSeconds": 45,
+          "items": [
+            {
+              "exerciseId": "lo_step_up",
+              "workSeconds": 40,
+              "restSeconds": 20,
+              "reps": 8,
+              "perSide": true
+            },
+            {
+              "exerciseId": "up_db_shoulder_press",
+              "workSeconds": 40,
+              "restSeconds": 20,
+              "reps": 10
+            },
+            {
+              "exerciseId": "co_dead_bug",
+              "workSeconds": 40,
+              "restSeconds": 20
+            }
+          ]
+        },
+        {
+          "titleVi": "Gối cuối buổi",
+          "rounds": 2,
+          "restBetweenRoundsSeconds": 30,
+          "items": [
+            {
+              "exerciseId": "kn_calf_raise_standing",
+              "workSeconds": 40,
+              "restSeconds": 20,
+              "reps": 15
+            },
+            {
+              "exerciseId": "kn_tibialis_raise",
+              "workSeconds": 30,
+              "restSeconds": 15,
+              "reps": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "w_zone2_knee",
+      "titleVi": "Chạy–đi bộ Zone 2 + chăm sóc gối",
+      "focusVi": "Nền tảng sức bền",
+      "minutes": 32,
+      "rpe": "4–5",
+      "blocks": [
+        {
+          "titleVi": "Chạy – đi bộ xen kẽ",
+          "rounds": 8,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 60,
+          "items": [
+            {
+              "exerciseId": "ca_run_easy",
+              "workSeconds": 120,
+              "note": "Nhịp chân 170–180, thở được thành câu ngắn"
+            },
+            {
+              "exerciseId": "ca_walk_brisk",
+              "workSeconds": 60,
+              "note": "Không dừng hẳn"
+            }
+          ]
+        },
+        {
+          "titleVi": "Chăm sóc gối 6 phút",
+          "rounds": 2,
+          "restBetweenRoundsSeconds": 30,
+          "items": [
+            {
+              "exerciseId": "kn_calf_raise_seated",
+              "workSeconds": 45,
+              "restSeconds": 15,
+              "reps": 15
+            },
+            {
+              "exerciseId": "kn_tibialis_raise",
+              "workSeconds": 45,
+              "restSeconds": 15,
+              "reps": 15
+            },
+            {
+              "exerciseId": "kn_monster_walk",
+              "workSeconds": 40,
+              "restSeconds": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "w_tabata_core",
+      "titleVi": "Tabata va đập thấp + Core",
+      "focusVi": "Đốt mỡ, siết bụng",
+      "minutes": 28,
+      "rpe": "8–9",
+      "blocks": [
+        {
+          "titleVi": "Tabata 1 — leo núi",
+          "rounds": 8,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 60,
+          "items": [
+            {
+              "exerciseId": "ca_mountain_climber",
+              "workSeconds": 20,
+              "restSeconds": 10
+            }
+          ]
+        },
+        {
+          "titleVi": "Tabata 2 — trượt ngang",
+          "rounds": 8,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 60,
+          "items": [
+            {
+              "exerciseId": "ca_skater_step",
+              "workSeconds": 20,
+              "restSeconds": 10
+            }
+          ]
+        },
+        {
+          "titleVi": "Tabata 3 — squat nhún",
+          "rounds": 8,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 60,
+          "items": [
+            {
+              "exerciseId": "ca_squat_pulse",
+              "workSeconds": 20,
+              "restSeconds": 10
+            }
+          ]
+        },
+        {
+          "titleVi": "Core",
+          "rounds": 3,
+          "restBetweenRoundsSeconds": 45,
+          "items": [
+            {
+              "exerciseId": "co_plank",
+              "workSeconds": 40,
+              "restSeconds": 20
+            },
+            {
+              "exerciseId": "co_side_plank",
+              "workSeconds": 60,
+              "restSeconds": 20,
+              "perSide": true
+            },
+            {
+              "exerciseId": "co_dead_bug",
+              "workSeconds": 40,
+              "restSeconds": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "w_lower_knee",
+      "titleVi": "Thân dưới + Prehab gối",
+      "focusVi": "Gối khoẻ để chạy",
+      "minutes": 32,
+      "rpe": "6–7",
+      "blocks": [
+        {
+          "titleVi": "Sức mạnh thân dưới",
+          "rounds": 3,
+          "restBetweenRoundsSeconds": 75,
+          "restAfterSeconds": 60,
+          "items": [
+            {
+              "exerciseId": "lo_split_squat",
+              "workSeconds": 50,
+              "restSeconds": 20,
+              "reps": 8,
+              "perSide": true
+            },
+            {
+              "exerciseId": "lo_hip_thrust",
+              "workSeconds": 45,
+              "restSeconds": 20,
+              "reps": 12
+            },
+            {
+              "exerciseId": "lo_rdl_single",
+              "workSeconds": 50,
+              "restSeconds": 20,
+              "reps": 8,
+              "perSide": true
+            }
+          ]
+        },
+        {
+          "titleVi": "Prehab gối",
+          "rounds": 3,
+          "restBetweenRoundsSeconds": 45,
+          "restAfterSeconds": 45,
+          "items": [
+            {
+              "exerciseId": "kn_spanish_squat",
+              "workSeconds": 45,
+              "restSeconds": 20,
+              "note": "Giữ 2 giây ở đáy"
+            },
+            {
+              "exerciseId": "kn_step_down",
+              "workSeconds": 50,
+              "restSeconds": 20,
+              "reps": 8,
+              "perSide": true,
+              "note": "Hạ trong 3 giây"
+            },
+            {
+              "exerciseId": "kn_calf_raise_seated",
+              "workSeconds": 45,
+              "restSeconds": 15,
+              "reps": 15
+            },
+            {
+              "exerciseId": "kn_tibialis_raise",
+              "workSeconds": 40,
+              "restSeconds": 15,
+              "reps": 15
+            }
+          ]
+        },
+        {
+          "titleVi": "Ổn định hông",
+          "rounds": 2,
+          "restBetweenRoundsSeconds": 30,
+          "items": [
+            {
+              "exerciseId": "kn_monster_walk",
+              "workSeconds": 40,
+              "restSeconds": 15
+            },
+            {
+              "exerciseId": "kn_side_abduction",
+              "workSeconds": 45,
+              "restSeconds": 15,
+              "reps": 15,
+              "perSide": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "w_intervals_core",
+      "titleVi": "Chạy biến tốc + Core + gối",
+      "focusVi": "Sức bền tốc độ",
+      "minutes": 30,
+      "rpe": "7–8",
+      "blocks": [
+        {
+          "titleVi": "Khởi động chạy",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 30,
+          "items": [
+            {
+              "exerciseId": "ca_walk_brisk",
+              "workSeconds": 300
+            }
+          ]
+        },
+        {
+          "titleVi": "Biến tốc",
+          "rounds": 6,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 60,
+          "items": [
+            {
+              "exerciseId": "ca_run_easy",
+              "workSeconds": 60,
+              "note": "Nhanh hơn Zone 2 một chút, không chạy hết sức"
+            },
+            {
+              "exerciseId": "ca_walk_brisk",
+              "workSeconds": 90
+            }
+          ]
+        },
+        {
+          "titleVi": "Core",
+          "rounds": 2,
+          "restBetweenRoundsSeconds": 45,
+          "restAfterSeconds": 30,
+          "items": [
+            {
+              "exerciseId": "co_pallof_press",
+              "workSeconds": 40,
+              "restSeconds": 15,
+              "perSide": true
+            },
+            {
+              "exerciseId": "co_hollow_hold",
+              "workSeconds": 30,
+              "restSeconds": 20
+            },
+            {
+              "exerciseId": "co_reverse_crunch",
+              "workSeconds": 40,
+              "restSeconds": 15,
+              "reps": 12
+            }
+          ]
+        },
+        {
+          "titleVi": "Gối 6 phút",
+          "rounds": 2,
+          "restBetweenRoundsSeconds": 30,
+          "items": [
+            {
+              "exerciseId": "kn_calf_raise_standing",
+              "workSeconds": 45,
+              "restSeconds": 15,
+              "reps": 15
+            },
+            {
+              "exerciseId": "kn_tke",
+              "workSeconds": 40,
+              "restSeconds": 15,
+              "perSide": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "w_long_easy",
+      "titleVi": "Chạy–đi bộ dài + Mobility đầy đủ",
+      "focusVi": "Sức bền nền, cuối tuần rộng giờ",
+      "minutes": 50,
+      "rpe": "4–5",
+      "blocks": [
+        {
+          "titleVi": "Chạy – đi bộ dài",
+          "rounds": 12,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 120,
+          "items": [
+            {
+              "exerciseId": "ca_run_easy",
+              "workSeconds": 120
+            },
+            {
+              "exerciseId": "ca_walk_brisk",
+              "workSeconds": 60
+            }
+          ]
+        },
+        {
+          "titleVi": "Mobility đầy đủ",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "items": [
+            {
+              "exerciseId": "wu_hip_9090",
+              "workSeconds": 90
+            },
+            {
+              "exerciseId": "wu_hipflexor_stretch",
+              "workSeconds": 90,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_open_book",
+              "workSeconds": 90,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_ankle_rock",
+              "workSeconds": 60,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_cat_cow",
+              "workSeconds": 60
+            },
+            {
+              "exerciseId": "wu_breath",
+              "workSeconds": 120
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "w_recovery",
+      "titleVi": "Hồi phục chủ động",
+      "focusVi": "Phòng chấn thương",
+      "minutes": 25,
+      "rpe": "2–3",
+      "blocks": [
+        {
+          "titleVi": "Yoga & mobility",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 30,
+          "items": [
+            {
+              "exerciseId": "wu_breath",
+              "workSeconds": 120
+            },
+            {
+              "exerciseId": "wu_cat_cow",
+              "workSeconds": 90
+            },
+            {
+              "exerciseId": "wu_open_book",
+              "workSeconds": 120,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_hip_9090",
+              "workSeconds": 120
+            },
+            {
+              "exerciseId": "wu_hipflexor_stretch",
+              "workSeconds": 120,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_ankle_rock",
+              "workSeconds": 90,
+              "perSide": true
+            },
+            {
+              "exerciseId": "co_bird_dog",
+              "workSeconds": 90
+            },
+            {
+              "exerciseId": "wu_glute_bridge",
+              "workSeconds": 90
+            }
+          ]
+        },
+        {
+          "titleVi": "Đi bộ nhẹ",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "items": [
+            {
+              "exerciseId": "ca_walk_brisk",
+              "workSeconds": 600
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
