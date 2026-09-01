@@ -23,6 +23,22 @@ class ProgramRulesTest {
     }
 
     @Test
+    fun `week number counts whole seven-day spans from the start day`() {
+        val start = 100L
+        assertEquals(1, Progression.weekNumber(start, start))       // day zero of the programme
+        assertEquals(1, Progression.weekNumber(start, start + 6))   // last day still in week 1
+        assertEquals(2, Progression.weekNumber(start, start + 7))   // first day of week 2
+        assertEquals(4, Progression.weekNumber(start, start + 27))  // last day of the first four-week block
+        assertEquals(5, Progression.weekNumber(start, start + 28))  // first day of the second block
+    }
+
+    @Test
+    fun `a start day in the future still reads as week one, not zero or negative`() {
+        val start = 100L
+        assertEquals(1, Progression.weekNumber(start, start - 10))
+    }
+
+    @Test
     fun `the deload week really does take work off`() {
         assertEquals(4, Progression.scaleVolume(baseline = 4, week = 1))
         assertEquals(2, Progression.scaleVolume(baseline = 4, week = 4))

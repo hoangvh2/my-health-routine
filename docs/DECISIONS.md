@@ -106,17 +106,18 @@ reinterpreting the request.
 What shipped instead, all consistent with D-006:
 
 - `Exercise.videoUrl` (already in the content model) is the hook for layer 2 — an
-  external link opened via `ACTION_VIEW`, never an embedded/downloaded file. No URLs
-  are populated yet: a `WebSearch` pass to curate them hit its session quota before
-  it produced results, and a session cannot verify a video's content by watching it,
-  only by source reputation — so a future pass must say so explicitly, and must
-  never fabricate a URL it hasn't gotten as an actual search result.
+  external link opened via `ACTION_VIEW`, never an embedded/downloaded file. A later
+  `WebSearch` pass (after the first one hit its quota) populated `videoUrl` for 6 of
+  63 exercises, chosen by title and channel reputation only — **no session has ever
+  watched one of these videos**, since none has that capability. Never fabricate a
+  URL that wasn't an actual search result; the other 57 exercises correctly show no
+  video button rather than a guessed link.
 - The tabata beat and every player cue are synthesised PCM (`audio/BeatEngine.kt`),
   not a file — D-006 extended to the player rather than relaxed for it.
-- No bundled "background music" track. If the user plays their own music in another
-  app, that is the intended source for it; a future pass can make cues request
-  transient audio focus so a beep politely ducks it rather than fighting it, but
-  that is not yet implemented.
+- No bundled "background music" track. `audio/PlaybackFocus.kt` requests transient
+  ducking focus once per session (not per beep, which would flap the user's own
+  music up and down every second during a count-in) so a user's own music app dips
+  briefly for cues instead of being fought or ignored.
 
 Do not revisit the "just download some images, it's personal use" framing — it was
 considered and rejected once already; re-litigating it wastes a session.

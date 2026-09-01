@@ -1,8 +1,8 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
-**CI:** compiled clean on `1864d63`, but real-device testing found the player was
-completely stuck (layout bug, see below). Fix pushed; not yet re-verified on device.
+**CI:** clean through the previous push (layout fix). This round's commit (audio-route
+fix, ducking, video links, Schedule screen) not yet built — see "Do this next".
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
@@ -14,94 +14,100 @@ Read this first, then `CLAUDE.md` for the background that does not change.
 |-----|----------|------------|
 | M1 | Khung dự án, Gradle, Compose, điều hướng, CI ra APK | ✅ Xong |
 | M2 | Tầng dữ liệu + toàn bộ nội dung (63 động tác, 7 buổi tập, chương trình tuần) | ✅ Xong |
-| M3 | Minh hoạ động tác | 🔁 Đổi hướng — xem bên dưới |
-| M4 | Trình phát buổi tập, nhịp tabata, giọng đếm tiếng Việt | 🟡 Build xanh, **chưa ai chạy thật trên máy** |
-| M5 | Lịch tuần, kéo thả đổi ngày, báo thức và nhắc nhở | ⬜ Chưa bắt đầu |
+| M3 | Minh hoạ động tác | 🔁 Đổi hướng — liên kết video, không tự vẽ. Xem D-008. |
+| M4 | Trình phát buổi tập, nhịp tabata, giọng đếm tiếng Việt | 🟡 Chạy được trên máy thật (nút bấm được, giọng đọc nghe được), nhịp trống vừa vá — **chưa xác nhận lại** |
+| M5 | Lịch tuần, kéo thả đổi ngày, báo thức và nhắc nhở | 🟡 Xem tuần read-only vừa xong; kéo thả + báo thức chưa làm |
 | M6 | Tiến trình, biểu đồ, Room, sao lưu JSON | ⬜ Chưa bắt đầu |
 | M7 | Hoàn thiện: tiếng Anh, tiếp cận, bản release | ⬜ Chưa bắt đầu |
 
-**M3 đổi hướng, không phải bị bỏ.** Kế hoạch ban đầu là tự vẽ hoạt hình vector khung
-xương (đã có prototype Python/Pillow chứng minh động học thuận/ngược đúng, xem lịch sử
-hội thoại). Người dùng sau đó đổi ý, muốn dùng ảnh/video 3D thật từ mạng. Việc **tải về
-và đóng gói cứng nội dung có bản quyền vào app đã bị từ chối** — xem `DECISIONS.md`
-(D-008), đây là ranh giới đã được quyết định, đừng lật lại. Hướng thay thế: liên kết
-video ngoài (`Exercise.videoUrl`, đã có sẵn trong model, hiện toàn bộ đang `null`) và
-văn bản kỹ thuật (`cues`) đã có sẵn trong nội dung — trình phát M4 dùng cả hai.
+## Vòng phản hồi thật đã chạy hai lần trên M4 — đây là bằng chứng quy trình push→CI→cài→báo lỗi→vá hoạt động
 
-## Điều CHƯA xong ở M4 — nói rõ để không ai lầm
+1. Build đầu tiên: xanh trên CI nhưng **kẹt cứng ở màn hình CHUẨN BỊ** — nút Play bị đẩy
+   ra ngoài màn hình do `fillMaxSize()` lồng trong `Column` (đã vá, xem lịch sử commit).
+2. Build thứ hai (đã vá lỗi trên): nút bấm được, đồng hồ chạy, **giọng đọc nghe được
+   nhưng nhịp trống tabata thì im lặng.**
 
-M4 được viết trong phiên trước và CI xanh trên lần build đầu tiên — nghĩa là API đúng
-chữ ký, nhưng **build xanh không có nghĩa là chạy đúng**: người dùng cài thử và bị kẹt
-cứng ngay màn hình CHUẨN BỊ, không tiếng, không phản hồi. Xem "Lỗi đã sửa" bên dưới —
-đã tìm ra và vá, nhưng **bản vá này chưa được người dùng xác nhận chạy đúng**.
+### Lỗi vừa vá: nhịp trống dùng sai luồng âm thanh Android
 
-1. **Người dùng cần cài lại và thử lại từ đầu.** Bấm Bắt đầu, xem có chạm được hàng nút
-   Play/Tạm dừng/Chuyển bài ở đáy màn hình không, đồng hồ có đếm không, có tiếng không.
-2. **`videoUrl` toàn bộ đang trống.** Một lượt `WebSearch` để tìm link thật đã đụng giới
-   hạn phiên (`session limit`, reset 04:20 UTC) trước khi tìm được kết quả nào. Nút
-   "Xem video hướng dẫn" sẽ không hiện cho tới khi có link — điều này đúng, không phải
-   lỗi.
+`BeatEngine` dùng `AudioAttributes.USAGE_ASSISTANCE_SONIFICATION` — luồng này trên phần
+lớn máy Android đi theo **âm lượng chuông/thông báo**, và bị tắt tiếng ở chế độ rung/im
+lặng. `TextToSpeech` mặc định phát qua `STREAM_MUSIC` (âm lượng media) — luồng khác hẳn,
+không bị ảnh hưởng bởi chế độ rung. Ảnh chụp máy người dùng có icon rung ở thanh trạng
+thái, khớp hoàn toàn với giả thuyết này.
 
-### Lỗi đã sửa: `fillMaxSize()` lồng trong `Column` đẩy nút Play ra khỏi màn hình
+**Đã sửa:** đổi sang `USAGE_MEDIA` + `CONTENT_TYPE_MUSIC` — cùng luồng với giọng đọc.
+Đồng thời thêm `PlaybackFocus` (audio-focus ducking, D-08 mục còn treo): xin
+`AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK` **một lần cho cả buổi tập** khi mở màn hình trình
+phát, không xin theo từng tiếng bíp — xin theo từng tiếng sẽ làm nhạc nền của người dùng
+giật lên xuống liên tục mỗi giây trong 3 giây đếm ngược, khó chịu hơn là không ducking.
 
-Ảnh chụp máy thật cho thấy màn hình CHUẨN BỊ đứng yên, không nút, không tiếng.
-`WorkoutPlayerScreen` có cấu trúc `Column { TopBar(); Column(fillMaxSize()){...}; Controls() }`
-— trong Compose, `fillMaxSize()` trên một phần tử **giữa** của `Column` chiếm đúng bằng
-chiều cao của `Column` cha (bằng cả màn hình), *không phải* "phần còn lại sau top bar".
-Vì vậy tổng chiều cao ba phần tử vượt màn hình, và `Controls()` (chứa nút Play) bị đẩy
-lọt hẳn ra ngoài đáy — tồn tại trong cây layout nhưng không ai chạm tới được. Nút Play
-không bao giờ được bấm → `start()` không bao giờ chạy → đồng hồ đứng yên, không cue nào
-phát ra. Một lỗi bố cục duy nhất giải thích trọn cả hai triệu chứng.
+**Chưa được xác nhận chạy đúng trên máy thật** — đây là việc ưu tiên nhất, xem "Do this
+next".
 
-**Đã sửa** bằng `Modifier.weight(1f)` thay cho `fillMaxSize()` trên Column giữa — đây
-mới là cách đúng để nói "chiếm phần còn lại sau các anh chị em không có weight". Đã có
-comment tại chỗ giải thích, đừng "dọn dẹp" nó về `fillMaxSize()` vì trông có vẻ tương
-đương.
+## Video hướng dẫn — đã có 6 link, KHÔNG PHẢI đã xem qua
 
-**Bài học chung cho những màn hình sau:** bất cứ `Column`/`Row` nào có cấu trúc
-header-cố-định + nội-dung-lấp-đầy + footer-cố-định đều phải dùng `weight(1f)` cho phần
-lấp đầy, không bao giờ `fillMaxSize()`. Đây là lỗi không thể bắt được bằng compile hay
-test tĩnh trong môi trường này — chỉ lộ ra khi chạy thật trên máy, đúng như giới hạn đã
-ghi ở `CLAUDE.md`.
+Phiên `WebSearch` trước bị chặn (`session limit`); phiên này (05:55 UTC, sau mốc reset
+04:20 UTC) đã tìm và gắn `videoUrl` cho: `kn_spanish_squat`, `kn_step_down`,
+`kn_tibialis_raise`, `lo_goblet_squat`, `co_plank`, `ca_mountain_climber`. Chọn theo
+**tên tiêu đề và tên kênh** (ưu tiên kênh vật lý trị liệu/rehab có tên riêng cho nhóm bài
+gối) — **không hề xem nội dung video**, vì không có khả năng phát video. Người dùng nên
+tự mở thử vài link để xác nhận trước khi tin tưởng hoàn toàn. 57 động tác còn lại vẫn
+chưa có link — nút "Xem video hướng dẫn" ẩn với những bài đó, đúng như thiết kế.
+
+## Lịch tuần (M5, phần đầu) — mới, chưa build-verify
+
+`ScheduleScreen` thay thế placeholder: hiện đủ 7 ngày trong `program.json`, buổi tập mỗi
+ngày, chip 4 khối (Làm quen/Tăng tải/Đỉnh khối/Giảm tải) tô sáng khối hiện tại, đánh dấu
+"Hôm nay". Read-only — **chưa có** kéo thả đổi ngày, chưa có đánh dấu ngày nghỉ, chưa có
+nút bắt đầu buổi tập từ đây (vẫn phải qua tab Hôm nay). Đây là quyết định phạm vi có chủ
+đích, không phải thiếu sót — xem "Việc cố tình chưa làm".
+
+Logic "đang ở tuần thứ mấy" được rút ra khỏi `TodayViewModel` (trước đó tính riêng lẻ,
+không test được) thành `Progression.weekNumber(startEpochDay, todayEpochDay)` trong
+`:core`, có test riêng (biên 6/7/27/28 ngày, và trường hợp ngày bắt đầu ở tương lai).
+Today và Schedule giờ dùng chung một hàm — không thể lệch nhau về "tuần mấy" nữa.
 
 ## Đã kiểm chứng thật (test chạy được ở đây)
 
-`:core` — **55 unit test, tất cả pass.** Chạy `./gradlew :core:test`.
+`:core` — **59 unit test, tất cả pass.** Chạy `./gradlew :core:test`.
 
 - `TimelineEngineTest`, `SleepLinkTest`, `TimelineClockTest` — lịch neo, co giãn, vị trí
-  hiện tại trong ngày (đã dùng để sửa layout theo phản hồi "quá nhiều chữ").
-- `ProgramRulesTest` — chu kỳ 4 tuần, trần 10%/tuần, đèn giao thông gối, mở va đập từ
-  tuần 3.
+  hiện tại trong ngày.
+- `ProgramRulesTest` — chu kỳ 4 tuần (**+ `weekNumber` mới**), trần 10%/tuần, đèn giao
+  thông gối, mở va đập từ tuần 3.
 - `ContentTest` — nội dung 63 động tác + 7 buổi tập hợp lệ, đúng với chính file sẽ ship.
-- `SessionBuilderTest` — bộ máy trình phát: tổng giây khớp `Workout.estimatedSeconds`
-  cho mọi buổi tập thật trong `program.json`, REST xem trước đúng bài kế tiếp qua ranh
-  giới item/vòng/khối, `cursorAt` đúng tại mọi mốc kể cả biên, `isCountIn` chỉ sáng ở
-  3 giây cuối chứ không phải lúc bằng 0.
+- `SessionBuilderTest` — bộ máy trình phát: tổng giây khớp `Workout.estimatedSeconds`,
+  REST xem trước đúng bài kế tiếp, `cursorAt` đúng tại mọi mốc, `isCountIn` chỉ sáng ở
+  3 giây cuối.
 
-**`:app` — chưa có gì được compile-verify trong phiên này.** Xem mục "CHƯA xong" ở trên.
+**`:app` — chưa compile-verify trong phiên này.** Cả BeatEngine, PlaybackFocus và
+ScheduleScreen đều mới, CI cho commit này chưa chạy khi ghi dòng này.
 
 ## Do this next
 
-1. **Người dùng cài APK mới, bấm "Bắt đầu", báo lại kết quả.** Cụ thể cần biết: đồng
-   hồ có chạy đúng nhịp và đúng giây không; âm thanh tabata có phát không (một số máy
-   OEM xử lý `AudioAttributes.USAGE_ASSISTANCE_SONIFICATION` khác nhau khi máy đang ở
-   chế độ im lặng/rung); giọng đọc tiếng Việt của TextToSpeech có kêu không (nhiều máy
-   Android thiếu sẵn gói dữ liệu giọng vi-VN — `VoiceCues` lặng lẽ bỏ qua khi vậy, cần
-   biết máy này có rơi vào trường hợp đó); vòng đếm ngược, rung, và nút chuyển bài có
-   phản hồi đúng không. Đây là việc chặn mọi thứ khác.
-2. **Tìm link video thật khi phiên WebSearch hết hạn** (reset 04:20 UTC theo thông báo
-   lúc bị chặn) — ưu tiên nhóm bài gối trước vì đó là nơi sai kỹ thuật nguy hiểm nhất:
-   `kn_spanish_squat`, `kn_step_down`, `kn_tibialis_raise`, cộng `lo_goblet_squat`,
-   `co_plank`, `ca_mountain_climber`. Chỉ điền `videoUrl` bằng URL thật lấy được từ kết
-   quả tìm kiếm — không bao giờ tự bịa link.
-3. **Audio-focus ducking** (D-008) — chưa làm. Khi cue phát, xin
-   `AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK` để nhạc nền của người dùng tự hạ nhỏ rồi trả
-   lại, thay vì im lặng hoàn toàn hoặc chồng tiếng.
+1. **Push, đọc CI, rồi người dùng cài lại và thử buổi tập thật.** Cần biết: nhịp trống
+   tabata có nghe được không (đặc biệt lúc máy đang ở chế độ rung — đúng kịch bản gây ra
+   bug lần trước); nếu đang mở nhạc nền (Spotify/YouTube Music), nhạc có tự hạ nhỏ khi
+   có tiếng bíp rồi trả lại không (audio-focus ducking mới thêm); tab Lịch tuần hiện
+   đúng 7 ngày và đúng khối hiện tại không.
+2. **Mở thử vài link trong 6 video đã gắn**, xác nhận chúng thật sự đúng động tác và
+   chất lượng chấp nhận được — chưa ai xem qua nội dung, chỉ chọn theo tên/kênh.
+3. **M5 phần còn lại:** báo thức 04:35/19:45 (`AlarmManager`), ba lần nhắc nghỉ bàn giấy
+   trong ngày (`WorkManager`), kéo thả đổi ngày trên Lịch tuần, đánh dấu ngày nghỉ. Đây
+   là mảng rủi ro cao hơn hẳn mọi thứ đã làm — hành vi nền/báo thức khác nhau rất nhiều
+   giữa các hãng Android (Doze, tối ưu pin theo OEM) và **không thể kiểm chứng gì từ
+   trong môi trường này**, chỉ suy luận đúng API là chưa đủ. Đừng làm dồn nhiều thứ
+   cùng lúc — làm từng mảnh nhỏ, để người dùng xác nhận từng bước trên máy thật.
+4. **Tìm nốt link video** cho các bài gối còn lại (`kn_calf_raise_seated`,
+   `kn_calf_raise_standing`, `kn_monster_walk`, `kn_clamshell`, `kn_side_abduction`,
+   `kn_ham_slide`, `kn_copenhagen_short`, `kn_tke`) khi có phiên WebSearch mới — vẫn theo
+   nguyên tắc chỉ dùng URL thật lấy từ kết quả tìm kiếm.
 
 ## Things deliberately left undone
 
 - **No ViewModels on the Library and Settings screens.** They read the repository flow
-  directly. Fine at this size; revisit if either grows real state.
+  directly. Fine at this size; revisit if either grows real state. Schedule follows the
+  same convention.
 - **27 of the 63 exercises are unused by the programme.** That is the substitution pool
   for the "easier/harder" swaps and for later four-week blocks — not dead content.
   `ContentTest` guards that the pool never swallows more than half the library.
@@ -112,4 +118,7 @@ ghi ở `CLAUDE.md`.
   progress; resuming always restarts the session from PREPARE. Acceptable for a first
   cut — revisit if it turns out to matter in practice.
 - **No hand-drawn/vector illustration layer.** Deliberately dropped per the user's own
-  change of direction (see M3 note above), not an oversight.
+  change of direction (see D-008), not an oversight.
+- **Schedule is read-only.** No drag-and-drop, no marking a day off, no starting a
+  workout from this screen. Deliberately scoped down to the safe, testable slice this
+  round; see "Do this next" #3 for why the rest is deferred rather than rushed.

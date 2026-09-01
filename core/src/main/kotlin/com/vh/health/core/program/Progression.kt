@@ -1,5 +1,6 @@
 package com.vh.health.core.program
 
+import java.time.LocalDate
 import kotlin.math.roundToInt
 
 /** Where a week sits inside the repeating four-week block. */
@@ -37,4 +38,17 @@ object Progression {
     /** Scales a baseline set/round count for the phase the given week falls in. */
     fun scaleVolume(baseline: Int, week: Int): Int =
         (baseline * phaseOf(week).volumeFactor).roundToInt().coerceAtLeast(1)
+
+    /**
+     * Which 1-based programme week [todayEpochDay] falls in, given the day the
+     * programme started. The single source of this arithmetic — Today and Schedule
+     * both call it, so they can never quietly disagree about what week it is.
+     *
+     * A start day that is still in the future (clock changed, bad data) reads as
+     * week 1 rather than a nonsensical zero or negative week.
+     */
+    fun weekNumber(programStartEpochDay: Long, todayEpochDay: Long = LocalDate.now().toEpochDay()): Int {
+        val elapsedDays = todayEpochDay - programStartEpochDay
+        return (elapsedDays / 7 + 1).coerceAtLeast(1).toInt()
+    }
 }

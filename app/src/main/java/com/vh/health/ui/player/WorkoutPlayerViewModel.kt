@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.vh.health.AppContainer
 import com.vh.health.audio.BeatEngine
+import com.vh.health.audio.PlaybackFocus
 import com.vh.health.audio.VoiceCues
 import com.vh.health.core.content.Workout
 import com.vh.health.core.session.SessionBuilder
@@ -49,6 +50,7 @@ class WorkoutPlayerViewModel(
 
     private val beat = BeatEngine()
     private val voice = VoiceCues(container.appContext)
+    private val focus = PlaybackFocus(container.appContext)
 
     private val workout: Workout? = container.content.program.workout(workoutId)
     private val steps: List<SessionStep> = workout?.let(SessionBuilder::build).orEmpty()
@@ -65,6 +67,7 @@ class WorkoutPlayerViewModel(
 
     init {
         if (steps.isNotEmpty()) {
+            focus.requestDucking()
             viewModelScope.launch {
                 lastTickRealtime = SystemClock.elapsedRealtime()
                 while (isActive) {
@@ -155,6 +158,7 @@ class WorkoutPlayerViewModel(
         super.onCleared()
         beat.release()
         voice.release()
+        focus.release()
     }
 
     companion object {

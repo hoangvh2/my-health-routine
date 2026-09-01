@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.time.LocalTime
 
 data class TodayUiState(
@@ -95,7 +94,7 @@ class TodayViewModel(private val container: AppContainer) : ViewModel() {
         )
         val evening = TimelineEngine.build(DayTemplates.evening(), Anchor.FinishBy(settings.bedtime))
         val weekday = container.content.weekdayToday()
-        val week = weekOf(settings.programStartEpochDay)
+        val week = settings.programStartEpochDay?.let { Progression.weekNumber(it) } ?: 1
 
         return TodayUiState(
             settings = settings,
@@ -111,12 +110,6 @@ class TodayViewModel(private val container: AppContainer) : ViewModel() {
             week = week,
             phase = Progression.phaseOf(week),
         )
-    }
-
-    private fun weekOf(programStartEpochDay: Long?): Int {
-        val startDay = programStartEpochDay ?: return 1
-        val elapsedDays = LocalDate.now().toEpochDay() - startDay
-        return (elapsedDays / 7 + 1).toInt().coerceAtLeast(1)
     }
 
     companion object {

@@ -20,6 +20,7 @@ import com.vh.health.ui.library.LibraryScreen
 import com.vh.health.ui.nav.Destination
 import com.vh.health.ui.placeholder.PlaceholderScreen
 import com.vh.health.ui.player.WorkoutPlayerScreen
+import com.vh.health.ui.schedule.ScheduleScreen
 import com.vh.health.ui.settings.SettingsScreen
 import com.vh.health.ui.today.TodayScreen
 
@@ -75,14 +76,7 @@ fun VhHealthRoot(container: AppContainer) {
                     WorkoutPlayerScreen(container, workoutId, onFinish = { navController.popBackStack() })
                 }
             }
-            composable(Destination.SCHEDULE.route) {
-                PlaceholderScreen(
-                    title = "Lịch tuần",
-                    milestone = "M5",
-                    body = "Xem theo tuần và theo khối 4 tuần, kéo thả đổi ngày khi bận đột xuất, " +
-                        "đánh dấu ngày nghỉ để app cân lại phần còn lại của tuần.",
-                )
-            }
+            composable(Destination.SCHEDULE.route) { ScheduleScreen(container) }
             composable(Destination.LIBRARY.route) { LibraryScreen(container) }
             composable(Destination.PROGRESS.route) {
                 PlaceholderScreen(

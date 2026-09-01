@@ -280,7 +280,8 @@
       ],
       "easier": "Squat tay không hoặc ngồi chạm ghế rồi đứng lên",
       "harder": "Tăng mức tạ hoặc dừng 2 giây ở đáy",
-      "animation": "lo_goblet_squat"
+      "animation": "lo_goblet_squat",
+      "videoUrl": "https://www.youtube.com/watch?v=JO7D6GJ98wY"
     },
     {
       "id": "lo_split_squat",
@@ -556,7 +557,8 @@
       ],
       "easier": "Xuống nông hơn và giảm thời gian giữ",
       "harder": "Ôm thêm tạ trước ngực",
-      "animation": "kn_spanish_squat"
+      "animation": "kn_spanish_squat",
+      "videoUrl": "https://www.youtube.com/watch?v=hgFxm5KIF7M"
     },
     {
       "id": "kn_step_down",
@@ -581,7 +583,8 @@
       ],
       "easier": "Bục thấp hơn và vịn tường",
       "harder": "Bục cao hơn hoặc cầm thêm tạ",
-      "animation": "kn_step_down"
+      "animation": "kn_step_down",
+      "videoUrl": "https://www.youtube.com/watch?v=rvI7OxBQqS4"
     },
     {
       "id": "kn_tke",
@@ -626,7 +629,8 @@
         "Hạ xuống quá nhanh"
       ],
       "harder": "Đứng xa tường hơn hoặc đặt tạ nhẹ lên mũi chân",
-      "animation": "kn_tibialis_raise"
+      "animation": "kn_tibialis_raise",
+      "videoUrl": "https://www.youtube.com/watch?v=RHWRxiBe1iU"
     },
     {
       "id": "kn_calf_raise_standing",
@@ -854,7 +858,8 @@
       ],
       "easier": "Chống gối xuống sàn",
       "harder": "Nhấc luân phiên một chân vài giây",
-      "animation": "co_plank"
+      "animation": "co_plank",
+      "videoUrl": "https://www.youtube.com/watch?v=gSDNblPRh1U"
     },
     {
       "id": "co_side_plank",
@@ -1222,7 +1227,8 @@
         "Vai trôi về trước cổ tay"
       ],
       "easier": "Chống tay lên ghế để giảm tải",
-      "animation": "ca_mountain_climber"
+      "animation": "ca_mountain_climber",
+      "videoUrl": "https://www.youtube.com/watch?v=ZhiCSdOVJp0"
     },
     {
       "id": "ca_skater_step",

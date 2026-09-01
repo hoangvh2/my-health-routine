@@ -49,9 +49,15 @@ class BeatEngine {
             offset += segment.size
         }
         scope.launch {
+            // USAGE_MEDIA + CONTENT_TYPE_MUSIC, not USAGE_ASSISTANCE_SONIFICATION: the
+            // latter routes to the ringer/notification volume on most devices and goes
+            // silent in vibrate/DND mode. A workout beat has to survive that the same
+            // way music does — and TextToSpeech already defaults to STREAM_MUSIC, so
+            // this is also what keeps the beat and the voice cues on the same volume
+            // control instead of two independently-muted streams.
             val attrs = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
             val format = AudioFormat.Builder()
                 .setSampleRate(sampleRate)
