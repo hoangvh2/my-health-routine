@@ -64,6 +64,25 @@ class ContentTest {
     }
 
     @Test
+    fun `every workout opens with a genuine warm-up movement`() {
+        // A real gap, not a hypothetical: w_zone2_knee (Tuesday) used to open straight
+        // into ca_run_easy with nothing before it — pressing "Bắt đầu" sent a body
+        // that just woke up directly into running intervals. This pins the fix and
+        // stops it from silently regressing when a new workout is authored.
+        program.workouts.forEach { workout ->
+            val firstItem = workout.blocks.firstOrNull()?.items?.firstOrNull()
+            assertTrue(firstItem != null, "${workout.id} has no blocks at all")
+            val exercise = library[firstItem!!.exerciseId]
+            assertTrue(exercise != null, "${workout.id}'s first exercise ${firstItem.exerciseId} is not in the library")
+            assertEquals(
+                MuscleGroup.WARM_UP,
+                exercise!!.group,
+                "${workout.id} launches straight into ${exercise.nameVi} (${exercise.group}) with no warm-up movement first",
+            )
+        }
+    }
+
+    @Test
     fun `each workout actually lasts roughly what it claims`() {
         program.workouts.forEach { workout ->
             val actualMinutes = workout.estimatedSeconds / 60.0

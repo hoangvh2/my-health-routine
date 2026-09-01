@@ -36,9 +36,51 @@
       "id": "w_strength_full_a",
       "titleVi": "Sức mạnh toàn thân A",
       "focusVi": "Giữ cơ khi giảm mỡ",
-      "minutes": 30,
+      "minutes": 35,
       "rpe": "6–7",
       "blocks": [
+        {
+          "titleVi": "Khởi động",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 15,
+          "items": [
+            {
+              "exerciseId": "wu_shoulder_circle",
+              "workSeconds": 20
+            },
+            {
+              "exerciseId": "wu_march",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_calf_pump",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_bw_squat",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_leg_swing",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_ankle_rock",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_cat_cow",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_glute_bridge",
+              "workSeconds": 30
+            }
+          ]
+        },
         {
           "titleVi": "Vòng sức mạnh 1",
           "rounds": 3,
@@ -123,9 +165,51 @@
       "id": "w_zone2_knee",
       "titleVi": "Chạy–đi bộ Zone 2 + chăm sóc gối",
       "focusVi": "Nền tảng sức bền",
-      "minutes": 32,
+      "minutes": 35,
       "rpe": "4–5",
       "blocks": [
+        {
+          "titleVi": "Khởi động",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 15,
+          "items": [
+            {
+              "exerciseId": "wu_shoulder_circle",
+              "workSeconds": 20
+            },
+            {
+              "exerciseId": "wu_march",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_calf_pump",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_bw_squat",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_leg_swing",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_ankle_rock",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_cat_cow",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_glute_bridge",
+              "workSeconds": 30
+            }
+          ]
+        },
         {
           "titleVi": "Chạy – đi bộ xen kẽ",
           "rounds": 8,
@@ -175,9 +259,51 @@
       "id": "w_tabata_core",
       "titleVi": "Tabata va đập thấp + Core",
       "focusVi": "Đốt mỡ, siết bụng",
-      "minutes": 28,
+      "minutes": 31,
       "rpe": "8–9",
       "blocks": [
+        {
+          "titleVi": "Khởi động",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 15,
+          "items": [
+            {
+              "exerciseId": "wu_shoulder_circle",
+              "workSeconds": 20
+            },
+            {
+              "exerciseId": "wu_march",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_calf_pump",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_bw_squat",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_leg_swing",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_ankle_rock",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_cat_cow",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_glute_bridge",
+              "workSeconds": 30
+            }
+          ]
+        },
         {
           "titleVi": "Tabata 1 — leo núi",
           "rounds": 8,
@@ -246,9 +372,51 @@
       "id": "w_lower_knee",
       "titleVi": "Thân dưới + Prehab gối",
       "focusVi": "Gối khoẻ để chạy",
-      "minutes": 32,
+      "minutes": 37,
       "rpe": "6–7",
       "blocks": [
+        {
+          "titleVi": "Khởi động",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 15,
+          "items": [
+            {
+              "exerciseId": "wu_shoulder_circle",
+              "workSeconds": 20
+            },
+            {
+              "exerciseId": "wu_march",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_calf_pump",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_bw_squat",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_leg_swing",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_ankle_rock",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_cat_cow",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_glute_bridge",
+              "workSeconds": 30
+            }
+          ]
+        },
         {
           "titleVi": "Sức mạnh thân dưới",
           "rounds": 3,
@@ -336,9 +504,51 @@
       "id": "w_intervals_core",
       "titleVi": "Chạy biến tốc + Core + gối",
       "focusVi": "Sức bền tốc độ",
-      "minutes": 30,
+      "minutes": 37,
       "rpe": "7–8",
       "blocks": [
+        {
+          "titleVi": "Khởi động",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 15,
+          "items": [
+            {
+              "exerciseId": "wu_shoulder_circle",
+              "workSeconds": 20
+            },
+            {
+              "exerciseId": "wu_march",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_calf_pump",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_bw_squat",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_leg_swing",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_ankle_rock",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_cat_cow",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_glute_bridge",
+              "workSeconds": 30
+            }
+          ]
+        },
         {
           "titleVi": "Khởi động chạy",
           "rounds": 1,
@@ -422,6 +632,48 @@
       "minutes": 50,
       "rpe": "4–5",
       "blocks": [
+        {
+          "titleVi": "Khởi động",
+          "rounds": 1,
+          "restBetweenRoundsSeconds": 0,
+          "restAfterSeconds": 15,
+          "items": [
+            {
+              "exerciseId": "wu_shoulder_circle",
+              "workSeconds": 20
+            },
+            {
+              "exerciseId": "wu_march",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_calf_pump",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_bw_squat",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_leg_swing",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_ankle_rock",
+              "workSeconds": 30,
+              "perSide": true
+            },
+            {
+              "exerciseId": "wu_cat_cow",
+              "workSeconds": 30
+            },
+            {
+              "exerciseId": "wu_glute_bridge",
+              "workSeconds": 30
+            }
+          ]
+        },
         {
           "titleVi": "Chạy – đi bộ dài",
           "rounds": 12,

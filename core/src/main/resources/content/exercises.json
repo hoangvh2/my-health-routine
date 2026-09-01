@@ -21,7 +21,8 @@
         "Thở ra nhanh bằng nhịp hít"
       ],
       "harder": "Kéo dài nhịp thở ra lên 8",
-      "animation": "wu_breath"
+      "animation": "wu_breath",
+      "videoUrl": "https://www.youtube.com/watch?v=9jpchJcKivk"
     },
     {
       "id": "wu_cat_cow",
@@ -42,7 +43,8 @@
         "Khoá khuỷu tay",
         "Đi quá nhanh, mất nhịp thở"
       ],
-      "animation": "wu_cat_cow"
+      "animation": "wu_cat_cow",
+      "videoUrl": "https://www.youtube.com/watch?v=xyNwxiuERXc"
     },
     {
       "id": "wu_open_book",
@@ -63,7 +65,8 @@
         "Nín thở khi mở",
         "Ép quá tầm gây đau vai"
       ],
-      "animation": "wu_open_book"
+      "animation": "wu_open_book",
+      "videoUrl": "https://www.youtube.com/watch?v=5TdmVlQe64c"
     },
     {
       "id": "wu_hip_9090",
@@ -85,7 +88,8 @@
         "Xoay từ khớp gối thay vì khớp hông"
       ],
       "easier": "Ngồi tựa lưng vào tường và chỉ chuyển nửa tầm",
-      "animation": "wu_hip_9090"
+      "animation": "wu_hip_9090",
+      "videoUrl": "https://www.youtube.com/watch?v=HUZimFZJZWU"
     },
     {
       "id": "wu_hipflexor_stretch",
@@ -107,7 +111,8 @@
         "Đẩy quá xa gây ê gối trước"
       ],
       "harder": "Giơ tay cùng bên lên cao và nghiêng nhẹ sang bên đối diện",
-      "animation": "wu_hipflexor_stretch"
+      "animation": "wu_hipflexor_stretch",
+      "videoUrl": "https://www.youtube.com/watch?v=Il0bHvPygzI"
     },
     {
       "id": "wu_ankle_rock",
@@ -129,7 +134,8 @@
         "Để gối đổ vào trong",
         "Đi quá nhanh, mất kiểm soát"
       ],
-      "animation": "wu_ankle_rock"
+      "animation": "wu_ankle_rock",
+      "videoUrl": "https://www.youtube.com/watch?v=Hm_Iu72bJJg"
     },
     {
       "id": "wu_glute_bridge",
@@ -150,7 +156,8 @@
         "Đặt chân quá xa nên đùi sau chuột rút",
         "Không siết ở đỉnh"
       ],
-      "animation": "wu_glute_bridge"
+      "animation": "wu_glute_bridge",
+      "videoUrl": "https://www.youtube.com/watch?v=wPM8icPu6H8"
     },
     {
       "id": "wu_leg_swing",
@@ -171,7 +178,8 @@
         "Võng lưng khi đá ra sau",
         "Xoay hông theo chân"
       ],
-      "animation": "wu_leg_swing"
+      "animation": "wu_leg_swing",
+      "videoUrl": "https://www.youtube.com/watch?v=difYoBtZi2s"
     },
     {
       "id": "wu_march",
@@ -192,7 +200,8 @@
         "Ngả người ra sau khi nâng gối",
         "Nâng gối bằng cách nghiêng hông"
       ],
-      "animation": "wu_march"
+      "animation": "wu_march",
+      "videoUrl": "https://www.youtube.com/watch?v=V0GoGP_NnxI"
     },
     {
       "id": "wu_bw_squat",
@@ -213,7 +222,8 @@
         "Nhấc gót khỏi sàn",
         "Cong lưng dưới ở đáy"
       ],
-      "animation": "wu_bw_squat"
+      "animation": "wu_bw_squat",
+      "videoUrl": "https://www.youtube.com/watch?v=CKcDiJnLaLY"
     },
     {
       "id": "wu_shoulder_circle",
@@ -234,7 +244,8 @@
         "Nín thở",
         "Ngả người theo vòng xoay"
       ],
-      "animation": "wu_shoulder_circle"
+      "animation": "wu_shoulder_circle",
+      "videoUrl": "https://www.youtube.com/watch?v=1wEuXXtq4EE"
     },
     {
       "id": "wu_calf_pump",
@@ -256,7 +267,8 @@
         "Nhấc gót nửa vời",
         "Hạ xuống nện gót"
       ],
-      "animation": "wu_calf_pump"
+      "animation": "wu_calf_pump",
+      "videoUrl": "https://www.youtube.com/watch?v=xHahy4-htUk"
     },
     {
       "id": "lo_goblet_squat",
