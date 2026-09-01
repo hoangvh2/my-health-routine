@@ -1,6 +1,7 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
+**CI:** both workflows green on `dfa1480` · APK artifact `vh-health-debug-apk` (17 MB)
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
@@ -18,11 +19,14 @@ Read this first, then `CLAUDE.md` for the background that does not change.
 | M6 | Tiến trình, biểu đồ, Room, sao lưu JSON | ⬜ Chưa bắt đầu |
 | M7 | Hoàn thiện: tiếng Anh, tiếp cận, bản release | ⬜ Chưa bắt đầu |
 
-**Not yet verified:** the `:app` module has never been compiled — `dl.google.com` is
-blocked in the dev container (see `CLAUDE.md`). The first CI run on this branch is the
-first time the Android code is type-checked. Expect to fix a few compile errors from
-the CI log before an APK exists; that is the expected shape of the first cycle, not a
-surprise.
+**The APK exists and is installable.** The first CI type-check of `:app` reported three
+errors, all the same mistake (`import androidx.compose.foundation.lazy.item` — `item` is
+a `LazyListScope` member, not a top-level function). Fixed in `dfa1480`, and the next run
+produced the APK.
+
+What is **not** verified is runtime behaviour: nobody has installed and opened the app
+yet. Layout and Vietnamese text wrapping have never been seen on a real screen. Ask the
+user what it looks like before building on top of it.
 
 ## What actually works today
 
@@ -41,10 +45,9 @@ surprise.
 
 ## Do this next
 
-1. **Get CI green.** Push, open the Actions tab, read `Build APK`. Fix whatever the
-   Kotlin compiler reports in `:app` — most likely candidates are Compose Material 3
-   signatures and icon names in `ui/nav/Destinations.kt`. Repeat until an APK artifact
-   appears. Do not start M3 before this is green.
+1. **Get the user's eyes on the running app.** They install the APK from the latest
+   `Build APK` run and say what the Today screen actually looks like on their phone.
+   This is the only outstanding thing blocking M3.
 2. **M3 — the exercise animator.** A Compose `Canvas` that draws a jointed figure from
    keyframes. Design sketch: a `Pose` is a map of joint → angle; an `Animation` is a
    list of `Pose` plus timings; the drawing code interpolates between them. Each
