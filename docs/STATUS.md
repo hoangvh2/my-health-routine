@@ -1,12 +1,12 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
-**CI:** M5+M6 (`620c0e0`) green. The user then actually pressed "Bắt đầu" on a real
-device — the first real signal on any of this round's code — and found a real bug
-(see "Phản hồi thật #3" below). **That confirms the APK installs and the player
-launches and runs**, nothing more yet: no confirmation on notifications, the knee
-picker, or the Progress screen. The fix below is **not pushed yet**; this file will be
-updated again once CI confirms it.
+**CI:** green on `2cda6e8` (the warm-up + thumbnail fix below), first try —
+`BUILD SUCCESSFUL in 3m 21s`, 38/38 tasks, APK produced (18.0MB, up from 17.3MB —
+consistent with Coil's library code being added). Only the one pre-existing, unrelated
+`Icons.Filled.ShowChart` deprecation warning remains; the `OpenInNew` one is gone along
+with the button that used it. **None of this has run on a real device yet** — see "Do
+this next".
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
@@ -77,8 +77,7 @@ là còn thiếu, sẽ nêu lại trong "Việc cố tình chưa làm".
 Intent cho trình duyệt, không phải app tự tải gì). Đây là lần đầu app tự gọi mạng để
 tải ảnh thumbnail. Vẫn không có tài khoản, không máy chủ riêng.
 
-**Chưa build-verify, chưa push.** Xem "Đã kiểm chứng thật" bên dưới cho phần đã chạy
-test thật (`:core`), và phần còn lại chưa có bằng chứng gì ngoài tự rà soát thủ công.
+**CI xanh (xem "Đã kiểm chứng thật"), chưa có xác nhận nào trên máy thật.**
 
 ## M5 + M6, làm trong phiên này — chưa từng chạy, kể cả trên CI
 
@@ -149,13 +148,12 @@ trước query param thừa, URL không phải YouTube thì không ra thumbnail,
 link thật, không phải dữ liệu giả).
 
 **`:app` — compile-verify qua CI, không phải trong container này** (không thể, xem
-CLAUDE.md). `Build APK` cho `620c0e0` (M5+M6) xanh: `BUILD SUCCESSFUL in 3m 22s`, 38/38
-task, APK đóng gói và upload thành công, chỉ còn 2 cảnh báo deprecation cũ, không liên
-quan vòng đó. **Vòng sửa lỗi khởi động + thumbnail này thì chưa** — có thêm rủi ro thật
-sự mới: dependency `Coil` lần đầu dùng trong project, quyền `INTERNET` lần đầu khai
-báo, `verticalScroll` lồng trong layout đã từng có bug thật một lần
-(`fillMaxSize()`-trong-`Column`) nên càng cần thận trọng dù lần sửa này dùng cách khác
-hẳn (`weight` + `verticalScroll`, không phải `fillMaxSize`).
+CLAUDE.md). `Build APK` cho `620c0e0` (M5+M6) xanh. `Build APK` cho `2cda6e8` (khởi
+động + thumbnail, đợt sửa vừa rồi) **cũng xanh, sạch từ lần đầu**: `Coil` (dependency
+mới), quyền `INTERNET` (mới khai báo), `verticalScroll` lồng trong layout từng có bug
+thật một lần (`fillMaxSize()`-trong-`Column`, dùng cách khác hẳn lần này —
+`weight` + `verticalScroll`) — tất cả compile sạch, không cảnh báo mới. **Compile sạch
+không chứng minh chạy đúng** — xem "Do this next".
 
 ## Real risk in this round
 
