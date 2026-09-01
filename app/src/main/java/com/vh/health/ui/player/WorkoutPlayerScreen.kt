@@ -96,8 +96,14 @@ fun WorkoutPlayerScreen(container: AppContainer, workoutId: String, onFinish: ()
         )
 
         Column(
+            // weight(1f), not fillMaxSize(): inside a Column, fillMaxSize() on a
+            // middle child claims the WHOLE column's height (matching its parent),
+            // not "whatever is left after the top bar" — that pushed PlayerControls
+            // off the bottom of the screen entirely, so Bắt đầu was unreachable and
+            // nothing ever played. weight(1f) is what actually means "the remainder".
             modifier = Modifier
-                .fillMaxSize()
+                .weight(1f)
+                .fillMaxWidth()
                 .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,

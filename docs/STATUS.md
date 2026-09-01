@@ -1,8 +1,8 @@
 # Status
 
 **Updated:** 2026-09-01 · **Branch:** `claude/android-workout-scheduler-app-e70u8m`
-**CI:** green on `1864d63` (session player) on the first try — no compile fixes needed
-this round. APK artifact `vh-health-debug-apk` current.
+**CI:** compiled clean on `1864d63`, but real-device testing found the player was
+completely stuck (layout bug, see below). Fix pushed; not yet re-verified on device.
 
 Read this first, then `CLAUDE.md` for the background that does not change.
 
@@ -30,18 +30,39 @@ văn bản kỹ thuật (`cues`) đã có sẵn trong nội dung — trình phá
 
 ## Điều CHƯA xong ở M4 — nói rõ để không ai lầm
 
-M4 được viết trong phiên trước (`WorkoutPlayerViewModel`, `WorkoutPlayerScreen`,
-`BeatEngine`, `VoiceCues`, `SessionBuilder`) và CI đã xanh trên lần build đầu tiên —
-nghĩa là mọi API Compose/Android dùng đúng chữ ký, nhưng đó là tất cả những gì đã được
-kiểm chứng.
+M4 được viết trong phiên trước và CI xanh trên lần build đầu tiên — nghĩa là API đúng
+chữ ký, nhưng **build xanh không có nghĩa là chạy đúng**: người dùng cài thử và bị kẹt
+cứng ngay màn hình CHUẨN BỊ, không tiếng, không phản hồi. Xem "Lỗi đã sửa" bên dưới —
+đã tìm ra và vá, nhưng **bản vá này chưa được người dùng xác nhận chạy đúng**.
 
-1. **Chưa ai bấm nút "Bắt đầu" trên máy thật.** Toàn bộ hành vi thời gian thực — đồng
-   hồ đếm, chuyển pha, âm thanh, rung — mới chỉ được suy luận đúng trên giấy và đúng
-   kiểu Kotlin, không phải quan sát chạy thật. Đây là việc ưu tiên nhất tiếp theo.
+1. **Người dùng cần cài lại và thử lại từ đầu.** Bấm Bắt đầu, xem có chạm được hàng nút
+   Play/Tạm dừng/Chuyển bài ở đáy màn hình không, đồng hồ có đếm không, có tiếng không.
 2. **`videoUrl` toàn bộ đang trống.** Một lượt `WebSearch` để tìm link thật đã đụng giới
    hạn phiên (`session limit`, reset 04:20 UTC) trước khi tìm được kết quả nào. Nút
    "Xem video hướng dẫn" sẽ không hiện cho tới khi có link — điều này đúng, không phải
    lỗi.
+
+### Lỗi đã sửa: `fillMaxSize()` lồng trong `Column` đẩy nút Play ra khỏi màn hình
+
+Ảnh chụp máy thật cho thấy màn hình CHUẨN BỊ đứng yên, không nút, không tiếng.
+`WorkoutPlayerScreen` có cấu trúc `Column { TopBar(); Column(fillMaxSize()){...}; Controls() }`
+— trong Compose, `fillMaxSize()` trên một phần tử **giữa** của `Column` chiếm đúng bằng
+chiều cao của `Column` cha (bằng cả màn hình), *không phải* "phần còn lại sau top bar".
+Vì vậy tổng chiều cao ba phần tử vượt màn hình, và `Controls()` (chứa nút Play) bị đẩy
+lọt hẳn ra ngoài đáy — tồn tại trong cây layout nhưng không ai chạm tới được. Nút Play
+không bao giờ được bấm → `start()` không bao giờ chạy → đồng hồ đứng yên, không cue nào
+phát ra. Một lỗi bố cục duy nhất giải thích trọn cả hai triệu chứng.
+
+**Đã sửa** bằng `Modifier.weight(1f)` thay cho `fillMaxSize()` trên Column giữa — đây
+mới là cách đúng để nói "chiếm phần còn lại sau các anh chị em không có weight". Đã có
+comment tại chỗ giải thích, đừng "dọn dẹp" nó về `fillMaxSize()` vì trông có vẻ tương
+đương.
+
+**Bài học chung cho những màn hình sau:** bất cứ `Column`/`Row` nào có cấu trúc
+header-cố-định + nội-dung-lấp-đầy + footer-cố-định đều phải dùng `weight(1f)` cho phần
+lấp đầy, không bao giờ `fillMaxSize()`. Đây là lỗi không thể bắt được bằng compile hay
+test tĩnh trong môi trường này — chỉ lộ ra khi chạy thật trên máy, đúng như giới hạn đã
+ghi ở `CLAUDE.md`.
 
 ## Đã kiểm chứng thật (test chạy được ở đây)
 
