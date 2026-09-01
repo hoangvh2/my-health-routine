@@ -78,6 +78,18 @@ class ProgramRulesTest {
     }
 
     @Test
+    fun `no check-in yet means no load adjustment`() {
+        assertEquals(1.0, KneeLoadPolicy.impactFactorFor(null), 1e-9)
+    }
+
+    @Test
+    fun `impactFactorFor matches decide for every signal`() {
+        KneeSignal.entries.forEach { signal ->
+            assertEquals(KneeLoadPolicy.decide(signal).impactFactor, KneeLoadPolicy.impactFactorFor(signal), 1e-9)
+        }
+    }
+
+    @Test
     fun `the ten percent cap holds even when the user feels strong`() {
         assertEquals(110, RunVolumeGuard.cap(previousWeekMinutes = 100, proposedMinutes = 160))
         assertEquals(90, RunVolumeGuard.cap(previousWeekMinutes = 100, proposedMinutes = 90))

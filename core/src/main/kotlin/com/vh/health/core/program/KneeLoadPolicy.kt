@@ -1,12 +1,18 @@
 package com.vh.health.core.program
 
+import kotlinx.serialization.Serializable
+
 /**
  * What the knees reported after a long walk or run.
  *
  * The app asks about the signal that actually applies here — ache that follows
  * volume — rather than a daily pain score, which would mostly read zero and teach
  * nothing.
+ *
+ * `@Serializable` so `ProgressRepository` (:app) can store a check-in's signal
+ * directly, without a parallel DTO enum to keep in sync.
  */
+@Serializable
 enum class KneeSignal(val labelVi: String) {
     /** No ache, or gone within the hour. */
     CLEAR("Không nhức, hoặc tan trong 1 giờ"),
@@ -62,4 +68,14 @@ object KneeLoadPolicy {
         require(window >= 1) { "window must be at least 1 week, got $window" }
         return recentSignals.takeLast(window).count { it == KneeSignal.OVERLOADED } >= 2
     }
+
+    /**
+     * The factor [applyCardioLoadFactor] should scale a workout's cardio content by,
+     * given the most recent knee check-in — the piece that turns a stored signal into
+     * an actual load change on the next session. No check-in yet means no
+     * adjustment: the programme runs exactly as authored until there is a real signal
+     * to respond to.
+     */
+    fun impactFactorFor(mostRecentSignal: KneeSignal?): Double =
+        mostRecentSignal?.let { decide(it).impactFactor } ?: 1.0
 }

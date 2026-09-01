@@ -168,7 +168,8 @@
             }
           ]
         }
-      ]
+      ],
+      "tracksKneeSignal": true
     },
     {
       "id": "w_tabata_core",
@@ -411,7 +412,8 @@
             }
           ]
         }
-      ]
+      ],
+      "tracksKneeSignal": true
     },
     {
       "id": "w_long_easy",
@@ -470,7 +472,8 @@
             }
           ]
         }
-      ]
+      ],
+      "tracksKneeSignal": true
     },
     {
       "id": "w_recovery",

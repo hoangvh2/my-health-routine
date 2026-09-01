@@ -104,6 +104,13 @@ data class Workout(
     val focusVi: String,
     val minutes: Int,
     val rpe: String,
+    /**
+     * True for the walking/running-heavy days — the ones the knee traffic light in
+     * `KneeLoadPolicy` is actually about. The player only asks "did your knee ache
+     * after this" on these; asking it after a strength or tabata day would be asking
+     * about a signal that workout was never going to produce. See docs/DECISIONS.md.
+     */
+    val tracksKneeSignal: Boolean = false,
     val blocks: List<WorkoutBlock>,
 ) {
     /** Clock time the block list actually adds up to, rests included. */
